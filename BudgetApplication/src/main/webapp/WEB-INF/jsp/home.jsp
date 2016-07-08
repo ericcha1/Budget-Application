@@ -20,7 +20,7 @@
 					<th>ID</th>
 					<th>Username</th>
 					<th>Password</th>
-					<th>Full Name</th>
+					<th>Name</th>
 					<th>Role</th>
 				</tr>
 			</thead>
