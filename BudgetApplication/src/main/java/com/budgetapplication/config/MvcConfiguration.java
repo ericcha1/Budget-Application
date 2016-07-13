@@ -35,6 +35,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
  
+    //returns configured DataSource Bean
     @Bean
     public DataSource getDataSource() 
     {
@@ -46,9 +47,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
          
         return dataSource;
     }
-     
+    
+    //returns the DAO implementation
+    //this bean is injected in the controller class
     @Bean
-    public UserDAO getContactDAO() 
+    public UserDAO getUserDAO() 
     {
         return new UserDAOImpl(getDataSource());
     }

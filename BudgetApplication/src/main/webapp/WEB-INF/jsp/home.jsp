@@ -13,39 +13,7 @@
 	<body>
 		<h1>Home</h1>
 		<h2>Welcome User</h2>
-<!-- 		<script type="text/javascript" src="js/home.js"></script> -->
-		<table id="userTable" cellspacing="0" style="width:50%" align="center" class="tablesorter">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Username</th>
-					<th>Password</th>
-					<th>Name</th>
-					<th>Role</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th>1</th>
-					<th>ericcha1</th>
-					<th>pass2</th>
-					<th>Eric Cha</th>
-					<th>Creater</th>			
-				</tr>
-				<tr>
-					<th>2</th>
-					<th>zzUsername</th>
-					<th>123Numbers</th>
-					<th>John Cha</th>
-					<th>User</th>			
-				</tr>
-			</tbody>
-		</table>
-		<script>
-		$(document).ready(function()
-		{ 
-	        $("#userTable").tablesorter(); 
-	    }); 
-		</script>
+		<h3><a href="allUsers">Users</a></h3>
+		<h3><a href="<c:url value="/j_spring_security_logout" />" > Logout</a></h3>
 	</body>
 </html>

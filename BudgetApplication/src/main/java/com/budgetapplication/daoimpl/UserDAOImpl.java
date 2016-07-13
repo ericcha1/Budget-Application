@@ -65,7 +65,7 @@ public class UserDAOImpl implements UserDAO
     @Override
     public List<User> list() 
     {
-    	String sql = "SELECT * FROM User";
+    	String sql = "SELECT * FROM user_table";
 
         List<User> userList = jdbcTemplate.query(sql, new RowMapper<User>() 
         {
