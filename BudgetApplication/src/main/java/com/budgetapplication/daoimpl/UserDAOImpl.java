@@ -13,6 +13,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
  
 /**
  * An implementation of the UserDAO interface.
@@ -25,6 +28,19 @@ public class UserDAOImpl implements UserDAO
  
     private JdbcTemplate jdbcTemplate;
  
+    /*
+    public UserDAOImpl() 
+    {
+    	DataSource dataSource = (DataSource) context.getBean("dataSource");
+        jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+    */
+    
+//    public void setTemplate(DataSource dataSource) 
+//    {  
+//        jdbcTemplate = new JdbcTemplate(dataSource);  
+//    }  
+    
     //constructor, initializes jdbcTemplate
     public UserDAOImpl(DataSource dataSource) 
     {
@@ -38,16 +54,16 @@ public class UserDAOImpl implements UserDAO
     	if (user.getId() > 0) 
     	{
             // update
-            String sql = "UPDATE user_table SET Username=?, Password=?, Name=?, "
-                        + "Role=? WHERE id=?";
+            String sql = "UPDATE user_table SET username=?, password=?, name=?, "
+                        + "role=?, enabled=? WHERE id=?";
             jdbcTemplate.update(sql, user.getUsername(), user.getPassword(),
                     user.getName(), user.getRole(), user.getId());
         } 
     	else 
     	{
             // insert
-            String sql = "INSERT INTO user_table (Username, Password, Name, Role)"
-                        + " VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO user_table (username, password, name, role, enabled)"
+                        + " VALUES (?, ?, ?, ?, ?)";
             jdbcTemplate.update(sql, user.getUsername(),
                     user.getPassword(), user.getName(), user.getName());
         }
@@ -74,11 +90,12 @@ public class UserDAOImpl implements UserDAO
             {
                 User user = new User();
      
-                user.setId(rs.getInt("Id"));
-                user.setUsername(rs.getString("Username"));
-                user.setPassword(rs.getString("Password"));
-                user.setName(rs.getString("Name"));
-                user.setRole(rs.getString("Role"));
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setName(rs.getString("name"));
+                user.setRole(rs.getString("role"));
+                user.setEnabled(rs.getBoolean("enabled"));
      
                 return user;
             }
@@ -91,7 +108,7 @@ public class UserDAOImpl implements UserDAO
     @Override
     public User get(int userId) 
     {
-    	String sql = "SELECT * FROM user_table WHERE Id=" + userId;
+    	String sql = "SELECT * FROM user_table WHERE id=" + userId;
         return jdbcTemplate.query(sql, new ResultSetExtractor<User>() 
         {
      
@@ -101,11 +118,12 @@ public class UserDAOImpl implements UserDAO
                 if (rs.next()) 
                 {
                     User user = new User();
-                    user.setId(rs.getInt("Id"));
-                    user.setUsername(rs.getString("Username"));
-                    user.setPassword(rs.getString("Password"));
-                    user.setName(rs.getString("Name"));
-                    user.setRole(rs.getString("Role"));
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setName(rs.getString("name"));
+                    user.setRole(rs.getString("role"));
+                    user.setEnabled(rs.getBoolean("enabled"));
                     return user;
                 }
      

@@ -6,9 +6,9 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-    <http auto-config="true" >
-        <intercept-url pattern="/*" access="ROLE_USER, ROLE_ADMIN" />
-        <intercept-url pattern="/home**" access="ROLE_USER" />
+    <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/*" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/home**" access="hasRole('ROLE_USER')" />
         <form-login
         	default-target-url="/home" 
             always-use-default-target="true"
@@ -16,13 +16,14 @@
             password-parameter="password" />
     </http>
 
+<!-- "SELECT ID, Username, Password, Name, Role FROM user_table WHERE Username=?" -->
 	<authentication-manager>
 	  <authentication-provider>
 		<jdbc-user-service data-source-ref="dataSource"
 		  users-by-username-query=
-		    "select username, password from user_table where username=?"
+		    "SELECT username, password, enabled FROM user_table WHERE username=?"
 		  authorities-by-username-query=
-		    "select username, role from user_table where username =?  " />
+		    "SELECT username, role FROM user_table WHERE username =?" />
 	  </authentication-provider>
 	</authentication-manager>
 

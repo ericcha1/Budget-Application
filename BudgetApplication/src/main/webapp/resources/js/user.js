@@ -21,7 +21,7 @@ function fillUserTable()
 			{
 				html += '<tr><td>' + val.id + '</td><td>' + val.username 
 				+ '</td><td>' + val.password + '</td><td>' + val.name
-				+ '</td><td>' + val.role + '</td></tr>';
+				+ '</td><td>' + val.role + '</td><td>' + val.enabled + "</td></tr>";
 			});
 			
 			$('#userTable tbody').empty().append(html);
@@ -31,21 +31,5 @@ function fillUserTable()
 	        console.log(error);
 	 }
 	});
-	
-	
-	/*
-	 *  $.ajax({
-        url: 'faqs',
-        type: 'GET',
-        success: function (response) {
-            var html = '';
-            $.each(response, function (key, val) {
-                html += '<tr><td>' + val.question + '</td></tr>'
-            });
-            $('#myTable tbody').empty().append(html);
-            $('#myTable').trigger('update');
-        }
-    });
-	 */
 }
 

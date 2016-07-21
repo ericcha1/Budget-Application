@@ -12,10 +12,14 @@ xsi:schemaLocation="
 	<mvc:annotation-driven />
 
     <context:component-scan  base-package="com.budgetapplication" />  
+   	
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
         <property name="prefix" value="/WEB-INF/jsp/" />  
         <property name="suffix" value=".jsp" />  
     </bean>  
+   	   	            
+<!--    	<bean id="userDAOImpl" class="com.budgetapplication.daoimpl.UserDAOImpl"> -->
+<!-- 	</bean> -->
     	
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     

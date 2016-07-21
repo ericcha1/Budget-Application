@@ -11,6 +11,7 @@ public class User
     private String password;
     private String name;
     private String role;
+    private boolean enabled;
  
     //default constructor
     public User() 
@@ -26,6 +27,17 @@ public class User
         this.password = password;
         this.name = name;
         this.role = role;
+        this.enabled = true;
+    }
+    
+    public User(int id, String username, String password, String name, String role, boolean enabled) 
+    {
+    	this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.role = role;
+        this.enabled = enabled;
     }
  
     //getters and setters
@@ -77,6 +89,16 @@ public class User
     public String getRole()
     {
     	return role;
+    }
+    
+    public void setEnabled(boolean userEnable)
+    {
+    	enabled = userEnable;
+    }
+    
+    public boolean getEnabled()
+    {
+    	return enabled;
     }
     
 }

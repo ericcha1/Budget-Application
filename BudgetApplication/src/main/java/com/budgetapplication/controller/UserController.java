@@ -9,22 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.budgetapplication.dao.UserDAO;
+import com.budgetapplication.daoimpl.UserDAOImpl;
 import com.budgetapplication.model.User;
+
 @Controller 
-//@EnableWebMvc
 public class UserController 
 {
 	@Autowired
     private UserDAO userDAO;
-	
 	
 	@RequestMapping(value="/allUsers")
 	public ModelAndView listUser(ModelAndView model) throws IOException
