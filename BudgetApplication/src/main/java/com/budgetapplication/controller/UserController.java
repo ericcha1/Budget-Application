@@ -21,7 +21,7 @@ import com.budgetapplication.model.User;
 @Controller 
 public class UserController 
 {
-	@Autowired
+	@Autowired (required=false)
     private UserDAO userDAO;
 	
 	@RequestMapping(value="/allUsers")

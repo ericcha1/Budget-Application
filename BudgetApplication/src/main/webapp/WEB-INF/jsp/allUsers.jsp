@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-<%-- 		<sec:authorize access="hasRole('ROLE_USER')"> --%>
+		<sec:authorize access="hasRole('ROLE_USER')">
 			<h1>User Table</h1>
 			<h3><a href="/newContact">New Contact</a></h3>
 			<table id="userTable" cellspacing="0" style="width:50%" align="center" class="tablesorter">
@@ -34,6 +34,6 @@
 			<h3>
 				<a href="home.html">Home</a>
 			</h3>
-<%-- 		</sec:authorize> --%>
+		</sec:authorize>
 	</body>
 </html>
