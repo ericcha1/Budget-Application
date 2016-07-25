@@ -5,16 +5,33 @@ import java.util.List;
 import com.budgetapplication.model.User;
  
 /*
- * Defines DAO operations for the User model.
- *
+ * Declares DAO operations for the User model
+ * through an interface.
  */
-public interface UserDAO {
+public interface UserDAO 
+{
+	/**
+	 * 
+	 * @param user
+	 */
+    public void saveOrUpdate(User user);
      
-    public void saveOrUpdate(User User);
+    /**
+     * 
+     * @param userId
+     */
+    public void delete(int userId);
+    
+    /**
+     * 
+     * @param userId
+     * @return
+     */
+    public User get(int userId);
      
-    public void delete(int UserId);
-     
-    public User get(int UserId);
-     
+    /**
+     * 
+     * @return
+     */
     public List<User> list();
 }

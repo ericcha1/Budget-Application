@@ -1,15 +1,15 @@
 $(document).ready(function()
 { 
 	//call function  
-	fillUserTable();
-	$("#userTable").tablesorter();
+	fillBudgetTable();
+	$("#budgetTable").tablesorter();
 }); 
 
-function fillUserTable()
+function fillBudgetTable()
 {	
 	//ajax call
 	$.ajax({
-		url: '/BudgetApplication/users', //see URL in UserController.java
+		url: '/BudgetApplication/entries', //see URL in UserController.java
 		type: 'GET',
 		dataType : 'json',
 		success: function (response)
@@ -17,17 +17,16 @@ function fillUserTable()
 			console.log(response);
 			var html = ''; //stores the string to be returned
 			
-			//append fields for each user in the table
+			//append fields for each entry in the table
 			$.each(response, function (key, val)
 			{
 				html += '<tr><td>' + val.id + '</td><td>' + val.username 
-				+ '</td><td>' + val.password + '</td><td>' + val.name
-				+ '</td><td>' + val.role + '</td><td>' + val.enabled + "</td></tr>";
+				+ '</td><td>' + val.category + '</td><td>' + val.amount + "</td></tr>";
 			});
 			
 			//clear table body, then update
-			$('#userTable tbody').empty().append(html);
-			$('#userTable').trigger('update');
+			$('#budgetTable tbody').empty().append(html);
+			$('#budgetTable').trigger('update');
 		},
 		error: function(error){
 	        console.log(error);

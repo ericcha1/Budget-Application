@@ -2,16 +2,16 @@ package com.budgetapplication.model;
 
 /*
  * User model which contains basic user information.
- *
  */
 public class User 
 {
+	//user attributes
     private int id;
     private String username;
     private String password;
-    private String name;
-    private String role;
-    private boolean enabled;
+    private String name; //real name
+    private String role; //used for access
+    private boolean enabled; //whether account is active
  
     //default constructor
     public User() 
@@ -19,7 +19,7 @@ public class User
     	//empty
     }
  
-    //constructor with parameters
+    //constructor with parameters, defaults enabled to true
     public User(int id, String username, String password, String name, String role) 
     {
     	this.id = id;
@@ -30,6 +30,7 @@ public class User
         this.enabled = true;
     }
     
+    //constructor with parameters, allows for enabled to be set explicitly
     public User(int id, String username, String password, String name, String role, boolean enabled) 
     {
     	this.id = id;

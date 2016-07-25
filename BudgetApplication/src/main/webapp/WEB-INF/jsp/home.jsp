@@ -16,6 +16,7 @@
 			<h1>Home</h1>
 			<h2>Welcome User</h2>
 			<h3><a href="allUsers">Users</a></h3>
+			<h3><a href="budget">Budget Entries</a></h3>
 			<h3><a href="<c:url value="/j_spring_security_logout" />" > Logout</a></h3>
 		</sec:authorize>
 	</body>

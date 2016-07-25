@@ -3,43 +3,23 @@ package com.budgetapplication.daoimpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
- 
 import javax.sql.DataSource;
-
 import com.budgetapplication.dao.*;
 import com.budgetapplication.model.*;
- 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
  
 /**
  * An implementation of the UserDAO interface.
  * Allows for modification, insertion, or deletion
  * of users in the table.
- *
  */
 public class UserDAOImpl implements UserDAO 
 {
  
     private JdbcTemplate jdbcTemplate;
- 
-    /*
-    public UserDAOImpl() 
-    {
-    	DataSource dataSource = (DataSource) context.getBean("dataSource");
-        jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-    */
-    
-//    public void setTemplate(DataSource dataSource) 
-//    {  
-//        jdbcTemplate = new JdbcTemplate(dataSource);  
-//    }  
     
     //constructor, initializes jdbcTemplate
     public UserDAOImpl(DataSource dataSource) 
@@ -55,7 +35,7 @@ public class UserDAOImpl implements UserDAO
     	{
             // update
             String sql = "UPDATE user_table SET username=?, password=?, name=?, "
-                        + "role=?, enabled=? WHERE id=?";
+                        + "role=?, enabled=? WHERE id=?"; //id or username?
             jdbcTemplate.update(sql, user.getUsername(), user.getPassword(),
                     user.getName(), user.getRole(), user.getId());
         } 
@@ -65,7 +45,7 @@ public class UserDAOImpl implements UserDAO
             String sql = "INSERT INTO user_table (username, password, name, role, enabled)"
                         + " VALUES (?, ?, ?, ?, ?)";
             jdbcTemplate.update(sql, user.getUsername(),
-                    user.getPassword(), user.getName(), user.getName());
+                    user.getPassword(), user.getName(), user.getRole(), user.getEnabled());
         }
     }
  
