@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,28 +23,34 @@ import com.budgetapplication.model.BudgetEntry;
 @Controller 
 public class BudgetController 
 {
-	@Autowired (required=false)
+	@Autowired
     private BudgetEntryDAO budgetEntryDAO;
 	
 	//goes to a view that displays a table with all of the budget entries
 	@RequestMapping(value="/budget")
 	public ModelAndView listBudget(ModelAndView model) throws IOException
 	{
+		//store the username of the user currently signed in
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		
 		//calls the list() function in the DAO implementation
-	    List<BudgetEntry> budgetList = budgetEntryDAO.list();
+	    List<BudgetEntry> budgetList = budgetEntryDAO.list(currentUser);
 	    model.addObject("budgetList", budgetList);
 	    model.setViewName("budget");
 	 
 	    return model;
 	}
-	
+
 	//URL for the xml form of the data, needed for ajax call
 	@RequestMapping(value="/entries", method = RequestMethod.GET)
 	@ResponseBody
 	public List<BudgetEntry> getList() throws IOException
 	{
+		//store the username of the user currently signed in
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		
 		//calls the list() function in the DAO implementation
-	    List<BudgetEntry> budgetList = budgetEntryDAO.list();
+	    List<BudgetEntry> budgetList = budgetEntryDAO.list(currentUser);
 	    
 	    return budgetList;
 	}
@@ -61,7 +69,7 @@ public class BudgetController
 	@RequestMapping(value = "/saveEntry", method = RequestMethod.POST)
 	public ModelAndView saveBudgetEntry(@ModelAttribute BudgetEntry entry) 
 	{
-	    budgetEntryDAO.saveOrUpdate(entry);
+	    budgetEntryDAO.insertOrUpdate(entry);
 	    return new ModelAndView("redirect:/");
 	}
 	

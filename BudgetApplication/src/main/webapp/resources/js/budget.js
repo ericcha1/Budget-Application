@@ -9,7 +9,7 @@ function fillBudgetTable()
 {	
 	//ajax call
 	$.ajax({
-		url: '/BudgetApplication/entries', //see URL in UserController.java
+		url: '/BudgetApplication/entries', //see URL in BudgetController.java
 		type: 'GET',
 		dataType : 'json',
 		success: function (response)

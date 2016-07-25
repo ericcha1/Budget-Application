@@ -29,7 +29,7 @@ public class UserDAOImpl implements UserDAO
  
     //update user information, or create new user if it doesn't exist
     @Override
-    public void saveOrUpdate(User user) 
+    public void insertOrUpdate(User user) 
     {
     	if (user.getId() > 0) 
     	{

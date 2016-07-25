@@ -29,7 +29,7 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
  
     //update entry information, or create new entry if it doesn't exist
     @Override
-    public void saveOrUpdate(BudgetEntry entry) 
+    public void insertOrUpdate(BudgetEntry entry) 
     {
     	if (entry.getId() > 0) 
     	{
@@ -62,6 +62,32 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
     public List<BudgetEntry> list() 
     {
     	String sql = "SELECT * FROM budget_table";
+
+        List<BudgetEntry> entryList = jdbcTemplate.query(sql, new RowMapper<BudgetEntry>() 
+        {
+        	@Override
+            public BudgetEntry mapRow(ResultSet rs, int rowNum) throws SQLException 
+            {
+                BudgetEntry entry = new BudgetEntry();
+     
+                entry.setId(rs.getInt("id"));
+                entry.setUsername(rs.getString("username"));
+                entry.setCategory(rs.getString("category"));
+                entry.setAmount(rs.getDouble("amount"));
+     
+                return entry;
+            }
+        });
+     
+        return entryList;
+    }
+    
+    //returns a list of all the entries corresponding to a certain username
+    @Override
+    public List<BudgetEntry> list(String currentUsername) 
+    {
+    	//append the username to the query
+    	String sql = "SELECT * FROM budget_table WHERE username=\"" + currentUsername + "\"";
 
         List<BudgetEntry> entryList = jdbcTemplate.query(sql, new RowMapper<BudgetEntry>() 
         {

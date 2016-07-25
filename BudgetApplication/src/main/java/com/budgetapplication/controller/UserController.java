@@ -21,7 +21,7 @@ import com.budgetapplication.model.User;
 @Controller 
 public class UserController 
 {
-	@Autowired (required=false)
+	@Autowired
     private UserDAO userDAO;
 	
 	//returns a view that contains a table of all of the users and account information
@@ -61,7 +61,7 @@ public class UserController
 	@RequestMapping(value = "/saveUser", method = RequestMethod.POST)
 	public ModelAndView saveUser(@ModelAttribute User user) 
 	{
-	    userDAO.saveOrUpdate(user);
+	    userDAO.insertOrUpdate(user);
 	    return new ModelAndView("redirect:/");
 	}
 	
