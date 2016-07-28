@@ -16,12 +16,17 @@
 		<sec:authorize access="hasRole('ROLE_USER')">
 			<h1>User Table</h1>
 <!-- 			<h3><a href="/newContact">New Contact</a></h3> -->
-			 <form>
-			 	Username: <input type="text" name="UsernameField" value="ericcha"/>
-			 	Category: <input type="text" name="CategoryField" value="Food"/>
-			 	Amount: <input type="number" name="AmountField" value="20"/>
-			 </form>
-
+			<form>
+			 	Username: <input type="text" name="usernameField" value="ericcha"/>
+			 	Category: <input type="text" name="categoryField" value="Water"/>
+			 	Amount: <input type="number" name="amountField" value="10"/>
+			</form>
+			<div class="buttons">
+				<button type="button" id="add" onclick="addEntry()">Add</button>
+				<button type="button" id="delete" onclick="deleteEntry()">Delete</button>
+				<button type="button" id="edit" onclick="editEntry()">Modify</button>
+			</div>
+			<br>
 			<table id="budgetTable" cellspacing="0" style="width:50%" align="center" class="tablesorter">
 				<thead>
 					<tr>

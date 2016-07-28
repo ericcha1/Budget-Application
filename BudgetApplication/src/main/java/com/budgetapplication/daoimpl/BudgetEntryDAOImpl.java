@@ -34,7 +34,7 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
     	if (entry.getId() > 0) 
     	{
             //update
-            String sql = "UPDATE budget_table SET username=?, category=?, amount=?, "
+            String sql = "UPDATE budget_table SET username=?, category=?, amount=? "
                         + "WHERE id=?";
             jdbcTemplate.update(sql, entry.getUsername(), entry.getCategory(),
                     entry.getAmount(), entry.getId());
@@ -42,10 +42,10 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
     	else 
     	{
             //insert
-            String sql = "INSERT INTO budget_table (username, category, amount, id)"
-                        + " VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO budget_table (username, category, amount)"
+                        + " VALUES (?, ?, ?)";
             jdbcTemplate.update(sql, entry.getUsername(), entry.getCategory(),
-                    entry.getAmount(), entry.getId());
+                    entry.getAmount());
         }
     }
  

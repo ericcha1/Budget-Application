@@ -1,18 +1,26 @@
+var currentId = 0;	
+
 $(document).ready(function()
 { 
+	//clicking a row will fill the fields above the table with the row's information
     $("#budgetTable").delegate("tr.rows", "click", function()
     {
-    	var bUsername = $("td.budgetUsername",this).html();
-    	var bCategory = $("td.budgetCategory",this).html();
-    	var bAmount = $("td.budgetAmount",this).html();
+    	//store the row's information
+    	var bUsername = $("td.budgetUsername", this).html();
+    	var bCategory = $("td.budgetCategory", this).html();
+    	var bAmount = $("td.budgetAmount", this).html();
     	
-    	document.getElementsByName("UsernameField")[0].value = bUsername;
-    	document.getElementsByName("CategoryField")[0].value = bCategory;
-    	document.getElementsByName("AmountField")[0].value = bAmount;
+    	//set the fields to the row's data
+    	document.getElementsByName("usernameField")[0].value = bUsername;
+    	document.getElementsByName("categoryField")[0].value = bCategory;
+    	document.getElementsByName("amountField")[0].value = bAmount;
+    	currentId = $("td.budgetId", this).html();
     	
+    	//scroll to top
     	window.scrollTo(0,0);
     });
-	//call function  
+
+	//fill table and apply tablesorter
 	fillBudgetTable();
 	$("#budgetTable").tablesorter();
 
@@ -49,13 +57,68 @@ function fillBudgetTable()
 	});
 }
 
-//function autoFill()
-//{
-//	var bUsername = $("td.budgetUsername",this).html();
-//	var bCategory = $("td.budgetCategory",this).html();
-//	var bAmount = $("td.budgetAmount",this).html();
-//	
-//	document.getElementsByName("UsernameField")[0].value = bUsername;
-//	document.getElementsByName("CategoryField")[0].value = bCategory;
-//	document.getElementsByName("AmountField")[0].value = bAmount;
-//}
+function addEntry()
+{
+	//store the elements that were filled in
+	var bUsername = document.getElementsByName("usernameField")[0].value;
+	var bCategory = document.getElementsByName("categoryField")[0].value;
+	var bAmount = document.getElementsByName("amountField")[0].value;
+
+    $.ajax({
+    	url: "/BudgetApplication/saveEntry",
+        type:"POST",
+        data: {username: bUsername, category: bCategory, amount: bAmount},
+        success:function(data)
+        {
+        	//refill the table
+        	fillBudgetTable();
+		},
+		error: function(error)
+		{
+	        console.log(error);
+		}
+    });
+}
+
+function deleteEntry()
+{
+    $.ajax({
+    	url: "/BudgetApplication/deleteEntry",
+        type: "POST",
+        //currentId is the id of the row that was last clicked
+        data: {id: currentId},
+        success:function(data)
+        {
+        	//refill table
+        	fillBudgetTable();
+		},
+		error: function(error)
+		{
+	        console.log(error);
+		}
+    });
+}
+
+function editEntry()
+{
+	//store the elements that were filled in
+	var bUsername = document.getElementsByName("usernameField")[0].value;
+	var bCategory = document.getElementsByName("categoryField")[0].value;
+	var bAmount = document.getElementsByName("amountField")[0].value;
+	
+    $.ajax({
+    	url: "/BudgetApplication/editEntry",
+        type: "GET",
+        //currentId is the id of the row that was last clicked
+        data: {id: currentId, username: bUsername, category: bCategory, amount: bAmount},
+        success:function(data)
+        {
+        	//refill table
+        	fillBudgetTable();
+		},
+		error: function(error)
+		{
+	        console.log(error);
+		}
+    });
+}

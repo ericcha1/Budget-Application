@@ -73,11 +73,11 @@ public class BudgetController
 	}
 	
 	//delete an entry from the table
-	@RequestMapping(value = "/deleteEntry", method = RequestMethod.GET)
-	public ModelAndView deleteBudgetEntry(HttpServletRequest request) 
+	@RequestMapping(value = "/deleteEntry", method = RequestMethod.POST)
+	public ModelAndView deleteBudgetEntry(HttpServletRequest request)
 	{
-	    int budgetId = Integer.parseInt(request.getParameter("id"));
-	    budgetEntryDAO.delete(budgetId);
+	    int entryId = Integer.parseInt(request.getParameter("id"));
+	    budgetEntryDAO.delete(entryId);
 	    return new ModelAndView("redirect:/");
 	}
 	
@@ -85,11 +85,22 @@ public class BudgetController
 	@RequestMapping(value = "/editEntry", method = RequestMethod.GET)
 	public ModelAndView editBudgetEntry(HttpServletRequest request) 
 	{
+		//retrieve the existing entry for the given id
 	    int entryId = Integer.parseInt(request.getParameter("id"));
 	    BudgetEntry entry = budgetEntryDAO.get(entryId);
-	    ModelAndView model = new ModelAndView("BudgetForm");
-	    model.addObject("entry", entry);
-	 
-	    return model;
+	    
+	    //modify the variables for the entry
+	    entry.setUsername(request.getParameter("username"));
+	    entry.setAmount(Integer.parseInt(request.getParameter("amount")));
+	    entry.setCategory(request.getParameter("category"));
+	    
+	    //ModelAndView model = new ModelAndView("BudgetForm");
+	    //model.addObject("entry", entry);
+	    
+	    //update entry
+	    budgetEntryDAO.insertOrUpdate(entry);
+	    return new ModelAndView("redirect:/");
+	    
+	    //return model;
 	}
 }
