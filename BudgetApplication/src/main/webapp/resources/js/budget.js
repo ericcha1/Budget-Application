@@ -1,23 +1,47 @@
 var currentId = 0;	
 
 $(document).ready(function()
-{ 
+{
+	//setting default availability of buttons
+	var addButton = document.getElementById("add");
+	var delButton = document.getElementById("delete");
+	var modButton = document.getElementById("edit");
+	addButton.disabled = false;
+	delButton.disabled = true;
+	modButton.disabled = true;
+	
 	//clicking a row will fill the fields above the table with the row's information
     $("#budgetTable").delegate("tr.rows", "click", function()
     {
+    	//disable add and enable delete/modify
+    	addButton.disabled = true;
+    	delButton.disabled = false;
+    	modButton.disabled = false;
+    	
     	//store the row's information
     	var bUsername = $("td.budgetUsername", this).html();
     	var bCategory = $("td.budgetCategory", this).html();
     	var bAmount = $("td.budgetAmount", this).html();
+    	currentId = $("td.budgetId", this).html();
     	
     	//set the fields to the row's data
     	document.getElementsByName("usernameField")[0].value = bUsername;
     	document.getElementsByName("categoryField")[0].value = bCategory;
     	document.getElementsByName("amountField")[0].value = bAmount;
-    	currentId = $("td.budgetId", this).html();
     	
     	//scroll to top
     	window.scrollTo(0,0);
+    });
+    
+    $("#clear").click(function()
+    {
+    	clearForm();
+    	
+    	//reset defaults
+    	addButton.disabled = false;
+    	delButton.disabled = true;
+    	modButton.disabled = true;
+    	currentId = 0;
     });
 
 	//fill table and apply tablesorter
@@ -60,14 +84,14 @@ function fillBudgetTable()
 function addEntry()
 {
 	//store the elements that were filled in
-	var bUsername = document.getElementsByName("usernameField")[0].value;
-	var bCategory = document.getElementsByName("categoryField")[0].value;
-	var bAmount = document.getElementsByName("amountField")[0].value;
-
+	var username = document.getElementsByName("usernameField")[0].value;
+	var category = document.getElementsByName("categoryField")[0].value;
+	var amount = document.getElementsByName("amountField")[0].value;
+	
     $.ajax({
     	url: "/BudgetApplication/saveEntry",
         type:"POST",
-        data: {username: bUsername, category: bCategory, amount: bAmount},
+        data: {username: username, category: category, amount: amount},
         success:function(data)
         {
         	//refill the table
@@ -102,15 +126,15 @@ function deleteEntry()
 function editEntry()
 {
 	//store the elements that were filled in
-	var bUsername = document.getElementsByName("usernameField")[0].value;
-	var bCategory = document.getElementsByName("categoryField")[0].value;
-	var bAmount = document.getElementsByName("amountField")[0].value;
+	var username = document.getElementsByName("usernameField")[0].value;
+	var category = document.getElementsByName("categoryField")[0].value;
+	var amount = document.getElementsByName("amountField")[0].value;
 	
     $.ajax({
     	url: "/BudgetApplication/editEntry",
         type: "GET",
         //currentId is the id of the row that was last clicked
-        data: {id: currentId, username: bUsername, category: bCategory, amount: bAmount},
+        data: {id: currentId, username: username, category: category, amount: amount},
         success:function(data)
         {
         	//refill table
@@ -121,4 +145,15 @@ function editEntry()
 	        console.log(error);
 		}
     });
+}
+
+function clearForm()
+{
+	//reset id
+	currentId = 0;
+	
+	//empty all fields
+	document.getElementsByName("usernameField")[0].value = "";
+	document.getElementsByName("categoryField")[0].value = "";
+	document.getElementsByName("amountField")[0].value = "";
 }
