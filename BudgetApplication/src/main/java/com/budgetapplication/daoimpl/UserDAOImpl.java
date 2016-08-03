@@ -83,6 +83,34 @@ public class UserDAOImpl implements UserDAO
      
         return userList;
     }
+    
+    //returns a list of all the users corresponding to a certain username (should be one user)
+    @Override
+    public List<User> list(String currentUsername) 
+    {
+    	//append the username to the query
+    	String sql = "SELECT * FROM user_table WHERE username=\"" + currentUsername + "\"";
+
+        List<User> userList = jdbcTemplate.query(sql, new RowMapper<User>() 
+        {
+        	@Override
+            public User mapRow(ResultSet rs, int rowNum) throws SQLException 
+            {
+                User user = new User();
+                
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setName(rs.getString("name"));
+                user.setRole(rs.getString("role"));
+                user.setEnabled(rs.getBoolean("enabled"));
+     
+                return user;
+            }
+        });
+     
+        return userList;
+    }
  
     //search for a user by id
     @Override
@@ -111,5 +139,33 @@ public class UserDAOImpl implements UserDAO
             }
         });
     }
- 
+
+    //Returns a list of all users with usernames like the given string.
+	@Override
+	public List<User> listSearch(String search) 
+	{
+		//append the username to the query
+		String sql = "SELECT * FROM user_table WHERE username "
+				+ "LIKE '%" + search + "%'";
+	
+	    List<User> userList = jdbcTemplate.query(sql, new RowMapper<User>() 
+	    {
+	    	@Override
+	        public User mapRow(ResultSet rs, int rowNum) throws SQLException 
+	        {
+	            User user = new User();
+	            
+	            user.setId(rs.getInt("id"));
+	            user.setUsername(rs.getString("username"));
+	            user.setPassword(rs.getString("password"));
+	            user.setName(rs.getString("name"));
+	            user.setRole(rs.getString("role"));
+	            user.setEnabled(rs.getBoolean("enabled"));
+	 
+	            return user;
+	        }
+	    });
+	 
+	    return userList;
+	}
 }

@@ -108,9 +108,6 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
         return entryList;
     }
  
-    /**
-     * 
-     */
     @Override
     public BudgetEntry get(int entryId) 
     {

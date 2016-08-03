@@ -1,3 +1,48 @@
+ul 
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+	border: 1px solid #e7e7e7;
+}
+
+li 
+{
+    float: left;
+    border-right: 1px solid #e7e7e7;
+}
+
+li:last-child 
+{
+    border-right: none;
+}
+
+li a 
+{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 12px 14px;
+    text-decoration: none;
+    background-color: #444;
+    font-size: 110%;
+}
+
+li a:hover
+{
+    background-color: orange;
+}
+
+li a:active 
+{ 
+    background-color: white;
+}
+
+li.selected a
+{ 
+    background-color: black;
+}
+
 body
 {
 	background-color: rgb(38, 38, 38);
@@ -40,9 +85,4 @@ form
 {
 	text-align: center;
 	color: white;
-}
-
-button
-{
-	text-align: center;
 }

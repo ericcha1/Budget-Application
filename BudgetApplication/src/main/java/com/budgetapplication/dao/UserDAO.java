@@ -1,7 +1,8 @@
 package com.budgetapplication.dao;
 
 import java.util.List;
- 
+
+import com.budgetapplication.model.BudgetEntry;
 import com.budgetapplication.model.User;
  
 /*
@@ -36,4 +37,20 @@ public interface UserDAO
      * @return List<User>
      */
     public List<User> list();
+    
+    /**
+     * Returns a list of all users corresponding to a
+     * username. This should only return one user.
+     * @param currentUsername
+     * @return List<User>
+     */
+	public List<User> list(String currentUsername);
+	
+    /**
+     * Returns a list of all users with usernames like
+     * the given string.
+     * @param search
+     * @return List<User>
+     */
+	public List<User> listSearch(String search);
 }

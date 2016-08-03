@@ -1,5 +1,5 @@
 package com.budgetapplication.config;
- 
+
 import javax.sql.DataSource;
 import com.budgetapplication.dao.*;
 import com.budgetapplication.daoimpl.*;

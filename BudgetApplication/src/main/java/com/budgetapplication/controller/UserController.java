@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,24 +26,49 @@ public class UserController
     private UserDAO userDAO;
 	
 	//returns a view that contains a table of all of the users and account information
-	@RequestMapping(value="/allUsers")
+	@RequestMapping(value="/user")
 	public ModelAndView listUser(ModelAndView model) throws IOException
 	{
 		//calls the list() function in the DAO implementation
 	    List<User> userList = userDAO.list();
 	    model.addObject("userList", userList);
-	    model.setViewName("allUsers");
+	    model.setViewName("user");
 	 
 	    return model;
 	}
 	
 	//displays the entries of the user table in xml format, needed for the ajax call
-	@RequestMapping(value="/users", method = RequestMethod.GET)
+	@RequestMapping(value="/currentData", method = RequestMethod.GET)
+	@ResponseBody
+	public List<User> getCurrentUser() throws IOException
+	{
+		//store the username of the user currently signed in
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();		
+		
+		//calls the list() function in the DAO implementation
+	    List<User> userList = userDAO.list(currentUser);
+	    
+	    return userList;
+	}
+	
+	//displays the entries of the user table in xml format, needed for the ajax call
+	@RequestMapping(value="/userData", method = RequestMethod.GET)
 	@ResponseBody
 	public List<User> getList() throws IOException
 	{
 		//calls the list() function in the DAO implementation
 	    List<User> userList = userDAO.list();
+	    
+	    return userList;
+	}
+	
+	//returns a list of users with similar usernames to the one searched, needed for the ajax call
+	@RequestMapping(value="/userSearch", method = RequestMethod.GET)
+	@ResponseBody
+	public List<User> search(HttpServletRequest request) throws IOException
+	{	
+		//calls the listSearch() function with the parameter from the request
+	    List<User> userList = userDAO.listSearch(request.getParameter("search"));
 	    
 	    return userList;
 	}

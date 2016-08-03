@@ -60,9 +60,28 @@ h2
 	text-align: center;
 }
 
-
 h3
 {
 	color: white;
 	text-align:center;
+}
+
+th
+{
+	color: white;
+}
+
+td
+{
+	color: white;
+}
+
+table, th, td {
+	text-align: left;
+    border: 1px solid white;
+}
+
+form
+{
+	text-align: center;
 }

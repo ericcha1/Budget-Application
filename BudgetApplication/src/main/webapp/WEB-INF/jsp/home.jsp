@@ -12,12 +12,19 @@
 	</head>
 
 	<body>
-<%-- 		<sec:authorize access="hasRole('ROLE_USER')"> --%>
+		<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
 			<h1>Home</h1>
 			<h2>Welcome User</h2>
-			<h3><a href="allUsers">Users</a></h3>
-			<h3><a href="budget">Budget Entries</a></h3>
-			<h3><a href="<c:url value="/j_spring_security_logout" />" > Logout</a></h3>
+			
+			<ul id="navBar">
+				<li class="selected"><a href="home" class="active">Home</a></li>
+				<li><a href="user" class="active">Profile</a></li>
+				<li><a href="budget" class="active">Budget</a></li>
+				<li><a href="help" class="active">Help</a></li>
+				<li><a href="about" class="active">About</a></li>
+				<li><a>Logged in as <sec:authentication property="principal.username" /></a>
+				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>
+			</ul>
 
 <%-- 			<c:url value="/j_spring_security_logout" var="logoutUrl" /> --%>
 			
@@ -40,6 +47,6 @@
 <!-- 					</h3> -->
 <%-- 				</c:if> --%>
 
-<%-- 		</sec:authorize> --%>
+		</sec:authorize>
 	</body>
 </html>

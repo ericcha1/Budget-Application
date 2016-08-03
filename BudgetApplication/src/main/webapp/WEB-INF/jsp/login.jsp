@@ -38,7 +38,7 @@
 				</table>
 				<br><input name="submit" type="submit" value="submit" />
 				<br><br>
-				<a href="help">Forgot username or password?</a>
+				<a href="loginHelp">Forgot username or password?</a>
 <%-- 			  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
 	
 			</form>
