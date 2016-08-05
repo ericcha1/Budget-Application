@@ -20,9 +20,9 @@ function loadUser()
 			//append fields for each entry in the table
 			$.each(response, function (key, val)
 			{
-				html += '<tr><td>' + val.id + '</td><td>' + val.username 
-				+ '</td><td>' + val.password + '</td><td>' + val.name
-				+ '</td><td>' + val.role + '</td><td>' + val.enabled + "</td></tr>";
+				html += '<tr><td>' + val.username + '</td><td>'
+				+ val.password + '</td><td>' + val.name + '</td><td>' 
+				+ val.role + '</td><td>' + val.enabled + '</td></tr>';
 			});
 			
 			//clear table body, then update
@@ -50,9 +50,9 @@ function fillUserTable()
 			//append fields for each user in the table
 			$.each(response, function (key, val)
 			{
-				html += '<tr><td>' + val.id + '</td><td>' + val.username 
-				+ '</td><td>' + val.password + '</td><td>' + val.name
-				+ '</td><td>' + val.role + '</td><td>' + val.enabled + "</td></tr>";
+				html += '<tr><td>' + val.username + '</td><td>'
+				+ val.password + '</td><td>' + val.name + '</td><td>' 
+				+ val.role + '</td><td>' + val.enabled + '</td></tr>';
 			});
 			
 			//clear table body, then update
@@ -82,9 +82,9 @@ function searchUser()
 			//append fields for each user in the table
 			$.each(response, function (key, val)
 			{
-				html += '<tr><td>' + val.id + '</td><td>' + val.username 
-				+ '</td><td>' + val.password + '</td><td>' + val.name
-				+ '</td><td>' + val.role + '</td><td>' + val.enabled + "</td></tr>";
+				html += '<tr><td>' + val.username + '</td><td>'
+				+ val.password + '</td><td>' + val.name + '</td><td>' 
+				+ val.role + '</td><td>' + val.enabled + '</td></tr>';
 			});
 			
 			//clear table body, then update

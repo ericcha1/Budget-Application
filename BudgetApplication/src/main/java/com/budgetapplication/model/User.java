@@ -6,7 +6,6 @@ package com.budgetapplication.model;
 public class User 
 {
 	//user attributes
-    private int id;
     private String username;
     private String password;
     private String name; //real name
@@ -20,9 +19,8 @@ public class User
     }
  
     //constructor with parameters, defaults enabled to true
-    public User(int id, String username, String password, String name, String role) 
+    public User(String username, String password, String name, String role) 
     {
-    	this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
@@ -31,9 +29,8 @@ public class User
     }
     
     //constructor with parameters, allows for enabled to be set explicitly
-    public User(int id, String username, String password, String name, String role, boolean enabled) 
+    public User(String username, String password, String name, String role, boolean enabled) 
     {
-    	this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
@@ -42,16 +39,6 @@ public class User
     }
  
     //getters and setters
-    public void setId(int userId)
-    {
-    	id = userId;
-    }
-    
-    public int getId()
-    {
-    	return id;
-    }
-    
     public void setUsername(String userUsername)
     {
     	username = userUsername;
@@ -92,9 +79,9 @@ public class User
     	return role;
     }
     
-    public void setEnabled(boolean userEnable)
+    public void setEnabled(boolean userEnabled)
     {
-    	enabled = userEnable;
+    	enabled = userEnabled;
     }
     
     public boolean getEnabled()

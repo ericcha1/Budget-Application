@@ -1,3 +1,9 @@
+li.dropdown a
+{ 
+    background-color: black;
+}
+
+
 body
 {
 	background-color: rgb(38, 38, 38);
@@ -39,4 +45,5 @@ table, th, td {
 form
 {
 	text-align: center;
+	color: white;
 }

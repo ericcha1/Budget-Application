@@ -54,16 +54,6 @@ public class BudgetController
 	    return budgetList;
 	}
 	
-	//add a row or BudgetEntry to the budget table
-	@RequestMapping(value = "/newBudgetEntry", method = RequestMethod.GET)
-	public ModelAndView newBudgetEntry(ModelAndView model) 
-	{
-	    BudgetEntry entry = new BudgetEntry();
-	    model.addObject("entry", entry);
-	    model.setViewName("BudgetForm");
-	    return model;
-	}
-	
 	//save changes to an entry
 	@RequestMapping(value = "/saveEntry", method = RequestMethod.POST)
 	public ModelAndView saveBudgetEntry(@ModelAttribute BudgetEntry entry) 

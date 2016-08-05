@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.budgetapplication.dao.UserDAO;
+import com.budgetapplication.model.BudgetEntry;
 import com.budgetapplication.model.User;
 
 /*
@@ -25,7 +26,7 @@ public class UserController
 	@Autowired
     private UserDAO userDAO;
 	
-	//returns a view that contains a table of all of the users and account information
+	//returns a view that contains a table of the current user
 	@RequestMapping(value="/user")
 	public ModelAndView listUser(ModelAndView model) throws IOException
 	{
@@ -33,6 +34,18 @@ public class UserController
 	    List<User> userList = userDAO.list();
 	    model.addObject("userList", userList);
 	    model.setViewName("user");
+	 
+	    return model;
+	}
+	
+	//returns a view that contains a table of all of the users and account information
+	@RequestMapping(value="/modifyUser")
+	public ModelAndView listAllUsers(ModelAndView model) throws IOException
+	{
+		//calls the list() function in the DAO implementation
+	    List<User> userList = userDAO.list();
+	    model.addObject("userList", userList);
+	    model.setViewName("modifyUser");
 	 
 	    return model;
 	}
@@ -72,43 +85,40 @@ public class UserController
 	    
 	    return userList;
 	}
-	
-	//add a row or BudgetEntry to the budget table
-	@RequestMapping(value = "/newUser", method = RequestMethod.GET)
-	public ModelAndView newUser(ModelAndView model) 
+
+	//add a user
+	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
+	public ModelAndView saveBudgetEntry(@ModelAttribute User user) 
 	{
-	    User user = new User();
-	    model.addObject("user", user);
-	    model.setViewName("UserForm");
-	    return model;
-	}
-	
-	//save changes to an user
-	@RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-	public ModelAndView saveUser(@ModelAttribute User user) 
-	{
-	    userDAO.insertOrUpdate(user);
+	    userDAO.insert(user);
 	    return new ModelAndView("redirect:/");
 	}
 	
 	//delete a user from the table
-	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
-	public ModelAndView deleteUser(HttpServletRequest request) 
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+	public ModelAndView deleteUser(HttpServletRequest request)
 	{
-	    int userId = Integer.parseInt(request.getParameter("id"));
-	    userDAO.delete(userId);
+	    String username = request.getParameter("username");
+	    userDAO.delete(username);
 	    return new ModelAndView("redirect:/");
 	}
 	
-	//edit an existing entry in the table
+	//edit an existing user in the table
 	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
-	public ModelAndView editUser(HttpServletRequest request) 
+	public ModelAndView editUserUser(HttpServletRequest request) 
 	{
-	    int userId = Integer.parseInt(request.getParameter("id"));
-	    User user = userDAO.get(userId);
-	    ModelAndView model = new ModelAndView("UserForm");
-	    model.addObject("user", user);
-	 
-	    return model;
+		//retrieve the existing user for the given username
+		String username = request.getParameter("username");
+	    User user = userDAO.get(username);
+	    
+	    //modify the variables for the user
+	    user.setPassword(request.getParameter("password"));
+	    user.setName(request.getParameter("name"));
+	    user.setRole(request.getParameter("role"));
+	    user.setEnabled(Boolean.parseBoolean(request.getParameter("Enabled")));
+	    
+	    //update user
+	    userDAO.update(user);
+	    return new ModelAndView("redirect:/");
 	}
 }

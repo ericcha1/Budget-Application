@@ -27,34 +27,32 @@ public class UserDAOImpl implements UserDAO
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
  
-    //update user information, or create new user if it doesn't exist
+    //insert new user into table
     @Override
-    public void insertOrUpdate(User user) 
+    public void insert(User user) 
     {
-    	if (user.getId() > 0) 
-    	{
-            // update
-            String sql = "UPDATE user_table SET username=?, password=?, name=?, "
-                        + "role=?, enabled=? WHERE id=?"; //id or username?
-            jdbcTemplate.update(sql, user.getUsername(), user.getPassword(),
-                    user.getName(), user.getRole(), user.getId());
-        } 
-    	else 
-    	{
-            // insert
-            String sql = "INSERT INTO user_table (username, password, name, role, enabled)"
-                        + " VALUES (?, ?, ?, ?, ?)";
-            jdbcTemplate.update(sql, user.getUsername(),
-                    user.getPassword(), user.getName(), user.getRole(), user.getEnabled());
-        }
+        String sql = "INSERT INTO user_table (username, password, name, role, enabled)"
+                    + " VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, user.getUsername(),
+                user.getPassword(), user.getName(), user.getRole(), user.getEnabled());
+    }
+    
+    //update an existing user
+    public void update(User user)
+    {
+        // update
+        String sql = "UPDATE user_table SET password=?, name=?, role=?, " +
+        		"enabled=? WHERE username=?";
+        jdbcTemplate.update(sql, user.getPassword(), user.getName(), user.getRole(), 
+        		user.getEnabled(), user.getUsername()); //is username mutable?
     }
  
     //delete an existing user
     @Override
-    public void delete(int userId) 
+    public void delete(String username) 
     {
-    	String sql = "DELETE FROM user_table WHERE id=?";
-        jdbcTemplate.update(sql, userId);
+    	String sql = "DELETE FROM user_table WHERE username=?";
+        jdbcTemplate.update(sql, username);
     }
  
     //returns a list of all the users in the table
@@ -70,7 +68,6 @@ public class UserDAOImpl implements UserDAO
             {
                 User user = new User();
      
-                user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setName(rs.getString("name"));
@@ -98,7 +95,6 @@ public class UserDAOImpl implements UserDAO
             {
                 User user = new User();
                 
-                user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setName(rs.getString("name"));
@@ -112,11 +108,11 @@ public class UserDAOImpl implements UserDAO
         return userList;
     }
  
-    //search for a user by id
+    //search for a user by username
     @Override
-    public User get(int userId) 
+    public User get(String username) 
     {
-    	String sql = "SELECT * FROM user_table WHERE id=" + userId;
+    	String sql = "SELECT * FROM user_table WHERE username='" + username + "'";
         return jdbcTemplate.query(sql, new ResultSetExtractor<User>() 
         {
      
@@ -126,7 +122,6 @@ public class UserDAOImpl implements UserDAO
                 if (rs.next()) 
                 {
                     User user = new User();
-                    user.setId(rs.getInt("id"));
                     user.setUsername(rs.getString("username"));
                     user.setPassword(rs.getString("password"));
                     user.setName(rs.getString("name"));
@@ -155,7 +150,6 @@ public class UserDAOImpl implements UserDAO
 	        {
 	            User user = new User();
 	            
-	            user.setId(rs.getInt("id"));
 	            user.setUsername(rs.getString("username"));
 	            user.setPassword(rs.getString("password"));
 	            user.setName(rs.getString("name"));

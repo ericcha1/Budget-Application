@@ -13,24 +13,29 @@ import com.budgetapplication.model.User;
 public interface UserDAO 
 {
 	/**
-	 * Update an user's information, or insert a new user
-     * if it does not exist.
+	 * Insert a new user into the table.
 	 * @param user
 	 */
-    public void insertOrUpdate(User user);
+    public void insert(User user);
+    
+    /**
+	 * Update an existing new user into the table.
+	 * @param user
+	 */
+    public void update(User user);
      
     /**
      * Remove an user from the user table.
-     * @param userId
+     * @param username
      */
-    public void delete(int userId);
+    public void delete(String username);
     
     /**
-     * Get an user corresponding to a user's id.
+     * Get an user corresponding to a user's username.
      * @param userId
      * @return User
      */
-    public User get(int userId);
+    public User get(String username);
      
     /**
      * Returns a list of all users in the user table.
