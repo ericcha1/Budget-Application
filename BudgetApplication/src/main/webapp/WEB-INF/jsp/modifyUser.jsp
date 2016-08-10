@@ -16,29 +16,29 @@
 
 	<body>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			<h1>User Table</h1>
 			<ul id="navBar">
-				<li><a href="home" class="active">Home</a></li>
-				<li><a href="user" class="active">Profile</a></li>
-				<li><a href="budget" class="active">Budget</a></li>
-				<li><a href="help" class="active">Help</a></li>
-				<li><a href="about" class="active">About</a></li>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<li class="dropdown"><a href="javascript:void(0)" class="dropButton" onclick="showAdminMenu()">Admin</a>
+				<li><a href="home" class="active">Home</a></li><!-- 
+			 --><li><a href="user" class="active">Profile</a></li><!-- 
+			 --><li><a href="budget" class="active">Budget</a></li><!-- 
+			 --><li><a href="help" class="active">Help</a></li><!-- 
+			 --><li><a href="about" class="active">About</a></li><!-- 
+			 --><sec:authorize access="hasRole('ROLE_ADMIN')"><!--
+				 --><li class="dropdown"><a href="javascript:void(0)" class="dropButton" onclick="showAdminMenu()">Admin</a>
 				    <ul class="dropdown-content" id="adminMenu">
 				    	<li><a href="modifyUser">Modify User</a></li>
-				    </ul></li>
-				</sec:authorize>
-				<li class="userLogged">Logged in as <sec:authentication property="principal.username" />
+				    </ul></li></sec:authorize><!--
+			 --><li class="userLogged">Logged in as <sec:authentication property="principal.username" />
 				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>
 			</ul>
-			<br><br><br>
+			<br><br>
+			<h1>User Table</h1>
 			<form>
 			 	Username: <input type="text" name="usernameField" required/>
 			 	Password: <input type="text" name="passwordField" required/>
 			 	Name: <input type="text" name="nameField" required/>
 			 	Role: <input type="text" name="roleField" required/>
 			 	Enabled: <input type="text" name="enabledField" required/>
+			 	Email: <input type="text" name="emailField" required/>
 			 	<br><br>
 				<button type="submit" id="add" onclick="addUser()">Add</button>
 				<button type="submit" id="delete" onclick="deleteUser()">Delete</button>
@@ -53,6 +53,7 @@
 						<th>Name</th>
 						<th>Role</th>
 						<th>Enabled</th>
+						<th>Email</th>
 					</tr>
 				</thead>
 				

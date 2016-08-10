@@ -11,6 +11,7 @@ public class User
     private String name; //real name
     private String role; //used for access
     private boolean enabled; //whether account is active
+    private String email;
  
     //default constructor
     public User() 
@@ -19,23 +20,25 @@ public class User
     }
  
     //constructor with parameters, defaults enabled to true
-    public User(String username, String password, String name, String role) 
+    public User(String username, String password, String name, String role, String email) 
     {
         this.username = username;
         this.password = password;
         this.name = name;
         this.role = role;
         this.enabled = true;
+        this.email = email;
     }
     
     //constructor with parameters, allows for enabled to be set explicitly
-    public User(String username, String password, String name, String role, boolean enabled) 
+    public User(String username, String password, String name, String role, boolean enabled, String email) 
     {
         this.username = username;
         this.password = password;
         this.name = name;
         this.role = role;
         this.enabled = enabled;
+        this.email = email;
     }
  
     //getters and setters
@@ -89,4 +92,13 @@ public class User
     	return enabled;
     }
     
+    public void setEmail(String userEmail)
+    {
+    	email = userEmail;
+    }
+    
+    public String getEmail()
+    {
+    	return email;
+    }
 }

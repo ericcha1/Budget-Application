@@ -40,8 +40,15 @@ public interface BudgetEntryDAO
     /**
      * Returns a list of all entries corresponding to a
      * username.
-     * @param name
+     * @param username
      * @return List<BudgetEntry>
      */
-	public List<BudgetEntry> list(String name);
+	public List<BudgetEntry> list(String username);
+	
+	/**
+	 * Returns the total spendings of a user,
+	 * @param username
+	 * @return double
+	 */
+	public double getTotal(String username);
 }

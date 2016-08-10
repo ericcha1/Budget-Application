@@ -15,24 +15,24 @@
 
 	<body>
 		<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
-			<h1>Home</h1>
-			<h2>Welcome User</h2>
-			
 			<ul id="navBar">
-				<li class="selected"><a href="home" class="active">Home</a></li>
-				<li><a href="user" class="active">Profile</a></li>
-				<li><a href="budget" class="active">Budget</a></li>
-				<li><a href="help" class="active">Help</a></li>
-				<li><a href="about" class="active">About</a></li>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<li class="dropdown"><a href="javascript:void(0)" class="dropButton" onclick="showAdminMenu()">Admin</a>
+				<li class="selected"><a href="home" class="active">Home</a></li><!-- 
+			 --><li><a href="user" class="active">Profile</a></li><!-- 
+			 --><li><a href="budget" class="active">Budget</a></li><!-- 
+			 --><li><a href="help" class="active">Help</a></li><!-- 
+			 --><li><a href="about" class="active">About</a></li><!-- 
+			 --><sec:authorize access="hasRole('ROLE_ADMIN')"><!--
+				 --><li class="dropdown"><a href="javascript:void(0)" class="dropButton" onclick="showAdminMenu()">Admin</a>
 				    <ul class="dropdown-content" id="adminMenu">
 				    	<li><a href="modifyUser">Modify User</a></li>
-				    </ul></li>
-				</sec:authorize>
-				<li class="userLogged">Logged in as <sec:authentication property="principal.username" />
+				    </ul></li></sec:authorize><!--
+			 --><li class="userLogged">Logged in as <sec:authentication property="principal.username" />
 				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>
 			</ul>
+			
+			<br><br>
+			<h1>Home</h1>
+			<h2>Welcome User</h2>
 
 <%-- 			<c:url value="/j_spring_security_logout" var="logoutUrl" /> --%>
 			
@@ -54,7 +54,9 @@
 <!-- 						<a href="javascript:formSubmit()"> Logout</a> -->
 <!-- 					</h3> -->
 <%-- 				</c:if> --%>
-
+			<h3>
+				Total: ${total}
+			</h3>
 		</sec:authorize>
 	</body>
 </html>

@@ -1,6 +1,6 @@
 $(document).ready(function()
 { 
-	//call function  
+	//load only the current user 
 	loadUser();
 	$("#userTable").tablesorter();
 }); 
@@ -9,7 +9,7 @@ function loadUser()
 {
 	//ajax call
 	$.ajax({
-		url: '/BudgetApplication/currentData', //see URL in BudgetController.java
+		url: '/BudgetApplication/currentData', //see URL in UserController.java
 		type: 'GET',
 		dataType : 'json',
 		success: function (response)
@@ -22,7 +22,8 @@ function loadUser()
 			{
 				html += '<tr><td>' + val.username + '</td><td>'
 				+ val.password + '</td><td>' + val.name + '</td><td>' 
-				+ val.role + '</td><td>' + val.enabled + '</td></tr>';
+				+ val.role + '</td><td>' + val.enabled + '</td><td>'
+				+ val.email + '</td></tr>';
 			});
 			
 			//clear table body, then update
@@ -52,7 +53,8 @@ function fillUserTable()
 			{
 				html += '<tr><td>' + val.username + '</td><td>'
 				+ val.password + '</td><td>' + val.name + '</td><td>' 
-				+ val.role + '</td><td>' + val.enabled + '</td></tr>';
+				+ val.role + '</td><td>' + val.enabled + '</td><td>'
+				+ val.email + '</td></tr>';
 			});
 			
 			//clear table body, then update
@@ -84,7 +86,8 @@ function searchUser()
 			{
 				html += '<tr><td>' + val.username + '</td><td>'
 				+ val.password + '</td><td>' + val.name + '</td><td>' 
-				+ val.role + '</td><td>' + val.enabled + '</td></tr>';
+				+ val.role + '</td><td>' + val.enabled + '</td><td>'
+				+ val.email + '</td></tr>';
 			});
 			
 			//clear table body, then update

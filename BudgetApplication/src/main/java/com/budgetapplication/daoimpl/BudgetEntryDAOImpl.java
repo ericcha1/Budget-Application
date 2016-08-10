@@ -133,5 +133,21 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
             }
         });
     }
+    
+    @Override
+    public double getTotal(String username)
+    {
+    	double total = 0;
+
+    	//get list of entries for the user
+        List<BudgetEntry> entryList = list(username);
+        
+        for (int i = 0; i < entryList.size(); i++)
+        {
+        	total += entryList.get(i).getAmount();
+        }
+    	
+    	return total;
+    }
  
 }

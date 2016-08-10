@@ -31,10 +31,10 @@ public class UserDAOImpl implements UserDAO
     @Override
     public void insert(User user) 
     {
-        String sql = "INSERT INTO user_table (username, password, name, role, enabled)"
-                    + " VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, user.getUsername(),
-                user.getPassword(), user.getName(), user.getRole(), user.getEnabled());
+        String sql = "INSERT INTO user_table (username, password, name, role, enabled, email)"
+                    + " VALUES (?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), 
+        		user.getName(), user.getRole(), user.getEnabled(), user.getEmail());
     }
     
     //update an existing user
@@ -42,9 +42,10 @@ public class UserDAOImpl implements UserDAO
     {
         // update
         String sql = "UPDATE user_table SET password=?, name=?, role=?, " +
-        		"enabled=? WHERE username=?";
+        		"enabled=?, email=? WHERE username=?";
         jdbcTemplate.update(sql, user.getPassword(), user.getName(), user.getRole(), 
-        		user.getEnabled(), user.getUsername()); //is username mutable?
+        		user.getEnabled(), user.getEmail(), user.getUsername()); 
+        //is username mutable?
     }
  
     //delete an existing user
@@ -73,6 +74,7 @@ public class UserDAOImpl implements UserDAO
                 user.setName(rs.getString("name"));
                 user.setRole(rs.getString("role"));
                 user.setEnabled(rs.getBoolean("enabled"));
+                user.setEmail(rs.getString("email"));
      
                 return user;
             }
@@ -100,6 +102,7 @@ public class UserDAOImpl implements UserDAO
                 user.setName(rs.getString("name"));
                 user.setRole(rs.getString("role"));
                 user.setEnabled(rs.getBoolean("enabled"));
+                user.setEmail(rs.getString("email"));
      
                 return user;
             }
@@ -127,6 +130,8 @@ public class UserDAOImpl implements UserDAO
                     user.setName(rs.getString("name"));
                     user.setRole(rs.getString("role"));
                     user.setEnabled(rs.getBoolean("enabled"));
+                    user.setEmail(rs.getString("email"));
+                    
                     return user;
                 }
      
@@ -155,6 +160,7 @@ public class UserDAOImpl implements UserDAO
 	            user.setName(rs.getString("name"));
 	            user.setRole(rs.getString("role"));
 	            user.setEnabled(rs.getBoolean("enabled"));
+	            user.setEmail(rs.getString("email"));
 	 
 	            return user;
 	        }

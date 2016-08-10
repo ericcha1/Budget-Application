@@ -23,16 +23,21 @@ h3
 
 th
 {
+	padding: 10px;
+	text-align: center;
 	color: white;
 }
 
 td
 {
+	padding: 10px;
+	text-align: left;
 	color: white;
 }
 
-table, th, td {
-	text-align: left;
+table, th, td 
+{
+/* 	text-align: left; */
     border: 1px solid white;
 }
 

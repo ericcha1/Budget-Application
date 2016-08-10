@@ -50,7 +50,7 @@ public class UserController
 	    return model;
 	}
 	
-	//displays the entries of the user table in xml format, needed for the ajax call
+	//returns the current user data, needed for the ajax call
 	@RequestMapping(value="/currentData", method = RequestMethod.GET)
 	@ResponseBody
 	public List<User> getCurrentUser() throws IOException
@@ -64,7 +64,7 @@ public class UserController
 	    return userList;
 	}
 	
-	//displays the entries of the user table in xml format, needed for the ajax call
+	//returns the entries of the user table, needed for the ajax call
 	@RequestMapping(value="/userData", method = RequestMethod.GET)
 	@ResponseBody
 	public List<User> getList() throws IOException

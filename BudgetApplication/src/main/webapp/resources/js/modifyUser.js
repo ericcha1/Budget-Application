@@ -25,6 +25,7 @@ $(document).ready(function()
     	var fillName = $("td.name", this).html();
     	var fillRole = $("td.role", this).html();
     	var fillEnabled = $("td.enabled", this).html();
+    	var fillEmail = $("td.email", this).html();
     	currentUser = $("td.username", this).html();
     	
     	//set the fields to the row's data
@@ -33,6 +34,7 @@ $(document).ready(function()
     	document.getElementsByName("nameField")[0].value = fillName;
     	document.getElementsByName("roleField")[0].value = fillRole;
     	document.getElementsByName("enabledField")[0].value = fillEnabled;
+    	document.getElementsByName("email")[0].value = fillEmail;
     	
     	//scroll to top
     	window.scrollTo(0,0);
@@ -72,7 +74,8 @@ function fillUserTable()
 				html += '<tr class="rows"><td class="username">' + val.username 
 				+ '</td><td class="password">' + val.password 
 				+ '</td><td class="name">' + val.name + '</td><td class="role">'
-				+ val.role + '</td><td class="enabled">' + val.enabled + '</td></tr>';
+				+ val.role + '</td><td class="enabled">' + val.enabled 
+				+ '</td><td class="email">' + val.email + '</td></tr>';
 			});
 			
 			//clear table body, then update
@@ -93,11 +96,13 @@ function addUser()
 	var name = document.getElementsByName("nameField")[0].value;
 	var role = document.getElementsByName("roleField")[0].value;
 	var enabled = document.getElementsByName("enabledField")[0].value;
+	var email = document.getElementsByName("email")[0].value;
 	
     $.ajax({
     	url: "/BudgetApplication/addUser",
         type:"POST",
-        data: {username: username, password: password, name:name, role:role, enabled:enabled},
+        data: {username: username, password: password, name: name, 
+        	role: role, enabled: enabled, email: email},
         success:function(data)
         {
         	//refill the table
@@ -137,12 +142,14 @@ function editUser()
 	var name = document.getElementsByName("nameField")[0].value;
 	var role = document.getElementsByName("roleField")[0].value;
 	var enabled = document.getElementsByName("enabledField")[0].value;
+	var email = document.getElementsByName("email")[0].value;
 	
     $.ajax({
     	url: "/BudgetApplication/editUser",
         type: "GET",
         //currentId is the id of the row that was last clicked
-        data: {username: currentUser, password: password, name:name, role:role, enabled:enabled},
+        data: {username: currentUser, password: password, name: name, 
+        	role: role, enabled: enabled, email: email},
        	success:function(data)
         {
         	//refill table
@@ -166,4 +173,5 @@ function clearForm()
 	document.getElementsByName("nameField")[0].value = "";
 	document.getElementsByName("roleField")[0].value = "";
 	document.getElementsByName("enabledField")[0].value = "";
+	document.getElementsByName("emailField")[0].value = "";
 }

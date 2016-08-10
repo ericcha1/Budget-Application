@@ -20,3 +20,12 @@ h3
 	color: white;
 	text-align:center;
 }
+
+pre
+{
+	color: white;
+	font-size: 130%;
+/* 	border: 5px solid powderblue; */
+	padding: 30px;
+/*     margin: 10px; */
+}

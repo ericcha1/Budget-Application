@@ -15,24 +15,22 @@
 
 	<body>
 		<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
-			<h1>User Table</h1>
 			<ul id="navBar">
-				<li><a href="home" class="active">Home</a></li>
-				<li class="selected"><a href="user" class="active">Profile</a></li>
-				<li><a href="budget" class="active">Budget</a></li>
-				<li><a href="help" class="active">Help</a></li>
-				<li><a href="about" class="active">About</a></li>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<li class="dropdown"><a href="javascript:void(0)" class="dropButton" onclick="showAdminMenu()">Admin</a>
+				<li><a href="home" class="active">Home</a></li><!-- 
+			 --><li class="selected"><a href="user" class="active">Profile</a></li><!-- 
+			 --><li><a href="budget" class="active">Budget</a></li><!-- 
+			 --><li><a href="help" class="active">Help</a></li><!-- 
+			 --><li><a href="about" class="active">About</a></li><!-- 
+			 --><sec:authorize access="hasRole('ROLE_ADMIN')"><!--
+				 --><li class="dropdown"><a href="javascript:void(0)" class="dropButton" onclick="showAdminMenu()">Admin</a>
 				    <ul class="dropdown-content" id="adminMenu">
 				    	<li><a href="modifyUser">Modify User</a></li>
-				    </ul></li>
-				</sec:authorize>
-				<li class="userLogged">Logged in as <sec:authentication property="principal.username" />
+				    </ul></li></sec:authorize><!--
+			 --><li class="userLogged">Logged in as <sec:authentication property="principal.username" />
 				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>
 			</ul>
-			<br><br><br>
-<!-- 			<h3><a href="/newContact">New Contact</a></h3> -->
+			<br><br>
+			<h1>User Table</h1>
 			<form>
 				Username: <input type="text" name="searchField"/>
 				<button type="button" onclick="searchUser()">Search</button>
@@ -40,6 +38,7 @@
 				<button type="button" onclick="fillUserTable()">Show All Users</button>
 				<button type="button" onclick="empty()">Clear</button>
 			</form>
+			<br>
 			<table id="userTable" cellspacing="0" style="width:50%" align="center" class="tablesorter">
 				<thead>
 					<tr>
@@ -48,6 +47,7 @@
 						<th>Name</th>
 						<th>Role</th>
 						<th>Enabled</th>
+						<th>Email</th>
 					</tr>
 				</thead>
 				
