@@ -3,6 +3,8 @@ package com.budgetapplication.config;
 import javax.sql.DataSource;
 import com.budgetapplication.dao.*;
 import com.budgetapplication.daoimpl.*;
+import com.budgetapplication.serviceimpl.MailServiceImpl;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

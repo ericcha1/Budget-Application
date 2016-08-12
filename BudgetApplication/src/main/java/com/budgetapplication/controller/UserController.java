@@ -105,7 +105,7 @@ public class UserController
 	
 	//edit an existing user in the table
 	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
-	public ModelAndView editUserUser(HttpServletRequest request) 
+	public ModelAndView editUser(HttpServletRequest request) 
 	{
 		//retrieve the existing user for the given username
 		String username = request.getParameter("username");

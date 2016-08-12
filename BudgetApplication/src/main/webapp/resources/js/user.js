@@ -7,7 +7,6 @@ $(document).ready(function()
 
 function loadUser()
 {
-	//ajax call
 	$.ajax({
 		url: '/BudgetApplication/currentData', //see URL in UserController.java
 		type: 'GET',
@@ -38,7 +37,6 @@ function loadUser()
 
 function fillUserTable()
 {	
-	//ajax call
 	$.ajax({
 		url: '/BudgetApplication/userData', //see URL in UserController.java
 		type: 'GET',

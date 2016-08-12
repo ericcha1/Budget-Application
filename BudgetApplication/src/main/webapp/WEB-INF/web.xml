@@ -27,22 +27,13 @@
 		</listener-class>
 	</listener>
     
-<!--     <context-param> -->
-<!--     <param-name>contextConfigLocation</param-name> -->
-<!--     <param-value>com.budgetapplication.config.AppConfig</param-value> -->
-<!-- </context-param> -->
-    
-<!--      <context-param>  -->
-<!--       <param-name>contextConfigLocation</param-name>  -->
-<!--       <param-value>/WEB-INF/*.xml</param-value>  -->
-<!--     </context-param> -->
-    
     <context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/spring-servlet.xml
 			/WEB-INF/spring-security.xml
 			/WEB-INF/spring-database.xml
+			/WEB-INF/spring-mail.xml
 		</param-value>
 	</context-param>
 

@@ -32,10 +32,18 @@ public interface UserDAO
     
     /**
      * Get an user corresponding to a user's username.
+     * Serves as the "default" (go-to) method to get a user.
      * @param userId
      * @return User
      */
     public User get(String username);
+    
+    /**
+     * Get an user corresponding to a user's email.
+     * @param email
+     * @return User
+     */
+    public User getUserByEmail(String email);
      
     /**
      * Returns a list of all users in the user table.

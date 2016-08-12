@@ -16,10 +16,7 @@ xsi:schemaLocation="
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
         <property name="prefix" value="/WEB-INF/jsp/" />  
         <property name="suffix" value=".jsp" />  
-    </bean>  
-   	   	            
-<!--    	<bean id="userDAOImpl" class="com.budgetapplication.daoimpl.UserDAOImpl"> -->
-<!-- 	</bean> -->
+    </bean>
     	
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     

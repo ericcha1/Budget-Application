@@ -56,6 +56,64 @@ public class UserDAOImpl implements UserDAO
         jdbcTemplate.update(sql, username);
     }
  
+    //search for a user by username
+    @Override
+    public User get(String username) 
+    {
+    	String sql = "SELECT * FROM user_table WHERE username='" + username + "'";
+        return jdbcTemplate.query(sql, new ResultSetExtractor<User>() 
+        {
+     
+            @Override
+            public User extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                if (rs.next()) 
+                {
+                    User user = new User();
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setName(rs.getString("name"));
+                    user.setRole(rs.getString("role"));
+                    user.setEnabled(rs.getBoolean("enabled"));
+                    user.setEmail(rs.getString("email"));
+                    
+                    return user;
+                }
+     
+                return null;
+            }
+        });
+    }
+    
+    //search for a user by email
+    @Override
+    public User getUserByEmail(String email) 
+    {
+    	String sql = "SELECT * FROM user_table WHERE email='" + email + "'";
+        return jdbcTemplate.query(sql, new ResultSetExtractor<User>() 
+        {
+     
+            @Override
+            public User extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                if (rs.next()) 
+                {
+                    User user = new User();
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setName(rs.getString("name"));
+                    user.setRole(rs.getString("role"));
+                    user.setEnabled(rs.getBoolean("enabled"));
+                    user.setEmail(rs.getString("email"));
+                    
+                    return user;
+                }
+     
+                return null;
+            }
+        });
+    }
+    
     //returns a list of all the users in the table
     @Override
     public List<User> list() 
@@ -109,35 +167,6 @@ public class UserDAOImpl implements UserDAO
         });
      
         return userList;
-    }
- 
-    //search for a user by username
-    @Override
-    public User get(String username) 
-    {
-    	String sql = "SELECT * FROM user_table WHERE username='" + username + "'";
-        return jdbcTemplate.query(sql, new ResultSetExtractor<User>() 
-        {
-     
-            @Override
-            public User extractData(ResultSet rs) throws SQLException, DataAccessException 
-            {
-                if (rs.next()) 
-                {
-                    User user = new User();
-                    user.setUsername(rs.getString("username"));
-                    user.setPassword(rs.getString("password"));
-                    user.setName(rs.getString("name"));
-                    user.setRole(rs.getString("role"));
-                    user.setEnabled(rs.getBoolean("enabled"));
-                    user.setEmail(rs.getString("email"));
-                    
-                    return user;
-                }
-     
-                return null;
-            }
-        });
     }
 
     //Returns a list of all users with usernames like the given string.
