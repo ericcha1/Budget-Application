@@ -115,7 +115,8 @@ public class UserController
 	    user.setPassword(request.getParameter("password"));
 	    user.setName(request.getParameter("name"));
 	    user.setRole(request.getParameter("role"));
-	    user.setEnabled(Boolean.parseBoolean(request.getParameter("Enabled")));
+	    user.setEnabled(Boolean.parseBoolean(request.getParameter("enabled")));
+	    user.setEmail(request.getParameter("email"));
 	    
 	    //update user
 	    userDAO.update(user);

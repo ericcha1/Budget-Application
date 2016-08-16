@@ -47,7 +47,17 @@ $(document).ready(function()
 	//fill table and apply tablesorter
 	fillBudgetTable();
 	$("#budgetTable").tablesorter();
-
+	
+	$("#buttons").submit(function(e) 
+	{
+		//need to check the string input because empty string is valid
+		//if(document.getElementsByName("categoryField")[0].value == "")
+			
+		e.preventDefault(); 
+		  
+		  //e.stopPropagation(); 
+		  // only necessary if something above is listening to the (default-)event too
+	});
 }); 
 
 function fillBudgetTable()
@@ -74,6 +84,7 @@ function fillBudgetTable()
 			//clear table body, then update
 			$('#budgetTable tbody').empty().append(html);
 			$('#budgetTable').trigger('update');
+
 		},
 		error: function(error){
 	        console.log(error);
@@ -89,17 +100,19 @@ function addEntry()
 	var amount = document.getElementsByName("amountField")[0].value;
 	
     $.ajax({
-    	url: "/BudgetApplication/saveEntry",
+    	url: "/BudgetApplication/addEntry",
         type:"POST",
         data: {username: username, category: category, amount: amount},
         success:function(data)
         {
-        	//refill the table
+        	//refill table
         	fillBudgetTable();
+        	showAlert("Entry successfully added.", "#4CAF50");
 		},
 		error: function(error)
 		{
 	        console.log(error);
+	        showAlert("ERROR: Entry could not be added.", "#f44336");
 		}
     });
 }
@@ -115,10 +128,12 @@ function deleteEntry()
         {
         	//refill table
         	fillBudgetTable();
+        	showAlert("Entry successfully deleted.", "#4CAF50");
 		},
 		error: function(error)
 		{
 	        console.log(error);
+	        showAlert("ERROR: Entry could not be deleted.", "#f44336");
 		}
     });
 }
@@ -136,15 +151,29 @@ function editEntry()
         //currentId is the id of the row that was last clicked
         data: {id: currentId, username: username, category: category, amount: amount},
         success:function(data)
-        {
-        	//refill table
+        {	
         	fillBudgetTable();
+        	showAlert("Entry successfully edited.", "#4CAF50");
 		},
 		error: function(error)
 		{
 	        console.log(error);
+	        showAlert("ERROR: Entry could not be edited.", "#f44336");
 		}
     });
+//    showAlert();
+}
+
+function showAlert(msg, color)
+{
+	//set color and message for alert
+	var customAlert = document.getElementById("alert");
+	customAlert.style.backgroundColor = color;
+	$('#message').empty().append(msg);
+	$('#message').trigger('update');
+	
+	//make alert visible
+	customAlert.style.display = "block";
 }
 
 function clearForm()

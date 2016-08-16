@@ -34,7 +34,7 @@ $(document).ready(function()
     	document.getElementsByName("nameField")[0].value = fillName;
     	document.getElementsByName("roleField")[0].value = fillRole;
     	document.getElementsByName("enabledField")[0].value = fillEnabled;
-    	document.getElementsByName("email")[0].value = fillEmail;
+    	document.getElementsByName("emailField")[0].value = fillEmail;
     	
     	//scroll to top
     	window.scrollTo(0,0);
@@ -51,6 +51,11 @@ $(document).ready(function()
     	currentUser = "";
     });
 	
+    $("#buttons").submit(function(e) 
+	{
+		e.preventDefault();
+	});
+    
 	//call function  
 	fillUserTable();
 	$("#userTable").tablesorter();
@@ -96,7 +101,7 @@ function addUser()
 	var name = document.getElementsByName("nameField")[0].value;
 	var role = document.getElementsByName("roleField")[0].value;
 	var enabled = document.getElementsByName("enabledField")[0].value;
-	var email = document.getElementsByName("email")[0].value;
+	var email = document.getElementsByName("emailField")[0].value;
 	
     $.ajax({
     	url: "/BudgetApplication/addUser",
@@ -107,10 +112,12 @@ function addUser()
         {
         	//refill the table
         	fillUserTable();
+        	showAlert("Entry successfully added.", "#4CAF50");
 		},
 		error: function(error)
 		{
 	        console.log(error);
+	        showAlert("ERROR: Entry could not be added.", "#f44336");
 		}
     });
 }
@@ -126,10 +133,12 @@ function deleteUser()
         {
         	//refill table
         	fillUserTable();
+        	showAlert("Entry successfully deleted.", "#4CAF50");
 		},
 		error: function(error)
 		{
 	        console.log(error);
+	        showAlert("ERROR: Entry could not be deleted.", "#f44336");
 		}
     });
 }
@@ -142,7 +151,7 @@ function editUser()
 	var name = document.getElementsByName("nameField")[0].value;
 	var role = document.getElementsByName("roleField")[0].value;
 	var enabled = document.getElementsByName("enabledField")[0].value;
-	var email = document.getElementsByName("email")[0].value;
+	var email = document.getElementsByName("emailField")[0].value;
 	
     $.ajax({
     	url: "/BudgetApplication/editUser",
@@ -154,12 +163,26 @@ function editUser()
         {
         	//refill table
         	fillUserTable();
+        	showAlert("Entry successfully edited.", "#4CAF50");
 		},
 		error: function(error)
 		{
 	        console.log(error);
+	        showAlert("ERROR: Entry could not be edited.", "#f44336");
 		}
     });
+}
+
+function showAlert(msg, color)
+{
+	//set color and message for alert
+	var customAlert = document.getElementById("alert");
+	customAlert.style.backgroundColor = color;
+	$('#message').empty().append(msg);
+	$('#message').trigger('update');
+	
+	//make alert visible
+	customAlert.style.display = "block";
 }
 
 function clearForm()

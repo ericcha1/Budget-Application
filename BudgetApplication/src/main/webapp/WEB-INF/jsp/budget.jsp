@@ -3,6 +3,7 @@
 <html>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/budget.css"/> "/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/navBar.css"/> "/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/customAlert.css"/> "/>
 	<head>
 		<title>Budget Application</title>
 		
@@ -15,6 +16,10 @@
 
 	<body>
 		<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
+			<div class="alert" id="alert">
+				<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+			  	<div id="message">This is an alert box.</div>
+			</div>
 			<ul id="navBar">
 				<li><a href="home" class="active">Home</a></li><!-- 
 			 --><li><a href="user" class="active">Profile</a></li><!-- 
@@ -31,13 +36,13 @@
 			</ul>
 			<br><br>
 			<h1>Budget Table</h1>
-			<form>
+			<form id="buttons">
 			 	Username: <input type="text" name="usernameField" required/>
 			 	Category: <input type="text" name="categoryField" required/>
 			 	Amount: <input type="number" name="amountField" required/>
 			 	<br><br>
 				<button type="submit" id="add" onclick="addEntry()">Add</button>
-				<button type="submit" id="delete" onclick="deleteEntry()">Delete</button>
+				<button type="button" id="delete" onclick="deleteEntry()">Delete</button>
 				<button type="submit" id="edit" onclick="editEntry()">Modify</button>
 				<button type="button" id="clear">Clear</button>
 			</form>

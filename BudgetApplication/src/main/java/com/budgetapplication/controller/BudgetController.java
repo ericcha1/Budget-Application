@@ -55,8 +55,8 @@ public class BudgetController
 	}
 	
 	//save changes to an entry
-	@RequestMapping(value = "/saveEntry", method = RequestMethod.POST)
-	public ModelAndView saveBudgetEntry(@ModelAttribute BudgetEntry entry) 
+	@RequestMapping(value = "/addEntry", method = RequestMethod.POST)
+	public ModelAndView addBudgetEntry(@ModelAttribute BudgetEntry entry) 
 	{
 	    budgetEntryDAO.insertOrUpdate(entry);
 	    return new ModelAndView("redirect:/");
@@ -84,13 +84,8 @@ public class BudgetController
 	    entry.setAmount(Integer.parseInt(request.getParameter("amount")));
 	    entry.setCategory(request.getParameter("category"));
 	    
-	    //ModelAndView model = new ModelAndView("BudgetForm");
-	    //model.addObject("entry", entry);
-	    
 	    //update entry
 	    budgetEntryDAO.insertOrUpdate(entry);
 	    return new ModelAndView("redirect:/");
-	    
-	    //return model;
 	}
 }

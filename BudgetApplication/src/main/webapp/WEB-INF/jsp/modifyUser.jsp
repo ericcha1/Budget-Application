@@ -3,6 +3,7 @@
 <html>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/modifyUser.css"/> "/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/navBar.css"/> "/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/customAlert.css"/> "/>
       
 	<head>
 		<title>Budget Application</title>
@@ -10,12 +11,17 @@
 		<script src="<c:url value="/resources/js/jquery-3.0.0.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery-latest.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery.tablesorter.js" />"></script>
+		<script type="text/javascript" src="<c:url value="/resources/js/customAlert.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/modifyUser.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/navBar.js"/>"></script>
 	</head>
 
 	<body>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<div class="alert" id="alert">
+				<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+			  	<div id="message">This is an alert box.</div>
+			</div>
 			<ul id="navBar">
 				<li><a href="home" class="active">Home</a></li><!-- 
 			 --><li><a href="user" class="active">Profile</a></li><!-- 
@@ -32,7 +38,7 @@
 			</ul>
 			<br><br>
 			<h1>User Table</h1>
-			<form>
+			<form id="buttons">
 			 	Username: <input type="text" name="usernameField" required/>
 			 	Password: <input type="text" name="passwordField" required/>
 			 	Name: <input type="text" name="nameField" required/>
@@ -41,7 +47,7 @@
 			 	Email: <input type="text" name="emailField" required/>
 			 	<br><br>
 				<button type="submit" id="add" onclick="addUser()">Add</button>
-				<button type="submit" id="delete" onclick="deleteUser()">Delete</button>
+				<button type="button" id="delete" onclick="deleteUser()">Delete</button>
 				<button type="submit" id="edit" onclick="editUser()">Modify</button>
 				<button type="button" id="clear">Clear</button>
 			</form>
