@@ -29,7 +29,8 @@
 			 --><sec:authorize access="hasRole('ROLE_ADMIN')"><!--
 				 --><li class="dropdown"><a href="javascript:void(0)" class="dropButton" onclick="showAdminMenu()">Admin</a>
 				    <ul class="dropdown-content" id="adminMenu">
-				    	<li><a href="modifyUser">Modify User</a></li>
+				    	<li><a href="modifyUser">Modify User</a></li><!-- 
+				    	 --><li><a href="category">Budget Categories</a></li>
 				    </ul></li></sec:authorize><!--
 			 --><li class="userLogged">Logged in as <sec:authentication property="principal.username" />
 				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>
@@ -38,7 +39,10 @@
 			<h1>Budget Table</h1>
 			<form id="buttons">
 			 	Username: <input type="text" name="usernameField" required/>
-			 	Category: <input type="text" name="categoryField" required/>
+<!-- 			 	Category: <input type="text" name="categoryField" required/> -->
+			 	Category: <select id="categories">
+			 		<option></option>
+			 		</select>
 			 	Amount: <input type="number" name="amountField" required/>
 			 	<br><br>
 				<button type="submit" id="add" onclick="addEntry()">Add</button>

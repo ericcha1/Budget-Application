@@ -1,8 +1,6 @@
 package com.budgetapplication.dao;
 
 import java.util.List;
-
-import com.budgetapplication.model.BudgetEntry;
 import com.budgetapplication.model.User;
  
 /*
@@ -19,7 +17,7 @@ public interface UserDAO
     public void insert(User user);
     
     /**
-	 * Update an existing new user into the table.
+	 * Update an existing user into the table.
 	 * @param user
 	 */
     public void update(User user);

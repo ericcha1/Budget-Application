@@ -44,7 +44,8 @@ $(document).ready(function()
     	currentId = 0;
     });
 
-	//fill table and apply tablesorter
+	//table and input setup
+    addCategories();
 	fillBudgetTable();
 	$("#budgetTable").tablesorter();
 	
@@ -62,7 +63,6 @@ $(document).ready(function()
 
 function fillBudgetTable()
 {	
-	//ajax call
 	$.ajax({
 		url: '/BudgetApplication/entries', //see URL in BudgetController.java
 		type: 'GET',
@@ -88,7 +88,35 @@ function fillBudgetTable()
 		},
 		error: function(error){
 	        console.log(error);
-	 }
+		}
+	});
+}
+
+function addCategories()
+{
+	$.ajax({
+		url: '/BudgetApplication/categories',
+		type: 'GET',
+		dataType : 'json',
+		success: function (response)
+		{
+			console.log(response);
+			var html = ''; //stores the string to be returned
+			
+			//add options for each category
+			$.each(response, function (key, val)
+			{
+				html += '<option value="' + val.category + '">' 
+				+ val.category + '</option>';
+			});
+			
+			//clear category options, then update
+			$('#categories').empty().append(html);
+			$('#categories').trigger('update');
+		},
+		error: function(error){
+	        console.log(error);
+		}
 	});
 }
 

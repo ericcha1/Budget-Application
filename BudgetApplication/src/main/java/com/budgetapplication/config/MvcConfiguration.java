@@ -70,4 +70,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
         return new BudgetEntryDAOImpl(getDataSource());
     }
     
+    //returns the DAO implementation of the Category model
+    @Bean
+    public CategoryDAO getCategoryDAO() 
+    {
+        return new CategoryDAOImpl(getDataSource());
+    }
+    
 }

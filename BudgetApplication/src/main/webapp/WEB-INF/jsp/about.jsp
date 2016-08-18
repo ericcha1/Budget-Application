@@ -19,7 +19,8 @@
 			 --><sec:authorize access="hasRole('ROLE_ADMIN')"><!--
 				 --><li class="dropdown"><a href="javascript:void(0)" class="dropButton" onclick="showAdminMenu()">Admin</a>
 				    <ul class="dropdown-content" id="adminMenu">
-				    	<li><a href="modifyUser">Modify User</a></li>
+				    	<li><a href="modifyUser">Modify User</a></li><!-- 
+				    	 --><li><a href="category">Budget Categories</a></li>
 				    </ul></li></sec:authorize><!--
 			 --><li class="userLogged">Logged in as <sec:authentication property="principal.username" />
 				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>
@@ -33,8 +34,7 @@ constantly be able to track the money currently being used from one's
 budget.
 This project was created for the purposes of practicing web development by 
 Eric Cha, a current computer science major studying at the University of 
-Maryland, Baltimore County. This application provided first-time experience
-with Agile software development, Spring MVC, and front-end programming languages. 
+Maryland, Baltimore County. 
 			</pre>
 
 		</sec:authorize>
