@@ -58,6 +58,8 @@
 						<th>Username</th>
 						<th>Category</th>
 						<th>Amount</th>
+						<th>Inserted By</th>
+						<th>Inserted On</th>
 					</tr>
 				</thead>
 				

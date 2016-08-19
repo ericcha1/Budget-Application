@@ -31,10 +31,10 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
     @Override
     public void insert(BudgetEntry entry) 
     {
-        String sql = "INSERT INTO budget_table (username, category, amount)"
-                    + " VALUES (?, ?, ?)";
+        String sql = "INSERT INTO budget_table (username, category, amount, insertedBy)"
+                    + " VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, entry.getUsername(), entry.getCategory(),
-                entry.getAmount());
+                entry.getAmount(), entry.getInsertedBy());
     }
     
     //update existing entry
@@ -71,7 +71,8 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
                 entry.setUsername(rs.getString("username"));
                 entry.setCategory(rs.getString("category"));
                 entry.setAmount(rs.getDouble("amount"));
-     
+                entry.setInsertedBy(rs.getString("insertedBy"));
+                entry.setInsertedOn(rs.getDate("insertedOn").toString());
                 return entry;
             }
         });
@@ -97,7 +98,8 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
                 entry.setUsername(rs.getString("username"));
                 entry.setCategory(rs.getString("category"));
                 entry.setAmount(rs.getDouble("amount"));
-     
+                entry.setInsertedBy(rs.getString("insertedBy"));
+                entry.setInsertedOn(rs.getDate("insertedOn").toString());
                 return entry;
             }
         });
@@ -122,7 +124,8 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
                     entry.setUsername(rs.getString("username"));
                     entry.setCategory(rs.getString("category"));
                     entry.setAmount(rs.getDouble("amount"));
-
+                    entry.setInsertedBy(rs.getString("insertedBy"));
+                    entry.setInsertedOn(rs.getDate("insertedOn").toString());
                     return entry;
                 }
      

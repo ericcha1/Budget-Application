@@ -32,22 +32,16 @@ public class UserController
 	
 	//returns a view that contains a table of the current user
 	@RequestMapping(value="/user")
-	public ModelAndView listUser(ModelAndView model) throws IOException
+	public ModelAndView listUser() throws IOException
 	{
-	    model.addObject("total", getTotal());
-	    model.setViewName("user");
-	 
-	    return model;
+	    return new ModelAndView("user", "total", getTotal());
 	}
 	
 	//returns a view that contains a table of all of the users and account information
 	@RequestMapping(value="/modifyUser")
 	public ModelAndView listAllUsers(ModelAndView model) throws IOException
 	{
-	    model.addObject("total", getTotal());
-	    model.setViewName("modifyUser");
-	 
-	    return model;
+		return new ModelAndView("modifyUser", "total", getTotal());
 	}
 	
 	//returns the current user data, needed for the ajax call
@@ -90,6 +84,10 @@ public class UserController
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public ModelAndView saveBudgetEntry(@ModelAttribute User user) throws IOException 
 	{
+		//store the username of the user currently signed in
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();		
+		user.setInsertedBy(currentUser);
+		
 	    userDAO.insert(user);
 	    return new ModelAndView("redirect:/", "total", getTotal());
 	}

@@ -24,10 +24,10 @@ $(document).ready(function()
 	fillCategoryTable();
 	$("#categoryTable").tablesorter();
 	
-	$("#buttons").submit(function(e) 
-	{			
-		e.preventDefault(); 
-	});
+//	$("#buttons").submit(function(e) 
+//	{			
+//		e.preventDefault();
+//	});
 }); 
 
 function fillCategoryTable()
@@ -44,7 +44,8 @@ function fillCategoryTable()
 			//append fields for each entry in the table
 			$.each(response, function (key, val)
 			{
-				html += '<tr class="rows"><td class="category">' + val.category + 
+				html += '<tr class="rows"><td>' + val.category + '</td><td>' 
+				+ val.insertedBy + '</td><td>' +val.insertedOn + 
 				'</td><td><button type="button" onclick="editCategory(\'' + val.category 
 				+ '\')">Edit</button>&nbsp;&nbsp;&nbsp;&nbsp;' +
 				'<button type="button" onclick="deleteCategory(\'' + val.category 

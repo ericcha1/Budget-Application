@@ -50,6 +50,10 @@ public class BudgetController
 	@RequestMapping(value = "/addEntry", method = RequestMethod.POST)
 	public ModelAndView addBudgetEntry(@ModelAttribute BudgetEntry entry) throws IOException 
 	{
+		//store the username of the user currently signed in
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		entry.setInsertedBy(currentUser);
 	    budgetEntryDAO.insert(entry);
 	    return new ModelAndView("redirect:/", "total", getTotal());
 	}

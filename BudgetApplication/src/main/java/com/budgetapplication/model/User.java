@@ -12,6 +12,8 @@ public class User
     private String role; //used for access
     private boolean enabled; //whether account is active
     private String email;
+	private String insertedBy;
+	private String insertedOn;
  
     //default constructor
     public User() 
@@ -20,7 +22,8 @@ public class User
     }
  
     //constructor with parameters, defaults enabled to true
-    public User(String username, String password, String name, String role, String email) 
+    public User(String username, String password, String name, String role, 
+    		String email, String insertedBy, String insertedOn) 
     {
         this.username = username;
         this.password = password;
@@ -28,10 +31,13 @@ public class User
         this.role = role;
         this.enabled = true;
         this.email = email;
+        this.insertedBy = insertedBy;
+        this.insertedOn = insertedOn;
     }
     
     //constructor with parameters, allows for enabled to be set explicitly
-    public User(String username, String password, String name, String role, boolean enabled, String email) 
+    public User(String username, String password, String name, String role,
+    		boolean enabled, String email, String insertedBy, String insertedOn) 
     {
         this.username = username;
         this.password = password;
@@ -39,6 +45,8 @@ public class User
         this.role = role;
         this.enabled = enabled;
         this.email = email;
+        this.insertedBy = insertedBy;
+        this.insertedOn = insertedOn;
     }
  
     //getters and setters
@@ -101,4 +109,24 @@ public class User
     {
     	return email;
     }
+    
+	public String getInsertedBy()
+	{
+		return insertedBy;
+	}
+	
+	public void setInsertedBy(String username)
+	{
+		this.insertedBy = username;
+	}
+	
+	public String getInsertedOn()
+	{
+		return insertedOn;
+	}
+	
+	public void setInsertedOn(String date)
+	{
+		this.insertedOn = date;
+	}
 }

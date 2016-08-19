@@ -51,6 +51,9 @@ public class CategoryController
 	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
 	public ModelAndView addCategory(@ModelAttribute Category cat) throws IOException 
 	{
+		//store the username of the user currently signed in
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		cat.setInsertedBy(currentUser);
 	    categoryDAO.insert(cat);
 	    return new ModelAndView("redirect:/", "total", getTotal());
 	}

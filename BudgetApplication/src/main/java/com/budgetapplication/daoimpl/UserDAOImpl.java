@@ -31,10 +31,10 @@ public class UserDAOImpl implements UserDAO
     @Override
     public void insert(User user) 
     {
-        String sql = "INSERT INTO user_table (username, password, name, role, enabled, email)"
-                    + " VALUES (?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), 
-        		user.getName(), user.getRole(), user.getEnabled(), user.getEmail());
+        String sql = "INSERT INTO user_table (username, password, name, role, enabled,"
+        		+ " email, insertedBy) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getName(), 
+        		user.getRole(), user.getEnabled(), user.getEmail(), user.getInsertedBy());
     }
     
     //update an existing user
@@ -76,6 +76,8 @@ public class UserDAOImpl implements UserDAO
                     user.setRole(rs.getString("role"));
                     user.setEnabled(rs.getBoolean("enabled"));
                     user.setEmail(rs.getString("email"));
+                    user.setInsertedBy(rs.getString("insertedBy"));
+                    user.setInsertedOn(rs.getDate("insertedOn").toString());
                     
                     return user;
                 }
@@ -105,6 +107,8 @@ public class UserDAOImpl implements UserDAO
                     user.setRole(rs.getString("role"));
                     user.setEnabled(rs.getBoolean("enabled"));
                     user.setEmail(rs.getString("email"));
+                    user.setInsertedBy(rs.getString("insertedBy"));
+                    user.setInsertedOn(rs.getDate("insertedOn").toString());
                     
                     return user;
                 }
@@ -133,7 +137,9 @@ public class UserDAOImpl implements UserDAO
                 user.setRole(rs.getString("role"));
                 user.setEnabled(rs.getBoolean("enabled"));
                 user.setEmail(rs.getString("email"));
-     
+                user.setInsertedBy(rs.getString("insertedBy"));
+                user.setInsertedOn(rs.getDate("insertedOn").toString());
+                
                 return user;
             }
         });
@@ -161,7 +167,9 @@ public class UserDAOImpl implements UserDAO
                 user.setRole(rs.getString("role"));
                 user.setEnabled(rs.getBoolean("enabled"));
                 user.setEmail(rs.getString("email"));
-     
+                user.setInsertedBy(rs.getString("insertedBy"));
+                user.setInsertedOn(rs.getDate("insertedOn").toString());
+                
                 return user;
             }
         });
@@ -190,7 +198,9 @@ public class UserDAOImpl implements UserDAO
 	            user.setRole(rs.getString("role"));
 	            user.setEnabled(rs.getBoolean("enabled"));
 	            user.setEmail(rs.getString("email"));
-	 
+	            user.setInsertedBy(rs.getString("insertedBy"));
+                user.setInsertedOn(rs.getDate("insertedOn").toString());
+                
 	            return user;
 	        }
 	    });

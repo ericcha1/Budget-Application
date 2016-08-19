@@ -31,8 +31,8 @@ public class CategoryDAOImpl implements CategoryDAO
     @Override
     public void insert(Category category) 
     {
-        String sql = "INSERT INTO category_table (category) VALUES (?)";
-        jdbcTemplate.update(sql, category.getCategory());
+        String sql = "INSERT INTO category_table (category, insertedBy) VALUES (?, ?)";
+        jdbcTemplate.update(sql, category.getCategory(), category.getInsertedBy());
     }
     
     //update an existing category
@@ -63,7 +63,10 @@ public class CategoryDAOImpl implements CategoryDAO
             {
                 if (rs.next()) 
                 {
-                    Category category = new Category(rs.getString("category"));           
+                    Category category = new Category(rs.getString("category"));  
+                    category.setInsertedBy(rs.getString("insertedBy"));
+                    //getDate().toString to exclude the time
+                    category.setInsertedOn(rs.getString("insertedOn"));
                     return category;
                 }
      
@@ -84,6 +87,8 @@ public class CategoryDAOImpl implements CategoryDAO
             public Category mapRow(ResultSet rs, int rowNum) throws SQLException 
             {
                 Category category = new Category(rs.getString("category"));
+                category.setInsertedBy(rs.getString("insertedBy"));
+                category.setInsertedOn(rs.getDate("insertedOn").toString());
                 return category;
             }
         });

@@ -49,6 +49,8 @@
 				<thead>
 					<tr>
 						<th>Category</th>
+						<th>Inserted By</th>
+						<th>Inserted On</th>
 						<th>Action</th>
 					</tr>
 				</thead>

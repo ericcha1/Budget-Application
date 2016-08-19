@@ -11,6 +11,8 @@ public class BudgetEntry
     private String username;
     private String category;
     private double amount;
+    private String insertedBy;
+    private String insertedOn;
 
     //default constructor
     public BudgetEntry() 
@@ -19,12 +21,15 @@ public class BudgetEntry
     }
  
     //constructor with parameters
-    public BudgetEntry(int id, String username, String category, double amount) 
+    public BudgetEntry(int id, String username, String category, 
+    		double amount, String insertedBy, String insertedOn) 
     {
     	this.id = id;
         this.username = username;
         this.category = category;
         this.amount = amount;
+        this.insertedBy = insertedBy;
+        this.insertedOn = insertedOn;
     }
  
     //getters and setters
@@ -67,5 +72,25 @@ public class BudgetEntry
     {
     	return amount;
     }
+    
+	public String getInsertedBy()
+	{
+		return insertedBy;
+	}
+	
+	public void setInsertedBy(String username)
+	{
+		this.insertedBy = username;
+	}
+	
+	public String getInsertedOn()
+	{
+		return insertedOn;
+	}
+	
+	public void setInsertedOn(String date)
+	{
+		this.insertedOn = date;
+	}
     
 }

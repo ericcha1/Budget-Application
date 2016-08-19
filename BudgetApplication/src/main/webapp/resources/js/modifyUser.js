@@ -80,7 +80,8 @@ function fillUserTable()
 				+ '</td><td class="password">' + val.password 
 				+ '</td><td class="name">' + val.name + '</td><td class="role">'
 				+ val.role + '</td><td class="enabled">' + val.enabled 
-				+ '</td><td class="email">' + val.email + '</td></tr>';
+				+ '</td><td class="email">' + val.email + '</td><td>' 
+				+ val.insertedBy + '</td><td>' + val.insertedOn + "</td></tr>";
 			});
 			
 			//clear table body, then update

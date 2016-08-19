@@ -84,7 +84,8 @@ function fillBudgetTable()
 				html += '<tr class="rows"><td class="budgetId">' + val.id + 
 				'</td><td class="budgetUsername">' + val.username + 
 				'</td><td class="budgetCategory">' + val.category + 
-				'</td><td class="budgetAmount">$' + val.amount.toFixed(2) + "</td></tr>";
+				'</td><td class="budgetAmount">$' + val.amount.toFixed(2) + 
+				'</td><td>' + val.insertedBy + '</td><td>' + val.insertedOn + "</td></tr>";
 			});
 			
 			//clear table body, then update

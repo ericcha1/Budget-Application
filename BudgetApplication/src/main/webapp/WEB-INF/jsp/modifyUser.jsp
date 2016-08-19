@@ -2,9 +2,7 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/modifyUser.css"/> "/>
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/navBar.css"/> "/>
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/customAlert.css"/> "/>
-      
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/navBar.css"/> "/>      
 	<head>
 		<title>Budget Application</title>
 		
@@ -61,6 +59,8 @@
 						<th>Role</th>
 						<th>Enabled</th>
 						<th>Email</th>
+						<th>Inserted By</th>
+						<th>Inserted On</th>
 					</tr>
 				</thead>
 				
