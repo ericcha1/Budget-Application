@@ -18,14 +18,13 @@ h2
 h3
 {
 	color: white;
-	text-align:center;
+	text-align: center;
 }
 
-pre
+p
 {
 	color: white;
 	font-size: 130%;
-/* 	border: 5px solid powderblue; */
 	padding: 30px;
-/*     margin: 10px; */
+	text-align: left;
 }

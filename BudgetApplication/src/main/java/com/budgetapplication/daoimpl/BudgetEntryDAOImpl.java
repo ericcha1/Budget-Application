@@ -134,6 +134,34 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
         });
     }
     
+    //returns a list of all the entries corresponding to a certain username
+    @Override
+    public List<BudgetEntry> listRecent(String currentUsername) 
+    {
+    	//select the user's rows and order by time inserted
+    	String sql = "SELECT * FROM budget_table WHERE username=\"" + currentUsername 
+    			+ "\"ORDER BY insertedOn DESC LIMIT 5;";
+
+        List<BudgetEntry> entryList = jdbcTemplate.query(sql, new RowMapper<BudgetEntry>() 
+        {
+        	@Override
+            public BudgetEntry mapRow(ResultSet rs, int rowNum) throws SQLException 
+            {
+                BudgetEntry entry = new BudgetEntry();
+     
+                entry.setId(rs.getInt("id"));
+                entry.setUsername(rs.getString("username"));
+                entry.setCategory(rs.getString("category"));
+                entry.setAmount(rs.getDouble("amount"));
+                entry.setInsertedBy(rs.getString("insertedBy"));
+                entry.setInsertedOn(rs.getDate("insertedOn").toString());
+                return entry;
+            }
+        });
+     
+        return entryList;
+    }
+    
     @Override
     public double getTotal(String username)
     {

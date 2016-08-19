@@ -1,59 +1,42 @@
 $(document).ready(function()
 { 
-	
-	// Close the dropdown if the user clicks outside of it
-	window.onclick = function(e) 
-	{
-		if (!e.target.matches(".dropButton")) 
-		{
-			var dropdowns = document.getElementsByClassName("dropdown-content");
-			
-			for (var d = 0; d < dropdowns.length; d++) 
-			{
-				var openDropdown = dropdowns[d];
-				
-				if (openDropdown.classList.contains('show')) 
-				{
-					openDropdown.classList.remove('show');
-				}
-			}
-		}
-	}
+	getRecent();
 }); 
 
-//When the user clicks on the Admin button, toggle dropdown content
-function showAdminMenu() 
+function getRecent()
 {
-    document.getElementById("adminMenu").classList.toggle("show");
-}
-
-function getTotal()
-{
-	//ajax call
 	$.ajax({
-		url: '/BudgetApplication/entries', //see URL in BudgetController.java
+		url: '/BudgetApplication/recent', //see HomeController.java
 		type: 'GET',
 		dataType : 'json',
 		success: function (response)
 		{
 			console.log(response);
-			var total = 0; //stores the string to be returned
+			var html = ""; //stores the string to be returned
 			
 			//append fields for each entry in the table
 			$.each(response, function (key, val)
 			{
-				html += '<tr class="rows"><td class="budgetId">' + val.id + 
-				'</td><td class="budgetUsername">' + val.username + 
-				'</td><td class="budgetCategory">' + val.category + 
-				'</td><td class="budgetAmount">' + val.amount + "</td></tr>";
+				html += '<tr><td>' + val.category + '</td><td>$' + val.amount.toFixed(2)
+				+ '</td><td>' + val.insertedOn + "</td></tr>";
 			});
 			
-			//clear table body, then update
-			$('#budgetTable tbody').empty().append(html);
-			$('#budgetTable').trigger('update');
+			if (html != "")
+			{
+				//clear table body, then update
+				$('#recentTable tbody').empty().append(html);
+				$('#recentTable').trigger('update');
+			}
+			else
+			{
+				$('#recentTable thead').empty();
+				$('#message').empty().append("No entries added yet!");
+				document.getElementById("recentTable").style.display = "none";
+			}
 		},
-		error: function(error){
+		error: function(error)
+		{
 	        console.log(error);
-	 }
+		}
 	});
 }

@@ -3,6 +3,7 @@
 <html>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/about.css"/> "/>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/navBar.css"/> "/>
+	<script src="<c:url value="/resources/js/jquery-3.0.0.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/navBar.js"/>"></script>
 	<head>
 		<title>Budget Application</title>
@@ -27,15 +28,14 @@
 			</ul>
 			<br><br>
 			<h1>About</h1>
-			<pre>
-This Budget Application allows users to track their spending on various
-categories. By keeping a running total of these expenditures, one will
-constantly be able to track the money currently being used from one's
-budget.
-This project was created for the purposes of practicing web development by 
-Eric Cha, a current computer science major studying at the University of 
-Maryland, Baltimore County. 
-			</pre>
+			<p>
+				This Budget Application allows users to track their spending on various 
+				categories. By keeping a running total of these expenditures, one will
+				constantly be able to track the money currently being used from one's budget.
+				This project was created for the purposes of practicing web development by 
+				Eric Cha, a current computer science major studying at the University of 
+				Maryland, Baltimore County. 
+			</p>
 
 		</sec:authorize>
 	</body>

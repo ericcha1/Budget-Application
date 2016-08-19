@@ -10,7 +10,7 @@
 		<script src="<c:url value="/resources/js/jquery-3.0.0.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery-latest.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery.tablesorter.js" />"></script>
-		<script type="text/javascript" src="<c:url value="/resources/js/navBar.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/resources/js/home.js"/>"></script>
 	</head>
 
 	<body>
@@ -33,7 +33,19 @@
 			
 			<br><br>
 			<h1>Home</h1>
-			<h2>Welcome User</h2>
+			<h2 id="message">Recent Entries</h2>
+			
+			<table id="recentTable" cellspacing="0" style="width:40%" align="center" class="tablesorter">
+				<thead>
+					<tr>
+						<th>Category</th>
+						<th>Amount</th>
+						<th>Inserted On</th>
+					</tr>
+				</thead>
+				
+				<tbody></tbody>
+			</table>
 
 <%-- 			<c:url value="/j_spring_security_logout" var="logoutUrl" /> --%>
 			
@@ -55,9 +67,6 @@
 <!-- 						<a href="javascript:formSubmit()"> Logout</a> -->
 <!-- 					</h3> -->
 <%-- 				</c:if> --%>
-			<h3>
-				Total: $${total}
-			</h3>
 		</sec:authorize>
 	</body>
 </html>

@@ -30,9 +30,20 @@ public class HomeController
         return new ModelAndView("home", "total", getTotal());  
     }
 	
+	//get a list of the last five entries in the budget table
+	@RequestMapping(value="/recent", method = RequestMethod.GET)
+	@ResponseBody
+    public List<BudgetEntry> getRecent() 
+	{  
+		//store the username of the user currently signed in
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<BudgetEntry> recentEntries = budgetEntryDAO.listRecent(currentUser);
+        
+		return recentEntries;
+    }
+	
 	public String getTotal() throws IOException
 	{
-		//store the username of the user currently signed in
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		//calls the getTotal() function which obtains the total spent by this user

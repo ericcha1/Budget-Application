@@ -36,7 +36,7 @@
 				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>
 			</ul>
 			<br><br>
-			<h1>Budget Table</h1>
+			<h1>Budget Table</h1><br>
 			<form id="buttons">
 			 	Username: <input type="text" name="usernameField" required/>
 			 	Category: <select id="categories">
@@ -50,7 +50,7 @@
 				<button type="button" id="delete" onclick="deleteEntry()">Delete</button>
 				<button type="submit" id="edit" onclick="editEntry()">Modify</button>
 				<button type="button" id="clear">Clear</button>
-			</form>
+			</form><br>
 			<table id="budgetTable" cellspacing="0" style="width:50%" align="center" class="tablesorter">
 				<thead>
 					<tr>

@@ -36,7 +36,7 @@
 				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>
 			</ul>
 			<br><br>
-			<h1>User Table</h1>
+			<h1>User Table</h1><br>
 			<form id="buttons">
 			 	Username: <input type="text" name="usernameField" required/>
 			 	Password: <input type="text" name="passwordField" required/>
@@ -49,7 +49,7 @@
 				<button type="button" id="delete" onclick="deleteUser()">Delete</button>
 				<button type="submit" id="edit" onclick="editUser()">Modify</button>
 				<button type="button" id="clear">Clear</button>
-			</form>
+			</form><br>
 			<table id="userTable" cellspacing="0" style="width:50%" align="center" class="tablesorter">
 				<thead>
 					<tr>

@@ -51,6 +51,14 @@ public interface BudgetEntryDAO
 	public List<BudgetEntry> list(String username);
 	
 	/**
+     * Returns a list of five most recent entries in a
+     * user's budget table.
+     * @param username
+     * @return List<BudgetEntry>
+     */
+	public List<BudgetEntry> listRecent(String username);
+	
+	/**
 	 * Returns the total spendings of a user,
 	 * @param username
 	 * @return double
