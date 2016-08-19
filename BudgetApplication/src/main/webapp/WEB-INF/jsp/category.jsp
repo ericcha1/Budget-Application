@@ -33,7 +33,7 @@
 				    	<li><a href="modifyUser">Modify User</a></li><!-- 
 				    	 --><li class="selected"><a href="category">Budget Categories</a></li>
 				    </ul></li></sec:authorize><!--
-			 --><li class="userLogged">Logged in as <sec:authentication property="principal.username" />
+			 --><li class="userLogged">Total: $${total} &nbsp&nbsp&nbsp Logged in as <sec:authentication property="principal.username" />
 				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>
 			</ul>
 			<br><br>

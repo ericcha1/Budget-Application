@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.budgetapplication.dao.BudgetEntryDAO;
 import com.budgetapplication.dao.UserDAO;
 import com.budgetapplication.model.BudgetEntry;
 import com.budgetapplication.model.User;
@@ -24,15 +26,15 @@ import com.budgetapplication.model.User;
 public class UserController 
 {
 	@Autowired
+    private BudgetEntryDAO budgetEntryDAO;
+	@Autowired
     private UserDAO userDAO;
 	
 	//returns a view that contains a table of the current user
 	@RequestMapping(value="/user")
 	public ModelAndView listUser(ModelAndView model) throws IOException
 	{
-		//calls the list() function in the DAO implementation
-	    List<User> userList = userDAO.list();
-	    model.addObject("userList", userList);
+	    model.addObject("total", getTotal());
 	    model.setViewName("user");
 	 
 	    return model;
@@ -42,9 +44,7 @@ public class UserController
 	@RequestMapping(value="/modifyUser")
 	public ModelAndView listAllUsers(ModelAndView model) throws IOException
 	{
-		//calls the list() function in the DAO implementation
-	    List<User> userList = userDAO.list();
-	    model.addObject("userList", userList);
+	    model.addObject("total", getTotal());
 	    model.setViewName("modifyUser");
 	 
 	    return model;
@@ -88,24 +88,24 @@ public class UserController
 
 	//add a user
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public ModelAndView saveBudgetEntry(@ModelAttribute User user) 
+	public ModelAndView saveBudgetEntry(@ModelAttribute User user) throws IOException 
 	{
 	    userDAO.insert(user);
-	    return new ModelAndView("redirect:/");
+	    return new ModelAndView("redirect:/", "total", getTotal());
 	}
 	
 	//delete a user from the table
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public ModelAndView deleteUser(HttpServletRequest request)
+	public ModelAndView deleteUser(HttpServletRequest request) throws IOException
 	{
 	    String username = request.getParameter("username");
 	    userDAO.delete(username);
-	    return new ModelAndView("redirect:/");
+	    return new ModelAndView("redirect:/", "total", getTotal());
 	}
 	
 	//edit an existing user in the table
 	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
-	public ModelAndView editUser(HttpServletRequest request) 
+	public ModelAndView editUser(HttpServletRequest request) throws IOException 
 	{
 		//retrieve the existing user for the given username
 		String username = request.getParameter("username");
@@ -120,6 +120,17 @@ public class UserController
 	    
 	    //update user
 	    userDAO.update(user);
-	    return new ModelAndView("redirect:/");
+	    return new ModelAndView("redirect:/", "total", getTotal());
+	}
+	
+	public String getTotal() throws IOException
+	{
+		//store the username of the user currently signed in
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		//calls the getTotal() function which obtains the total spent by this user
+	    double total = budgetEntryDAO.getTotal(currentUser);
+	    String stringTotal = String.format("%.2f", total);
+	    return stringTotal;
 	}
 }

@@ -27,17 +27,9 @@ public class BudgetController
 	
 	//goes to a view that displays a table with all of the budget entries
 	@RequestMapping(value="/budget")
-	public ModelAndView listBudget(ModelAndView model) throws IOException
+	public ModelAndView listBudget() throws IOException
 	{
-		//store the username of the user currently signed in
-		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-		
-		//calls the list() function in the DAO implementation
-	    List<BudgetEntry> budgetList = budgetEntryDAO.list(currentUser);
-	    model.addObject("budgetList", budgetList);
-	    model.setViewName("budget");
-	 
-	    return model;
+	    return new ModelAndView("budget", "total", getTotal());
 	}
 
 	//URL for the xml form of the data, needed for ajax call
@@ -56,24 +48,24 @@ public class BudgetController
 	
 	//save changes to an entry
 	@RequestMapping(value = "/addEntry", method = RequestMethod.POST)
-	public ModelAndView addBudgetEntry(@ModelAttribute BudgetEntry entry) 
+	public ModelAndView addBudgetEntry(@ModelAttribute BudgetEntry entry) throws IOException 
 	{
 	    budgetEntryDAO.insert(entry);
-	    return new ModelAndView("redirect:/");
+	    return new ModelAndView("redirect:/", "total", getTotal());
 	}
 	
 	//delete an entry from the table
 	@RequestMapping(value = "/deleteEntry", method = RequestMethod.POST)
-	public ModelAndView deleteBudgetEntry(HttpServletRequest request)
+	public ModelAndView deleteBudgetEntry(HttpServletRequest request) throws IOException
 	{
 	    int entryId = Integer.parseInt(request.getParameter("id"));
 	    budgetEntryDAO.delete(entryId);
-	    return new ModelAndView("redirect:/");
+	    return new ModelAndView("redirect:/", "total", getTotal());
 	}
 	
 	//edit an existing entry in the table
 	@RequestMapping(value = "/editEntry", method = RequestMethod.GET)
-	public ModelAndView editBudgetEntry(HttpServletRequest request) 
+	public ModelAndView editBudgetEntry(HttpServletRequest request) throws IOException 
 	{
 		//retrieve the existing entry for the given id
 	    int entryId = Integer.parseInt(request.getParameter("id"));
@@ -86,6 +78,17 @@ public class BudgetController
 	    
 	    //update entry
 	    budgetEntryDAO.update(entry);
-	    return new ModelAndView("redirect:/");
+	    return new ModelAndView("redirect:/", "total", getTotal());
+	}
+	
+	public String getTotal() throws IOException
+	{
+		//store the username of the user currently signed in
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		//calls the getTotal() function which obtains the total spent by this user
+	    double total = budgetEntryDAO.getTotal(currentUser);
+	    String stringTotal = String.format("%.2f", total);
+	    return stringTotal;
 	}
 }

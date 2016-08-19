@@ -27,20 +27,17 @@ public class HomeController
 	@RequestMapping(value={"", "/", "/home"})  
     public ModelAndView home() throws IOException 
 	{  
-        double total = getTotal();
-        return new ModelAndView("home", "total", total);  
+        return new ModelAndView("home", "total", getTotal());  
     }
 	
-	//@RequestMapping(value="/total", method = RequestMethod.GET)
-	//@ResponseBody
-	public double getTotal() throws IOException
+	public String getTotal() throws IOException
 	{
 		//store the username of the user currently signed in
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		//calls the getTotal() function which obtains the total spent by this user
 	    double total = budgetEntryDAO.getTotal(currentUser);
-	    
-	    return total;
+	    String stringTotal = String.format("%.2f", total);
+	    return stringTotal;
 	}
 }  
