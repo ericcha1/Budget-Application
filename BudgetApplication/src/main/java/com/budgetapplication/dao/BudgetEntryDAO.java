@@ -12,11 +12,16 @@ import com.budgetapplication.model.BudgetEntry;
 public interface BudgetEntryDAO 
 {
     /**
-     * Update an entry's information, or insert a new entry
-     * if it does not exist.
+     * Insert a new entry into the budget table.
      * @param entry
      */
-    public void insertOrUpdate(BudgetEntry entry);
+    public void insert(BudgetEntry entry);
+    
+    /**
+     * Update an entry's information.
+     * @param entry
+     */
+    public void update(BudgetEntry entry);
     
     /**
      * Remove an entry from the budget table.

@@ -27,26 +27,23 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
  
-    //update entry information, or create new entry if it doesn't exist
+    //insert new entry
     @Override
-    public void insertOrUpdate(BudgetEntry entry) 
+    public void insert(BudgetEntry entry) 
     {
-    	if (entry.getId() > 0) 
-    	{
-            //update
-            String sql = "UPDATE budget_table SET username=?, category=?, amount=? "
-                        + "WHERE id=?";
-            jdbcTemplate.update(sql, entry.getUsername(), entry.getCategory(),
-                    entry.getAmount(), entry.getId());
-        } 
-    	else 
-    	{
-            //insert
-            String sql = "INSERT INTO budget_table (username, category, amount)"
-                        + " VALUES (?, ?, ?)";
-            jdbcTemplate.update(sql, entry.getUsername(), entry.getCategory(),
-                    entry.getAmount());
-        }
+        String sql = "INSERT INTO budget_table (username, category, amount)"
+                    + " VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, entry.getUsername(), entry.getCategory(),
+                entry.getAmount());
+    }
+    
+    //update existing entry
+    public void update(BudgetEntry entry)
+    {
+        String sql = "UPDATE budget_table SET username=?, category=?, amount=? "
+                    + "WHERE id=?";
+        jdbcTemplate.update(sql, entry.getUsername(), entry.getCategory(),
+                entry.getAmount(), entry.getId());
     }
  
     //delete an existing entry

@@ -56,7 +56,7 @@
 <!-- 					</h3> -->
 <%-- 				</c:if> --%>
 			<h3>
-				Total: ${total}
+				Total: $${total}
 			</h3>
 		</sec:authorize>
 	</body>

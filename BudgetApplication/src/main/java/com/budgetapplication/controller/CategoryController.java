@@ -28,10 +28,9 @@ public class CategoryController
 	
 	//goes to a view that displays a table with all of the categories
 	@RequestMapping(value="/category")
-	public ModelAndView listCategory(ModelAndView model) throws IOException
+	public ModelAndView listCategory() throws IOException
 	{
-	    model.setViewName("category");
-	    return model;
+	    return new ModelAndView("category");
 	}
 	
 	//URL for the xml form of the data, needed for ajax call
@@ -44,7 +43,7 @@ public class CategoryController
 	    return catList;
 	}
 	
-	//save changes to an entry
+	//save changes to a category
 	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
 	public ModelAndView addCategory(@ModelAttribute Category cat) 
 	{

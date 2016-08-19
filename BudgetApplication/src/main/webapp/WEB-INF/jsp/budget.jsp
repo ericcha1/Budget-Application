@@ -39,11 +39,12 @@
 			<h1>Budget Table</h1>
 			<form id="buttons">
 			 	Username: <input type="text" name="usernameField" required/>
-<!-- 			 	Category: <input type="text" name="categoryField" required/> -->
 			 	Category: <select id="categories">
 			 		<option></option>
 			 		</select>
-			 	Amount: <input type="number" name="amountField" required/>
+<!-- 			 	Amount: <span class='currency-symbol'>$</span><input type="text" id="number"  -->
+<!-- 			 			class="currency" min="0.01" max="99999.99" value="10.00" pattern="[0-9]*"/> -->
+			 	Amount: <input type="number" name="amountField" step=".01" required/>
 			 	<br><br>
 				<button type="submit" id="add" onclick="addEntry()">Add</button>
 				<button type="button" id="delete" onclick="deleteEntry()">Delete</button>

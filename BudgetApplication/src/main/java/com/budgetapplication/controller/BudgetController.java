@@ -58,7 +58,7 @@ public class BudgetController
 	@RequestMapping(value = "/addEntry", method = RequestMethod.POST)
 	public ModelAndView addBudgetEntry(@ModelAttribute BudgetEntry entry) 
 	{
-	    budgetEntryDAO.insertOrUpdate(entry);
+	    budgetEntryDAO.insert(entry);
 	    return new ModelAndView("redirect:/");
 	}
 	
@@ -81,11 +81,11 @@ public class BudgetController
 	    
 	    //modify the variables for the entry
 	    entry.setUsername(request.getParameter("username"));
-	    entry.setAmount(Integer.parseInt(request.getParameter("amount")));
+	    entry.setAmount(Double.parseDouble(request.getParameter("amount")));
 	    entry.setCategory(request.getParameter("category"));
 	    
 	    //update entry
-	    budgetEntryDAO.insertOrUpdate(entry);
+	    budgetEntryDAO.update(entry);
 	    return new ModelAndView("redirect:/");
 	}
 }

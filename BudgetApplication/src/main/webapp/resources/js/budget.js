@@ -21,12 +21,12 @@ $(document).ready(function()
     	//store the row's information
     	var bUsername = $("td.budgetUsername", this).html();
     	var bCategory = $("td.budgetCategory", this).html();
-    	var bAmount = $("td.budgetAmount", this).html();
+    	var bAmount = $("td.budgetAmount", this).html().replace("$", "");
     	currentId = $("td.budgetId", this).html();
     	
     	//set the fields to the row's data
     	document.getElementsByName("usernameField")[0].value = bUsername;
-    	document.getElementsByName("categoryField")[0].value = bCategory;
+    	document.getElementById("categories").value = bCategory;
     	document.getElementsByName("amountField")[0].value = bAmount;
     	
     	//scroll to top
@@ -59,6 +59,12 @@ $(document).ready(function()
 		  //e.stopPropagation(); 
 		  // only necessary if something above is listening to the (default-)event too
 	});
+	
+	document.getElementsByName("amountField")[0].onblur = function ()
+	{    
+		//when focus is lost from the amount field input, switch it to have two decimal places
+	    this.value = parseFloat(this.value).toFixed(2);
+	}
 }); 
 
 function fillBudgetTable()
@@ -78,7 +84,7 @@ function fillBudgetTable()
 				html += '<tr class="rows"><td class="budgetId">' + val.id + 
 				'</td><td class="budgetUsername">' + val.username + 
 				'</td><td class="budgetCategory">' + val.category + 
-				'</td><td class="budgetAmount">' + val.amount + "</td></tr>";
+				'</td><td class="budgetAmount">$' + val.amount.toFixed(2) + "</td></tr>";
 			});
 			
 			//clear table body, then update
@@ -124,7 +130,7 @@ function addEntry()
 {
 	//store the elements that were filled in
 	var username = document.getElementsByName("usernameField")[0].value;
-	var category = document.getElementsByName("categoryField")[0].value;
+	var category = document.getElementById("categories").value;
 	var amount = document.getElementsByName("amountField")[0].value;
 	
     $.ajax({
@@ -135,6 +141,7 @@ function addEntry()
         {
         	//refill table
         	fillBudgetTable();
+        	clearForm();
         	showAlert("Entry successfully added.", "#4CAF50");
 		},
 		error: function(error)
@@ -156,6 +163,7 @@ function deleteEntry()
         {
         	//refill table
         	fillBudgetTable();
+        	clearForm();
         	showAlert("Entry successfully deleted.", "#4CAF50");
 		},
 		error: function(error)
@@ -170,7 +178,7 @@ function editEntry()
 {
 	//store the elements that were filled in
 	var username = document.getElementsByName("usernameField")[0].value;
-	var category = document.getElementsByName("categoryField")[0].value;
+	var category = document.getElementById("categories").value;
 	var amount = document.getElementsByName("amountField")[0].value;
 	
     $.ajax({
@@ -181,6 +189,7 @@ function editEntry()
         success:function(data)
         {	
         	fillBudgetTable();
+        	clearForm();
         	showAlert("Entry successfully edited.", "#4CAF50");
 		},
 		error: function(error)
@@ -211,6 +220,6 @@ function clearForm()
 	
 	//empty all fields
 	document.getElementsByName("usernameField")[0].value = "";
-	document.getElementsByName("categoryField")[0].value = "";
+	document.getElementById("categories").value = "";
 	document.getElementsByName("amountField")[0].value = "";
 }
