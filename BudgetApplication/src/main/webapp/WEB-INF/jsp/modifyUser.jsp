@@ -29,8 +29,9 @@
 			 --><sec:authorize access="hasRole('ROLE_ADMIN')"><!--
 				 --><li class="dropdown"><a href="javascript:void(0)" class="dropButton" onclick="showAdminMenu()">Admin</a>
 				    <ul class="dropdown-content" id="adminMenu">
-				    	<li><a href="modifyUser">Modify User</a></li><!-- 
-				    	 --><li><a href="category">Budget Categories</a></li>
+				    	<li><a href="modifyUser">Modify User</a></li>
+				    	<li><a href="modifyBudget">Modify Budget</a></li>
+				    	<li><a href="category">Budget Categories</a></li>
 				    </ul></li></sec:authorize><!--
 			 --><li class="userLogged">Total: $${total} &nbsp&nbsp&nbsp Logged in as <sec:authentication property="principal.username" />
 				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>

@@ -37,11 +37,10 @@ td
 
 table, th, td 
 {
-/* 	text-align: left; */
     border: 1px solid white;
 }
 
-form
+form 
 {
 	text-align: center;
 	color: white;

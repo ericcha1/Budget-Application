@@ -19,11 +19,13 @@ $(document).ready(function()
     	modButton.disabled = false;
     	
     	//store the row's information
+    	var bUsername = $("td.budgetUsername", this).html();
     	var bCategory = $("td.budgetCategory", this).html();
     	var bAmount = $("td.budgetAmount", this).html().replace("$", "");
     	currentId = $("td.budgetId", this).html();
     	
     	//set the fields to the row's data
+    	document.getElementsByName("usernameField")[0].value = bUsername;
     	document.getElementById("categories").value = bCategory;
     	document.getElementsByName("amountField")[0].value = bAmount;
     	
@@ -83,7 +85,7 @@ $(document).ready(function()
 function fillBudgetTable()
 {	
 	$.ajax({
-		url: '/BudgetApplication/entries', //see URL in BudgetController.java
+		url: '/BudgetApplication/allEntries', //see URL in BudgetController.java
 		type: 'GET',
 		dataType : 'json',
 		success: function (response)
@@ -94,7 +96,8 @@ function fillBudgetTable()
 			//append fields for each entry in the table
 			$.each(response, function (key, val)
 			{
-				html += '<tr class="rows"><td class="budgetId">' + val.id +
+				html += '<tr class="rows"><td class="budgetId">' + val.id + 
+				'</td><td class="budgetUsername">' + val.username + 
 				'</td><td class="budgetCategory">' + val.category + 
 				'</td><td class="budgetAmount">$' + val.amount.toFixed(2) + 
 				'</td><td>' + val.insertedBy + '</td><td>' + val.insertedOn + '</td></tr>';
@@ -142,20 +145,21 @@ function fillCategories()
 function addEntry()
 {
 	//store the elements that were filled in
+	var username = document.getElementsByName("usernameField")[0].value;
 	var category = document.getElementById("categories").value;
 	var amount = document.getElementsByName("amountField")[0].value;
 	
 	//check for empty strings
-	if(category == "")
+	if(username == "" || category == "")
 	{
 		showAlert("ERROR: Budget entry could not be added. Please fill in every value.", "#f44336");
 		return;
 	}
 	
     $.ajax({
-    	url: "/BudgetApplication/addEntry",
+    	url: "/BudgetApplication/adminAddEntry",
         type:"POST",
-        data: {category: category, amount: amount},
+        data: {username: username, category: category, amount: amount},
         success:function(data)
         {
         	//refill table
@@ -194,21 +198,22 @@ function deleteEntry()
 function editEntry()
 {
 	//store the elements that were filled in
+	var username = document.getElementsByName("usernameField")[0].value;
 	var category = document.getElementById("categories").value;
 	var amount = document.getElementsByName("amountField")[0].value;
 	
 	//check for empty string
-	if(category == "")
+	if(username == "" || category == "")
 	{
 		showAlert("ERROR: Category could not be added. Please fill in an appropriate value.", "#f44336");
 		return;
 	}
 	
     $.ajax({
-    	url: "/BudgetApplication/editEntry",
+    	url: "/BudgetApplication/adminEditEntry",
         type: "GET",
         //currentId is the id of the row that was last clicked
-        data: {id: currentId, category: category, amount: amount},
+        data: {id: currentId, username: username, category: category, amount: amount},
         success:function(data)
         {	
         	fillBudgetTable();
@@ -240,6 +245,7 @@ function clearForm()
 	currentId = 0;
 	
 	//empty all fields
+	document.getElementsByName("usernameField")[0].value = "";
 	document.getElementById("categories").value = "";
 	document.getElementsByName("amountField")[0].value = "";
 }

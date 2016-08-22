@@ -25,11 +25,18 @@ public class BudgetController
 	@Autowired
     private BudgetEntryDAO budgetEntryDAO;
 	
-	//goes to a view that displays a table with all of the budget entries
+	//goes to a view that displays a table with the current user's budget entries
 	@RequestMapping(value="/budget")
 	public ModelAndView listBudget() throws IOException
 	{
 	    return new ModelAndView("budget", "total", getTotal());
+	}
+	
+	//goes to a view that displays a table with the current user's budget entries
+	@RequestMapping(value="/modifyBudget")
+	public ModelAndView allBudgets() throws IOException
+	{
+	    return new ModelAndView("modifyBudget", "total", getTotal());
 	}
 
 	//URL for the xml form of the data, needed for ajax call
@@ -46,9 +53,34 @@ public class BudgetController
 	    return budgetList;
 	}
 	
+	//URL for the xml form of the data, needed for ajax call
+	@RequestMapping(value="/allEntries", method = RequestMethod.GET)
+	@ResponseBody
+	public List<BudgetEntry> getAllList() throws IOException
+	{
+		//calls the list() function in the DAO implementation
+	    List<BudgetEntry> budgetList = budgetEntryDAO.list();
+	    
+	    return budgetList;
+	}
+	
 	//save changes to an entry
 	@RequestMapping(value = "/addEntry", method = RequestMethod.POST)
 	public ModelAndView addBudgetEntry(@ModelAttribute BudgetEntry entry) throws IOException 
+	{
+		//store the username of the user currently signed in
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		//automatically set username for non-admin insertion
+		entry.setInsertedBy(currentUser);
+		entry.setUsername(currentUser);
+	    budgetEntryDAO.insert(entry);
+	    return new ModelAndView("redirect:/", "total", getTotal());
+	}
+	
+	//save changes to an entry from admin view
+	@RequestMapping(value = "/adminAddEntry", method = RequestMethod.POST)
+	public ModelAndView adminAddEntry(@ModelAttribute BudgetEntry entry) throws IOException 
 	{
 		//store the username of the user currently signed in
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -67,6 +99,24 @@ public class BudgetController
 	    return new ModelAndView("redirect:/", "total", getTotal());
 	}
 	
+	//edit an existing entry in the table from admin view
+	@RequestMapping(value = "/adminEditEntry", method = RequestMethod.GET)
+	public ModelAndView adminEditEntry(HttpServletRequest request) throws IOException 
+	{
+		//retrieve the existing entry for the given id
+	    int entryId = Integer.parseInt(request.getParameter("id"));
+	    BudgetEntry entry = budgetEntryDAO.get(entryId);
+	    
+	    //modify the variables for the entry
+	    entry.setUsername(request.getParameter("username"));
+	    entry.setAmount(Double.parseDouble(request.getParameter("amount")));
+	    entry.setCategory(request.getParameter("category"));
+	    
+	    //update entry
+	    budgetEntryDAO.update(entry);
+	    return new ModelAndView("redirect:/", "total", getTotal());
+	}
+	
 	//edit an existing entry in the table
 	@RequestMapping(value = "/editEntry", method = RequestMethod.GET)
 	public ModelAndView editBudgetEntry(HttpServletRequest request) throws IOException 
@@ -76,7 +126,8 @@ public class BudgetController
 	    BudgetEntry entry = budgetEntryDAO.get(entryId);
 	    
 	    //modify the variables for the entry
-	    entry.setUsername(request.getParameter("username"));
+	    //automatically set username for non-admin edits
+	    entry.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 	    entry.setAmount(Double.parseDouble(request.getParameter("amount")));
 	    entry.setCategory(request.getParameter("category"));
 	    
