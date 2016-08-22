@@ -37,8 +37,12 @@ td
 
 table, th, td 
 {
-/* 	text-align: left; */
     border: 1px solid white;
+}
+
+#budgetTable tr > *:nth-child(1) 
+{
+    display: none;
 }
 
 form 

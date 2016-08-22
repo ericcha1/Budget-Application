@@ -19,6 +19,9 @@ $(document).ready(function()
     	delButton.disabled = false;
     	modButton.disabled = false;
     	
+    	//username is not mutable
+    	document.getElementsByName("usernameField")[0].disabled = true;
+    	
     	//store the row's information
     	var fillUser = $("td.username", this).html();
     	var fillPass = $("td.password", this).html();
@@ -49,6 +52,7 @@ $(document).ready(function()
     	delButton.disabled = true;
     	modButton.disabled = true;
     	currentUser = "";
+    	document.getElementsByName("usernameField")[0].disabled = false;
     });
 	
     $("#buttons").submit(function(e) 
@@ -59,6 +63,7 @@ $(document).ready(function()
     	delButton.disabled = true;
     	modButton.disabled = true;
     	currentUser = "";
+    	document.getElementsByName("usernameField")[0].disabled = false;
     	
     	//prevent normal submission and display success/fail alerts
 		e.preventDefault();
@@ -72,6 +77,7 @@ $(document).ready(function()
     	delButton.disabled = true;
     	modButton.disabled = true;
     	currentUser = "";
+    	document.getElementsByName("usernameField")[0].disabled = false;
 	});
     
 	//table setup 
@@ -98,7 +104,7 @@ function fillUserTable()
 				+ '</td><td class="name">' + val.name + '</td><td class="role">'
 				+ val.role + '</td><td class="enabled">' + val.enabled 
 				+ '</td><td class="email">' + val.email + '</td><td>' 
-				+ val.insertedBy + '</td><td>' + val.insertedOn + "</td></tr>";
+				+ val.insertedBy + '</td><td>' + val.insertedOn + '</td></tr>';
 			});
 			
 			//clear table body, then update

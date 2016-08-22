@@ -4,23 +4,20 @@ ul
     margin: 0 auto;
     padding: 0;
 	line-height: 40px;
-    overflow: hidden;
-	border: 1px solid #e7e7e7;
-/* 	position: absolute; */
+	
+	/* box for nav bar */
+/*     overflow: hidden; */
+/* 	border: 1px solid #e7e7e7; */
 	text-align:center;
-/* 	display: inline block;	 */
 }
 
 li 
 {
 	display: inline;
-/*     float: left; */
-/*     border-right: 1px solid #e7e7e7; */
 }
 
 li.userLogged
 {
-/* 	display: inline; */
     color: white;
     text-align: center;
     padding: 12px 14px;
@@ -29,15 +26,8 @@ li.userLogged
     border: 1px solid #e7e7e7;
 }
 
-li:last-child 
-{
-    border-right: none;
-}
-
 li a
 {
-/* 	padding:0 30px; */
-/*     display: block; */
     color: white;
     text-align: center;
     padding: 12px 14px;
@@ -65,7 +55,6 @@ li.selected a
 .dropdown 
 {
     display: inline-block;
-/*     position: absolute; */
 }
 
 .dropdown-content 

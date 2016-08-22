@@ -82,7 +82,7 @@ public class UserController
 
 	//add a user
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public ModelAndView saveBudgetEntry(@ModelAttribute User user) throws IOException 
+	public ModelAndView addUser(@ModelAttribute User user) throws IOException 
 	{
 		//store the username of the user currently signed in
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();		
@@ -106,8 +106,7 @@ public class UserController
 	public ModelAndView editUser(HttpServletRequest request) throws IOException 
 	{
 		//retrieve the existing user for the given username
-		String username = request.getParameter("username");
-	    User user = userDAO.get(username);
+	    User user = userDAO.get(request.getParameter("username"));
 	    
 	    //modify the variables for the user
 	    user.setPassword(request.getParameter("password"));

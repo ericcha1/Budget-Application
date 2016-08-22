@@ -44,11 +44,12 @@
 				<thead>
 					<tr>
 						<th>Username</th>
-						<th>Password</th>
 						<th>Name</th>
 						<th>Role</th>
 						<th>Enabled</th>
 						<th>Email</th>
+						<th>Inserted By</th>
+						<th>Inserted On</th>
 					</tr>
 				</thead>
 				

@@ -20,9 +20,9 @@ function loadUser()
 			$.each(response, function (key, val)
 			{
 				html += '<tr><td>' + val.username + '</td><td>'
-				+ val.password + '</td><td>' + val.name + '</td><td>' 
-				+ val.role + '</td><td>' + val.enabled + '</td><td>'
-				+ val.email + '</td></tr>';
+				+ val.name + '</td><td>' + val.role + '</td><td>' 
+				+ val.enabled + '</td><td>' + val.email + '</td><td>' 
+				+ val.insertedBy + '</td><td>' + val.insertedOn + '</td></tr>';
 			});
 			
 			//clear table body, then update
@@ -50,9 +50,9 @@ function fillUserTable()
 			$.each(response, function (key, val)
 			{
 				html += '<tr><td>' + val.username + '</td><td>'
-				+ val.password + '</td><td>' + val.name + '</td><td>' 
-				+ val.role + '</td><td>' + val.enabled + '</td><td>'
-				+ val.email + '</td></tr>';
+				+ val.name + '</td><td>' + val.role + '</td><td>' 
+				+ val.enabled + '</td><td>' + val.email + '</td><td>' 
+				+ val.insertedBy + '</td><td>' + val.insertedOn + '</td></tr>';
 			});
 			
 			//clear table body, then update
@@ -83,9 +83,9 @@ function searchUser()
 			$.each(response, function (key, val)
 			{
 				html += '<tr><td>' + val.username + '</td><td>'
-				+ val.password + '</td><td>' + val.name + '</td><td>' 
-				+ val.role + '</td><td>' + val.enabled + '</td><td>'
-				+ val.email + '</td></tr>';
+				+ val.name + '</td><td>' + val.role + '</td><td>' 
+				+ val.enabled + '</td><td>' + val.email + '</td><td>' 
+				+ val.insertedBy + '</td><td>' + val.insertedOn + '</td></tr>';
 			});
 			
 			//clear table body, then update
