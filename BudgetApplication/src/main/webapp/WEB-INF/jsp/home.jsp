@@ -10,6 +10,7 @@
 		<script src="<c:url value="/resources/js/jquery-3.0.0.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery-latest.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery.tablesorter.js" />"></script>
+		<script type="text/javascript" src="<c:url value="/resources/js/navBar.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/home.js"/>"></script>
 	</head>
 

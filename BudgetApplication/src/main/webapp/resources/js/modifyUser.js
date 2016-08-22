@@ -53,17 +53,34 @@ $(document).ready(function()
 	
     $("#buttons").submit(function(e) 
 	{
+    	//reset page
+		clearForm();
+    	addButton.disabled = false;
+    	delButton.disabled = true;
+    	modButton.disabled = true;
+    	currentUser = "";
+    	
+    	//prevent normal submission and display success/fail alerts
 		e.preventDefault();
 	});
     
-	//call function  
+    $("#delete").click(function(e) 
+	{
+    	//reset page
+		clearForm();
+    	addButton.disabled = false;
+    	delButton.disabled = true;
+    	modButton.disabled = true;
+    	currentUser = "";
+	});
+    
+	//table setup 
 	fillUserTable();
 	$("#userTable").tablesorter();
 });
 
 function fillUserTable()
 {	
-	//ajax call
 	$.ajax({
 		url: '/BudgetApplication/userData', //see URL in UserController.java
 		type: 'GET',
@@ -103,6 +120,13 @@ function addUser()
 	var role = document.getElementsByName("roleField")[0].value;
 	var enabled = document.getElementsByName("enabledField")[0].value;
 	var email = document.getElementsByName("emailField")[0].value;
+	
+	//check for empty strings
+	if(username == "" || password == "" || name == "" || role == "" || enabled == "" || email == "")
+	{
+		showAlert("ERROR: Category could not be added. Please fill in every value.", "#f44336");
+		return;
+	}
 	
     $.ajax({
     	url: "/BudgetApplication/addUser",
@@ -153,6 +177,13 @@ function editUser()
 	var role = document.getElementsByName("roleField")[0].value;
 	var enabled = document.getElementsByName("enabledField")[0].value;
 	var email = document.getElementsByName("emailField")[0].value;
+	
+	//check for empty string
+	if(username == "" || password == "" || name == "" || role == "" || enabled == "" || email == "")
+	{
+		showAlert("ERROR: Category could not be added. Please fill in every value.", "#f44336");
+		return;
+	}
 	
     $.ajax({
     	url: "/BudgetApplication/editUser",

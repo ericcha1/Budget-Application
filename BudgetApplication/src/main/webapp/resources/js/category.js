@@ -18,17 +18,20 @@ $(document).ready(function()
     	//reset defaults
     	addButton.disabled = false;
     	saveButton.disabled = true;
-    	currentId = 0;
+    	currentCategory = "";
     });
-
+	
+	//submit allows required tag to work in html
+	$("#buttons").submit(function(e) 
+	{
+		//prevent normal submission and display success/fail alerts
+		e.preventDefault();
+	});
+	
+	//table setup
 	fillCategoryTable();
 	$("#categoryTable").tablesorter();
-	
-//	$("#buttons").submit(function(e) 
-//	{			
-//		e.preventDefault();
-//	});
-}); 
+});
 
 function fillCategoryTable()
 {	
@@ -45,11 +48,11 @@ function fillCategoryTable()
 			$.each(response, function (key, val)
 			{
 				html += '<tr class="rows"><td>' + val.category + '</td><td>' 
-				+ val.insertedBy + '</td><td>' +val.insertedOn + 
-				'</td><td><button type="button" onclick="editCategory(\'' + val.category 
-				+ '\')">Edit</button>&nbsp;&nbsp;&nbsp;&nbsp;' +
-				'<button type="button" onclick="deleteCategory(\'' + val.category 
-				+ '\')">Delete</button></td></tr>';
+				+ val.insertedBy + '</td><td>' +val.insertedOn 
+				+ '</td><td><button type="button" onclick="editCategory(\'' 
+				+ val.category + '\')">Edit</button>&nbsp;&nbsp;&nbsp;&nbsp;' 
+				+ '<button type="button" onclick="deleteCategory(\'' 
+				+ val.category + '\')">Delete</button></td></tr>';
 			});
 			
 			//clear table body, then update
@@ -67,6 +70,13 @@ function addCategory()
 {
 	//store the text that was filled in
 	var category = document.getElementsByName("categoryField")[0].value;
+	
+	//check for empty string
+	if(category == "")
+	{
+		showAlert("ERROR: Category could not be added. Please fill in an appropriate value.", "#f44336");
+		return;
+	}
 	
     $.ajax({
     	url: "/BudgetApplication/addCategory",
@@ -131,6 +141,13 @@ function saveCategory()
 	//store the text that was filled in
 	var category = document.getElementsByName("categoryField")[0].value;
 	
+	//check for empty string
+	if(category == "")
+	{
+		showAlert("ERROR: Category could not be added. Please fill in an appropriate value.", "#f44336");
+		return;
+	}
+	
     $.ajax({
     	url: "/BudgetApplication/editCategory",
         type: "GET",
@@ -164,13 +181,11 @@ function showAlert(msg, color)
 
 function clearForm()
 {
-	//reset buttons
+	//reset buttons and category
 	addButton.disabled = false;
 	saveButton.disabled = true;
-	
-	//reset category
 	currentCategory = "";
 	
-	//empty all fields
+	//empty input field
 	document.getElementsByName("categoryField")[0].value = "";
 }

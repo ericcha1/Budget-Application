@@ -18,7 +18,7 @@
 		<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
 			<div class="alert" id="alert">
 				<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-			  	<div id="message">This is an alert box.</div>
+			  	<div id="message"></div>
 			</div>
 			<ul id="navBar">
 				<li><a href="home" class="active">Home</a></li><!-- 
@@ -42,8 +42,6 @@
 			 	Category: <select id="categories">
 			 		<option></option>
 			 		</select>
-<!-- 			 	Amount: <span class='currency-symbol'>$</span><input type="text" id="number"  -->
-<!-- 			 			class="currency" min="0.01" max="99999.99" value="10.00" pattern="[0-9]*"/> -->
 			 	Amount: <input type="number" name="amountField" step=".01" required/>
 			 	<br><br>
 				<button type="submit" id="add" onclick="addEntry()">Add</button>

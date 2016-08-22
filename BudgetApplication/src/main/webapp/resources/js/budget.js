@@ -43,28 +43,43 @@ $(document).ready(function()
     	modButton.disabled = true;
     	currentId = 0;
     });
-
+	
+	$("#buttons").submit(function(e) 
+	{
+		clearForm();
+    	
+    	//reset defaults
+    	addButton.disabled = false;
+    	delButton.disabled = true;
+    	modButton.disabled = true;
+    	currentId = 0;
+		
+		//prevent normal submission and display success/fail alerts
+		e.preventDefault(); 
+	});
+	
+	$("#delete").click(function(e) 
+	{
+		clearForm();
+    	
+    	//reset defaults
+    	addButton.disabled = false;
+    	delButton.disabled = true;
+    	modButton.disabled = true;
+    	currentId = 0;
+	});
+	
+	//when focus is lost from the amount field input, 
+	//switch it to have two decimal places
+	document.getElementsByName("amountField")[0].onblur = function ()
+	{    
+	    this.value = parseFloat(this.value).toFixed(2);
+	}
+	
 	//table and input setup
     addCategories();
 	fillBudgetTable();
 	$("#budgetTable").tablesorter();
-	
-	$("#buttons").submit(function(e) 
-	{
-		//need to check the string input because empty string is valid
-		//if(document.getElementsByName("categoryField")[0].value == "")
-			
-		e.preventDefault(); 
-		  
-		  //e.stopPropagation(); 
-		  // only necessary if something above is listening to the (default-)event too
-	});
-	
-	document.getElementsByName("amountField")[0].onblur = function ()
-	{    
-		//when focus is lost from the amount field input, switch it to have two decimal places
-	    this.value = parseFloat(this.value).toFixed(2);
-	}
 }); 
 
 function fillBudgetTable()
@@ -134,6 +149,13 @@ function addEntry()
 	var category = document.getElementById("categories").value;
 	var amount = document.getElementsByName("amountField")[0].value;
 	
+	//check for empty strings
+	if(username == "" || category == "")
+	{
+		showAlert("ERROR: Budget entry could not be added. Please fill in every value.", "#f44336");
+		return;
+	}
+	
     $.ajax({
     	url: "/BudgetApplication/addEntry",
         type:"POST",
@@ -142,7 +164,6 @@ function addEntry()
         {
         	//refill table
         	fillBudgetTable();
-        	clearForm();
         	showAlert("Entry successfully added.", "#4CAF50");
 		},
 		error: function(error)
@@ -164,7 +185,6 @@ function deleteEntry()
         {
         	//refill table
         	fillBudgetTable();
-        	clearForm();
         	showAlert("Entry successfully deleted.", "#4CAF50");
 		},
 		error: function(error)
@@ -182,6 +202,13 @@ function editEntry()
 	var category = document.getElementById("categories").value;
 	var amount = document.getElementsByName("amountField")[0].value;
 	
+	//check for empty string
+	if(category == "" || category == "")
+	{
+		showAlert("ERROR: Category could not be added. Please fill in an appropriate value.", "#f44336");
+		return;
+	}
+	
     $.ajax({
     	url: "/BudgetApplication/editEntry",
         type: "GET",
@@ -190,7 +217,6 @@ function editEntry()
         success:function(data)
         {	
         	fillBudgetTable();
-        	clearForm();
         	showAlert("Entry successfully edited.", "#4CAF50");
 		},
 		error: function(error)
@@ -199,7 +225,6 @@ function editEntry()
 	        showAlert("ERROR: Entry could not be edited.", "#f44336");
 		}
     });
-//    showAlert();
 }
 
 function showAlert(msg, color)
