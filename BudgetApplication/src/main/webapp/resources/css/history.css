@@ -1,0 +1,48 @@
+body
+{
+	background-color: rgb(38, 38, 38);
+}
+
+h1
+{
+	color: white;
+	text-align: center;
+}
+
+h2
+{
+	color: white;
+	text-align: center;
+}
+
+h3
+{
+	color: white;
+	text-align:center;
+}
+
+
+th
+{
+	padding: 10px;
+	text-align: center;
+	color: white;
+}
+
+td
+{
+	padding: 10px;
+	text-align: left;
+	color: white;
+}
+
+table, th, td 
+{
+    border: 1px solid white;
+}
+
+form 
+{
+	text-align: center;
+	color: white;
+}

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html>
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/budget.css"/> "/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/entries.css"/> "/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/navBar.css"/> "/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/customAlert.css"/> "/>
 	<head>
@@ -10,7 +10,7 @@
 		<script src="<c:url value="/resources/js/jquery-3.0.0.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery-latest.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery.tablesorter.js" />"></script>
-		<script type="text/javascript" src="<c:url value="/resources/js/budget.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/resources/js/entries.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/navBar.js"/>"></script>
 	</head>
 
@@ -23,7 +23,9 @@
 			<ul id="navBar">
 				<li><a href="home" class="active">Home</a></li><!-- 
 			 --><li><a href="user" class="active">Profile</a></li><!-- 
-			 --><li class="selected"><a href="budget" class="active">Budget</a></li><!-- 
+			 --><li class="selected"><a href="budget" class="active">Budget</a></li><!--
+			 --><li><a href="entries" class="active">Entries</a></li><!--
+			 --><li><a href="history" class="active">History</a></li><!-- 
 			 --><li><a href="help" class="active">Help</a></li><!-- 
 			 --><li><a href="about" class="active">About</a></li><!-- 
 			 --><sec:authorize access="hasRole('ROLE_ADMIN')"><!--

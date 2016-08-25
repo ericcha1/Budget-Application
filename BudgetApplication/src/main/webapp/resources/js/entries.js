@@ -83,7 +83,7 @@ $(document).ready(function()
 function fillBudgetTable()
 {	
 	$.ajax({
-		url: '/BudgetApplication/entries', //see URL in BudgetController.java
+		url: '/BudgetApplication/budgetEntries', //see URL in BudgetController.java
 		type: 'GET',
 		dataType : 'json',
 		success: function (response)

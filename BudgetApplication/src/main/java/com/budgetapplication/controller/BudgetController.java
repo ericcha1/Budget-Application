@@ -26,10 +26,10 @@ public class BudgetController
     private BudgetEntryDAO budgetEntryDAO;
 	
 	//goes to a view that displays a table with the current user's budget entries
-	@RequestMapping(value="/budget")
+	@RequestMapping(value="/entries")
 	public ModelAndView listBudget() throws IOException
 	{
-	    return new ModelAndView("budget", "total", getTotal());
+	    return new ModelAndView("entries", "total", getTotal());
 	}
 	
 	//goes to a view that displays a table with the current user's budget entries
@@ -40,7 +40,7 @@ public class BudgetController
 	}
 
 	//URL for the xml form of the data, needed for ajax call
-	@RequestMapping(value="/entries", method = RequestMethod.GET)
+	@RequestMapping(value="/budgetEntries", method = RequestMethod.GET)
 	@ResponseBody
 	public List<BudgetEntry> getList() throws IOException
 	{

@@ -1,5 +1,6 @@
 package com.budgetapplication.daoimpl;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -86,6 +87,35 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
     {
     	//append the username to the query
     	String sql = "SELECT * FROM budget_table WHERE username=\"" + currentUsername + "\"";
+
+        List<BudgetEntry> entryList = jdbcTemplate.query(sql, new RowMapper<BudgetEntry>() 
+        {
+        	@Override
+            public BudgetEntry mapRow(ResultSet rs, int rowNum) throws SQLException 
+            {
+                BudgetEntry entry = new BudgetEntry();
+     
+                entry.setId(rs.getInt("id"));
+                entry.setUsername(rs.getString("username"));
+                entry.setCategory(rs.getString("category"));
+                entry.setAmount(rs.getDouble("amount"));
+                entry.setInsertedBy(rs.getString("insertedBy"));
+                entry.setInsertedOn(rs.getDate("insertedOn").toString());
+                return entry;
+            }
+        });
+     
+        return entryList;
+    }
+    
+    //returns a list of all the entries corresponding to a certain username between two dates
+    @Override
+    public List<BudgetEntry> list(String currentUsername, Date start, Date end) 
+    {
+    	//append the username to the query
+    	String sql = "SELECT * FROM budget_table WHERE username='" + currentUsername 
+    			+ "' AND insertedOn BETWEEN '" + start.toString() + "' AND '" 
+    			+ end.toString() + "'";
 
         List<BudgetEntry> entryList = jdbcTemplate.query(sql, new RowMapper<BudgetEntry>() 
         {

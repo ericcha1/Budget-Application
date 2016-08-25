@@ -20,6 +20,8 @@
 				<li class="selected"><a href="home" class="active">Home</a></li><!-- 
 			 --><li><a href="user" class="active">Profile</a></li><!-- 
 			 --><li><a href="budget" class="active">Budget</a></li><!-- 
+			 --><li><a href="entries" class="active">Entries</a></li><!--
+			 --><li><a href="history" class="active">History</a></li><!-- 
 			 --><li><a href="help" class="active">Help</a></li><!-- 
 			 --><li><a href="about" class="active">About</a></li><!-- 
 			 --><sec:authorize access="hasRole('ROLE_ADMIN')"><!--

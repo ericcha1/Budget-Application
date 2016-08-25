@@ -55,26 +55,30 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
         return dataSource;
     }
     
-    //returns the DAO implementation of the User model
-    //this bean is injected in the controller class
+    //returns the DAO implementation of the models
+    //these beans are injected in the controller classes
     @Bean
     public UserDAO getUserDAO() 
     {
         return new UserDAOImpl(getDataSource());
     }
     
-    //returns the DAO implementation of the BudgetEntry model
     @Bean
     public BudgetEntryDAO getBudgetEntryDAO() 
     {
         return new BudgetEntryDAOImpl(getDataSource());
     }
     
-    //returns the DAO implementation of the Category model
     @Bean
     public CategoryDAO getCategoryDAO() 
     {
         return new CategoryDAOImpl(getDataSource());
+    }
+    
+    @Bean
+    public DurationDAO getDurationDAO() 
+    {
+        return new DurationDAOImpl(getDataSource());
     }
     
 }

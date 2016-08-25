@@ -1,5 +1,6 @@
 package com.budgetapplication.dao;
 
+import java.sql.Date;
 import java.util.List;
  
 import com.budgetapplication.model.BudgetEntry;
@@ -49,6 +50,14 @@ public interface BudgetEntryDAO
      * @return List<BudgetEntry>
      */
 	public List<BudgetEntry> list(String username);
+	
+	/**
+     * Returns a list of all entries corresponding to a
+     * username between two dates.
+     * @param username, start. end
+     * @return List<BudgetEntry>
+     */
+	public List<BudgetEntry> list(String username, Date start, Date end);
 	
 	/**
      * Returns a list of five most recent entries in a
