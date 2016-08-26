@@ -52,7 +52,7 @@ public class HistoryController
 	    return durationList;
 	}
 	
-	//URL for the xml form of the data, needed for ajax call
+	//gets a list of  entries that go between the start and end dates
 	@RequestMapping(value="/dateEntries", method = RequestMethod.GET)
 	@ResponseBody
 	public List<BudgetEntry> getEntries(HttpServletRequest request) throws IOException

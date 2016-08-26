@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html>
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/entries.css"/> "/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/budget.css"/> "/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/navBar.css"/> "/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/customAlert.css"/> "/>
 	<head>
@@ -10,7 +10,7 @@
 		<script src="<c:url value="/resources/js/jquery-3.0.0.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery-latest.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery.tablesorter.js" />"></script>
-		<script type="text/javascript" src="<c:url value="/resources/js/entries.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/resources/js/budget.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/navBar.js"/>"></script>
 	</head>
 
@@ -23,8 +23,8 @@
 			<ul id="navBar">
 				<li><a href="home" class="active">Home</a></li><!-- 
 			 --><li><a href="user" class="active">Profile</a></li><!-- 
-			 --><li><a href="budget" class="active">Budget</a></li><!--
-			 --><li class="selected"><a href="entries" class="active">Entries</a></li><!--
+			 --><li class="selected"><a href="budget" class="active">Budget</a></li><!--
+			 --><li><a href="entries" class="active">Entries</a></li><!--
 			 --><li><a href="history" class="active">History</a></li><!-- 
 			 --><li><a href="help" class="active">Help</a></li><!-- 
 			 --><li><a href="about" class="active">About</a></li><!-- 
@@ -39,19 +39,26 @@
 				<li><a href="<c:url value="/j_spring_security_logout" />" class="active">Logout</a></li>
 			</ul>
 			<br><br>
-			<h1>Budget Table</h1><br>
+			<h1>Budget</h1>
+			<form id="dateForm">
+				Starting Date: <input type="date" name="startDate" required/> &nbsp
+				End Date: <input type="date" name="endDate" required/><br><br>
+				<button type="submit" id="start">Start Budget</button>
+			</form>
+			<br><br>
+			<h1>Limit Table</h1><br>
 			<form id="buttons">
 			 	Category: <select id="categories">
 			 		<option></option>
 			 		</select>
 			 	Amount: <input type="number" name="amountField" step=".01" required/>
 			 	<br><br>
-				<button type="submit" id="add" onclick="addEntry()">Add</button>
-				<button type="button" id="delete" onclick="deleteEntry()">Delete</button>
-				<button type="submit" id="edit" onclick="editEntry()">Modify</button>
+				<button type="submit" id="add" onclick="addLimit()">Add</button>
+				<button type="button" id="delete" onclick="deleteLimit()">Delete</button>
+				<button type="submit" id="edit" onclick="editLimit()">Modify</button>
 				<button type="button" id="clear">Clear</button>
 			</form><br>
-			<table id="budgetTable" cellspacing="0" style="width:50%" align="center" class="tablesorter">
+			<table id="limitTable" cellspacing="0" style="width:50%" align="center" class="tablesorter">
 				<thead>
 					<tr>
 						<th>ID</th>

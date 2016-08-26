@@ -68,7 +68,7 @@ public interface BudgetEntryDAO
 	public List<BudgetEntry> listRecent(String username);
 	
 	/**
-	 * Returns the total spendings of a user,
+	 * Returns the total spendings of a user
 	 * @param username
 	 * @return double
 	 */

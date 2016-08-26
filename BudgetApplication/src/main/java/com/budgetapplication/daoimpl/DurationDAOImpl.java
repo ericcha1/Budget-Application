@@ -25,14 +25,43 @@ public class DurationDAOImpl implements DurationDAO
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
  
-    //insert new duration
+    //insert new duration and return the id
     @Override
-    public void insert(Duration duration) 
+    public int insert(Duration duration) 
     {
         String sql = "INSERT INTO duration_table (username, startDate, endDate, insertedBy)"
                     + " VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, duration.getUsername(), duration.getStartDate(),
                 duration.getEndDate(), duration.getInsertedBy());
+        
+        //extract the row just inserted and return id
+        String sql2 = "SELECT id FROM duration_table WHERE username='" + duration.getUsername()
+        			+ "' AND startDate='" + duration.getStartDate().toString() + "' AND endDate='" 
+        			+ duration.getEndDate().toString() + "'";
+        
+        Duration dur = jdbcTemplate.query(sql2, new ResultSetExtractor<Duration>() 
+        {
+            @Override
+            public Duration extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                if (rs.next()) 
+                {
+                    Duration duration = new Duration();
+                    
+                    duration.setId(rs.getInt("id"));
+                    duration.setUsername(rs.getString("username"));
+                    duration.setStartDate(rs.getDate("startDate"));
+                    duration.setEndDate(rs.getDate("endDate"));
+                    duration.setInsertedBy(rs.getString("insertedBy"));
+                    duration.setInsertedOn(rs.getDate("insertedOn").toString());
+                    return duration;
+                }
+     
+                return null;
+            }
+        });
+        
+        return dur.getId();
     }
     
     //update existing duration
@@ -111,7 +140,6 @@ public class DurationDAOImpl implements DurationDAO
     	String sql = "SELECT * FROM duration_table WHERE id=" + id;
         return jdbcTemplate.query(sql, new ResultSetExtractor<Duration>() 
         {
-     
             @Override
             public Duration extractData(ResultSet rs) throws SQLException, DataAccessException 
             {

@@ -21,6 +21,12 @@ public interface UserDAO
 	 * @param user
 	 */
     public void update(User user);
+    
+    /**
+	 * Update a user's current budget duration id.
+	 * @param user
+	 */
+    public void updateDuration(User user);
      
     /**
      * Remove an user from the user table.

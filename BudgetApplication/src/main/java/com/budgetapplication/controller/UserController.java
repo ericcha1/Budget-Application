@@ -89,7 +89,7 @@ public class UserController
 		user.setInsertedBy(currentUser);
 		
 	    userDAO.insert(user);
-	    return new ModelAndView("redirect:/", "total", getTotal());
+	    return new ModelAndView("redirect:/");
 	}
 	
 	//delete a user from the table
@@ -98,7 +98,7 @@ public class UserController
 	{
 	    String username = request.getParameter("username");
 	    userDAO.delete(username);
-	    return new ModelAndView("redirect:/", "total", getTotal());
+	    return new ModelAndView("redirect:/");
 	}
 	
 	//edit an existing user in the table
@@ -117,7 +117,7 @@ public class UserController
 	    
 	    //update user
 	    userDAO.update(user);
-	    return new ModelAndView("redirect:/", "total", getTotal());
+	    return new ModelAndView("redirect:/");
 	}
 	
 	public String getTotal() throws IOException

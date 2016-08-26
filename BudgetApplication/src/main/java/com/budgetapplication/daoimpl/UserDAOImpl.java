@@ -47,6 +47,12 @@ public class UserDAOImpl implements UserDAO
         		user.getEnabled(), user.getEmail(), user.getUsername()); 
         //is username mutable?
     }
+    
+    public void updateDuration(User user)
+    {
+        String sql = "UPDATE user_table SET durationId=? WHERE username=?";
+        jdbcTemplate.update(sql, user.getDurationId(), user.getUsername()); 
+    }
  
     //delete an existing user
     @Override
@@ -78,7 +84,7 @@ public class UserDAOImpl implements UserDAO
                     user.setEmail(rs.getString("email"));
                     user.setInsertedBy(rs.getString("insertedBy"));
                     user.setInsertedOn(rs.getDate("insertedOn").toString());
-                    
+                    user.setDurationId(rs.getInt("durationId"));
                     return user;
                 }
      
@@ -109,7 +115,7 @@ public class UserDAOImpl implements UserDAO
                     user.setEmail(rs.getString("email"));
                     user.setInsertedBy(rs.getString("insertedBy"));
                     user.setInsertedOn(rs.getDate("insertedOn").toString());
-                    
+                    user.setDurationId(rs.getInt("durationId"));
                     return user;
                 }
      
@@ -139,7 +145,7 @@ public class UserDAOImpl implements UserDAO
                 user.setEmail(rs.getString("email"));
                 user.setInsertedBy(rs.getString("insertedBy"));
                 user.setInsertedOn(rs.getDate("insertedOn").toString());
-                
+                user.setDurationId(rs.getInt("durationId"));
                 return user;
             }
         });
@@ -152,7 +158,7 @@ public class UserDAOImpl implements UserDAO
     public List<User> list(String currentUsername) 
     {
     	//append the username to the query
-    	String sql = "SELECT * FROM user_table WHERE username=\"" + currentUsername + "\"";
+    	String sql = "SELECT * FROM user_table WHERE username='" + currentUsername + "'";
 
         List<User> userList = jdbcTemplate.query(sql, new RowMapper<User>() 
         {
@@ -169,7 +175,7 @@ public class UserDAOImpl implements UserDAO
                 user.setEmail(rs.getString("email"));
                 user.setInsertedBy(rs.getString("insertedBy"));
                 user.setInsertedOn(rs.getDate("insertedOn").toString());
-                
+                user.setDurationId(rs.getInt("durationId"));
                 return user;
             }
         });
@@ -200,7 +206,7 @@ public class UserDAOImpl implements UserDAO
 	            user.setEmail(rs.getString("email"));
 	            user.setInsertedBy(rs.getString("insertedBy"));
                 user.setInsertedOn(rs.getDate("insertedOn").toString());
-                
+                user.setDurationId(rs.getInt("durationId"));
 	            return user;
 	        }
 	    });

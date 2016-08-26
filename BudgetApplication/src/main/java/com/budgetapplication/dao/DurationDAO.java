@@ -14,8 +14,9 @@ public interface DurationDAO
     /**
      * Insert a new duration into the table.
      * @param duration
+     * @return int
      */
-    public void insert(Duration duration);
+    public int insert(Duration duration);
     
     /**
      * Update an duration's information.

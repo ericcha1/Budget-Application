@@ -14,6 +14,7 @@ public class User
     private String email;
 	private String insertedBy;
 	private String insertedOn;
+	private int durationId;
  
     //default constructor
     public User() 
@@ -33,11 +34,12 @@ public class User
         this.email = email;
         this.insertedBy = insertedBy;
         this.insertedOn = insertedOn;
+        this.durationId = -1;
     }
     
     //constructor with parameters, allows for enabled to be set explicitly
     public User(String username, String password, String name, String role,
-    		boolean enabled, String email, String insertedBy, String insertedOn) 
+    		boolean enabled, String email, String insertedBy, String insertedOn, int durationId) 
     {
         this.username = username;
         this.password = password;
@@ -47,6 +49,7 @@ public class User
         this.email = email;
         this.insertedBy = insertedBy;
         this.insertedOn = insertedOn;
+        this.durationId = durationId;
     }
  
     //getters and setters
@@ -128,5 +131,15 @@ public class User
 	public void setInsertedOn(String date)
 	{
 		this.insertedOn = date;
+	}
+	
+	public int getDurationId()
+	{
+		return durationId;
+	}
+	
+	public void setDurationId(int durationId)
+	{
+		this.durationId = durationId;
 	}
 }

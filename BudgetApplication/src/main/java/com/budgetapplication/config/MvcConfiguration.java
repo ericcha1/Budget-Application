@@ -81,4 +81,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
         return new DurationDAOImpl(getDataSource());
     }
     
+    @Bean
+    public LimitDAO getLimitDAO() 
+    {
+        return new LimitDAOImpl(getDataSource());
+    }
 }

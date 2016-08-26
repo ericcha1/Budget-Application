@@ -55,7 +55,7 @@ public class CategoryController
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		cat.setInsertedBy(currentUser);
 	    categoryDAO.insert(cat);
-	    return new ModelAndView("redirect:/", "total", getTotal());
+	    return new ModelAndView("redirect:/");
 	}
 	
 	//delete an entry from the table
@@ -64,7 +64,7 @@ public class CategoryController
 	{
 	    String category = request.getParameter("category");
 	    categoryDAO.delete(category);
-	    return new ModelAndView("redirect:/", "total", getTotal());
+	    return new ModelAndView("redirect:/");
 	}
 	
 	//edit an existing entry in the table
@@ -77,7 +77,7 @@ public class CategoryController
 	    
 	    //update entry
 	    categoryDAO.update(initialCategory, newCategory);
-	    return new ModelAndView("redirect:/", "total", getTotal());
+	    return new ModelAndView("redirect:/");
 	}
 	
 	public String getTotal() throws IOException

@@ -11,7 +11,7 @@ $(document).ready(function()
 	modButton.disabled = true;
 	
 	//clicking a row will fill the fields above the table with the row's information
-    $("#budgetTable").delegate("tr.rows", "click", function()
+    $("#limitTable").delegate("tr.rows", "click", function()
     {
     	//disable add and enable delete/modify
     	addButton.disabled = true;
@@ -19,9 +19,9 @@ $(document).ready(function()
     	modButton.disabled = false;
     	
     	//store the row's information
-    	var bCategory = $("td.budgetCategory", this).html();
-    	var bAmount = $("td.budgetAmount", this).html().replace("$", "");
-    	currentId = $("td.budgetId", this).html();
+    	var bCategory = $("td.limitCategory", this).html();
+    	var bAmount = $("td.limitAmount", this).html().replace("$", "");
+    	currentId = $("td.limitId", this).html();
     	
     	//set the fields to the row's data
     	document.getElementById("categories").value = bCategory;
@@ -56,6 +56,23 @@ $(document).ready(function()
 		e.preventDefault(); 
 	});
 	
+	$("#dateForm").submit(function(e) 
+	{		
+		var startDate = document.getElementsByName("startDate")[0].value;
+		var endDate = document.getElementsByName("endDate")[0].value;
+		
+		if (!compareDates(startDate, endDate))
+		{
+			showAlert("ERROR: Make sure the start date comes before the end date.", "#f44336");
+		}
+		else
+		{
+			startBudget();
+		}
+		//prevent normal submission and display success/fail alerts
+		e.preventDefault(); 
+	});
+	
 	$("#delete").click(function(e) 
 	{
 		clearForm();
@@ -76,14 +93,15 @@ $(document).ready(function()
 	
 	//table and input setup
     fillCategories();
-	fillBudgetTable();
-	$("#budgetTable").tablesorter();
+	fillLimitTable();
+	$("#limitTable").tablesorter();
+	checkActive();
 }); 
 
-function fillBudgetTable()
+function fillLimitTable()
 {	
 	$.ajax({
-		url: '/BudgetApplication/budgetEntries', //see URLs in EntryController.java
+		url: '/BudgetApplication/limits', //see URLs in LimitController.java
 		type: 'GET',
 		dataType : 'json',
 		success: function (response)
@@ -94,15 +112,15 @@ function fillBudgetTable()
 			//append fields for each entry in the table
 			$.each(response, function (key, val)
 			{
-				html += '<tr class="rows"><td class="budgetId">' + val.id +
-				'</td><td class="budgetCategory">' + val.category + 
-				'</td><td class="budgetAmount">$' + val.amount.toFixed(2) + 
+				html += '<tr class="rows"><td class="limitId">' + val.id +
+				'</td><td class="limitCategory">' + val.category + 
+				'</td><td class="limitAmount">$' + val.amount.toFixed(2) + 
 				'</td><td>' + val.insertedBy + '</td><td>' + val.insertedOn + '</td></tr>';
 			});
 			
 			//clear table body, then update
-			$('#budgetTable tbody').empty().append(html);
-			$('#budgetTable').trigger('update');
+			$('#limitTable tbody').empty().append(html);
+			$('#limitTable').trigger('update');
 
 		},
 		error: function(error){
@@ -139,7 +157,7 @@ function fillCategories()
 	});
 }
 
-function addEntry()
+function addLimit()
 {
 	//store the elements that were filled in
 	var category = document.getElementById("categories").value;
@@ -148,76 +166,54 @@ function addEntry()
 	//check for empty strings
 	if(category == "")
 	{
-		showAlert("ERROR: Budget entry could not be added. Please fill in every value.", "#f44336");
+		showAlert("ERROR: Limit could not be added. Please fill in every value.", "#f44336");
 		return;
 	}
 	
-	$.ajax({
-    	url: "/BudgetApplication/checkLimit", //BudgetController.java
-        type:"GET",
+    $.ajax({
+    	url: "/BudgetApplication/addLimit",
+        type:"POST",
         data: {category: category, amount: amount},
-        success:function(limit)
+        success:function(data)
         {
-        	//boolean value if limit is exceeded
-        	if(!limit)
-        	{
-        		showAlert("ERROR: Cannot add entries that exceed the limit for this category.", "#f44336");
-        		return;
-        	}
-        	
-        	//ajax to add entry
-        	$.ajax({
-		    	url: "/BudgetApplication/addEntry",
-		        type:"POST",
-		        data: {category: category, amount: amount},
-		        success:function(data)
-		        {
-		        	//refill table
-		        	fillBudgetTable();
-		        	showAlert("Entry successfully added.", "#4CAF50");
-				},
-				error: function(error)
-				{
-			        console.log(error);
-			        showAlert("ERROR: Entry could not be added.", "#f44336");
-				}
-        	});
+        	//refill table
+        	fillLimitTable();
+        	showAlert("Limit successfully added.", "#4CAF50");
 		},
 		error: function(error)
 		{
 	        console.log(error);
-	        showAlert("ERROR: Entry could not be added.", "#f44336");
+	        showAlert("ERROR: Limit could not be added.", "#f44336");
 		}
     });
 }
 
-function deleteEntry()
+function deleteLimit()
 {
     $.ajax({
-    	url: "/BudgetApplication/deleteEntry",
+    	url: "/BudgetApplication/deleteLimit",
         type: "POST",
         //currentId is the id of the row that was last clicked
         data: {id: currentId},
         success:function(data)
         {
         	//refill table
-        	fillBudgetTable();
-        	showAlert("Entry successfully deleted.", "#4CAF50");
+        	fillLimitTable();
+        	showAlert("Limit successfully deleted.", "#4CAF50");
 		},
 		error: function(error)
 		{
 	        console.log(error);
-	        showAlert("ERROR: Entry could not be deleted.", "#f44336");
+	        showAlert("ERROR: Limit could not be deleted.", "#f44336");
 		}
     });
 }
 
-function editEntry()
+function editLimit()
 {
 	//store the elements that were filled in
 	var category = document.getElementById("categories").value;
 	var amount = document.getElementsByName("amountField")[0].value;
-	var id = currentId;
 	
 	//check for empty string
 	if(category == "")
@@ -226,42 +222,22 @@ function editEntry()
 		return;
 	}
 	
-	$.ajax({
-    	url: "/BudgetApplication/checkLimit", //BudgetController.java
-        type:"GET",
-        data: {category: category, amount: amount},
-        success:function(limit)
-        {
-        	//boolean value if limit is exceeded
-        	if(!limit)
-        	{
-        		showAlert("ERROR: Cannot add entries that exceed the limit for this category.", "#f44336");
-        		return;
-        	}
-        	
-		    $.ajax({
-		    	url: "/BudgetApplication/editEntry",
-		        type: "GET",
-		        //currentId is the id of the row that was last clicked
-		        data: {id: id, category: category, amount: amount},
-		        success:function(data)
-		        {	
-		        	fillBudgetTable();
-		        	showAlert("Entry successfully edited.", "#4CAF50");
-				},
-				error: function(error)
-				{
-			        console.log(error);
-			        showAlert("ERROR: Entry could not be edited.", "#f44336");
-				}
-		    });
-        },
-	    error: function(error)
+    $.ajax({
+    	url: "/BudgetApplication/editLimit",
+        type: "GET",
+        //currentId is the id of the row that was last clicked
+        data: {id: currentId, category: category, amount: amount},
+        success:function(data)
+        {	
+        	fillLimitTable();
+        	showAlert("Limit successfully edited.", "#4CAF50");
+		},
+		error: function(error)
 		{
 	        console.log(error);
-	        showAlert("ERROR: Entry could not be added.", "#f44336");
+	        showAlert("ERROR: Limit could not be edited.", "#f44336");
 		}
-	});
+    });
 }
 
 function showAlert(msg, color)
@@ -284,4 +260,73 @@ function clearForm()
 	//empty all fields
 	document.getElementById("categories").value = "";
 	document.getElementsByName("amountField")[0].value = "";
+}
+
+function startBudget()
+{	
+	var start = document.getElementsByName("startDate")[0].value;
+	var end = document.getElementsByName("endDate")[0].value;
+
+    $.ajax({
+    	url: "/BudgetApplication/startBudget",
+        type:"POST",
+        data: {startDate: start, endDate: end},
+        success:function(data)
+        {
+        	showAlert("Budget successfully started.", "#4CAF50");
+		},
+		error: function(error)
+		{
+	        console.log(error);
+	        showAlert("ERROR: Budget could not be started.", "#f44336");
+		}
+    });
+	
+}
+
+function compareDates(start, end)
+{
+    //parse the dates
+    var startParts = start.split("-");
+    var startDay = parseInt(startParts[2]);
+    var startMonth = parseInt(startParts[1]);
+    var startYear = parseInt(startParts[0]);
+    
+    var endParts = end.split("-");
+    var endDay = parseInt(endParts[2]);
+    var endMonth = parseInt(endParts[1]);
+    var endYear = parseInt(endParts[0]);
+    
+    //check start comes before end
+    if (startYear == endYear)
+    {
+    	if (startMonth == endMonth)
+    		{ return startDay < endDay; }
+    	else
+    		{ return startMonth < endMonth; }
+    }
+    
+    return startYear < endYear;
+};
+
+function checkActive()
+{
+	$.ajax({
+    	url: "/BudgetApplication/activeBudget",
+        type:"GET",
+        success:function(active)
+        {
+        	if (active)
+        	{
+            	document.getElementsByName("startDate")[0].disabled = true;
+            	document.getElementsByName("endDate")[0].disabled = true;
+            	document.getElementById("start").disabled = true;
+        	}
+		},
+		error: function(error)
+		{
+	        console.log(error);
+	        showAlert("ERROR: Failed to retrieve status of budget.", "#f44336");
+		}
+    });
 }
