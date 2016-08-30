@@ -1,6 +1,5 @@
 $(document).ready(function()
 { 
-	
 	// Close the dropdown if the user clicks outside of it
 	window.onclick = function(e) 
 	{

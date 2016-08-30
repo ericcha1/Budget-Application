@@ -2,11 +2,11 @@ package com.budgetapplication.model;
 
 /*
  * Limit model which sets a limit on a
- * user's spendings in a certain category.
+ * user's spending in a certain category.
  */
 public class Limit
 {
-	//attributes of an limit in the budget table
+	//attributes of an limit in the limit_table
     private int id;
     private String username;
     private String category;

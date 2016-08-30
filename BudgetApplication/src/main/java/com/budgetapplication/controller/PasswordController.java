@@ -23,10 +23,10 @@ public class PasswordController
 {
 	@Autowired
     private UserDAO userDAO;
-	
 	@Autowired
 	private MailServiceImpl mailService;
 	
+	//forgotten password page
 	@RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
 	public ModelAndView forgotPassword(
 			@RequestParam(value = "message", required = false) String message)
@@ -36,11 +36,12 @@ public class PasswordController
 	    return new ModelAndView("forgotPassword", "message", message);
 	}
 	
+	//send email when entered
 	@RequestMapping(value = "/sendEmail", method = RequestMethod.GET)
 	@ResponseBody
 	public String sendEmail(HttpServletRequest request)
 	{
-		//obtain the user to get access to username and password
+		//obtain the user through email (to get the user's username and password)
 		String userEmail = request.getParameter("email");
 		User user = userDAO.getUserByEmail(userEmail);
 		String message = "";
@@ -49,11 +50,11 @@ public class PasswordController
 	    {
 	    	//create fields for the email
 	    	SimpleMailMessage email = new SimpleMailMessage();
-			email.setFrom("kcha.eric@gmail.com");
+			email.setFrom("budgetapplicationproject@gmail.com");
 			email.setTo(userEmail);
-			String subject = "Budget Application - Password Reset";
+			String subject = "Budget Application - Password Request";
 			String emailText = "Username: " + user.getUsername() + "\nPassword: " + user.getPassword();
-			mailService.sendMail("kcha.eric@gmail.com", userEmail, subject, emailText);
+			mailService.sendMail("budgetapplicationproject@gmail.com", userEmail, subject, emailText);
 		    
 			message = "Email Sent.";
 	    }
@@ -64,5 +65,4 @@ public class PasswordController
 	    
 		return message; 
 	}
-
 }

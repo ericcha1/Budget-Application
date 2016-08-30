@@ -1,6 +1,5 @@
 package com.budgetapplication.controller;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -24,22 +23,19 @@ import com.budgetapplication.model.Limit;
 import com.budgetapplication.model.User;
 
 /*
- * Controller that handles the Limit. This maps appropriate
- * URLs while calling functions from LimitDAOImpl in order
- * to create the CRUD functionality.
+ * Controller that handles the Limit and creates a budget.
+ * Contains most of the interaction between limits and
+ * budgets/budget entries.
  */
 @Controller 
 public class BudgetController 
 {
 	@Autowired
     private BudgetEntryDAO budgetEntryDAO;
-	
 	@Autowired
     private LimitDAO limitDAO;
-	
 	@Autowired
     private DurationDAO durationDAO;
-	
 	@Autowired
     private UserDAO userDAO;
 	
@@ -52,22 +48,29 @@ public class BudgetController
 	
 	//save changes to an limit
 	@RequestMapping(value = "/startBudget", method = RequestMethod.POST)
-	public ModelAndView addBudget(@ModelAttribute Duration duration)
+	public ModelAndView addBudget(HttpServletRequest request)
 	{
 		//store the username
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		
-		//set username for current user
+		//set fields
+		Duration duration = new Duration();
 		duration.setInsertedBy(currentUser);
 		duration.setUsername(currentUser);
+		duration.setStartDate(java.sql.Date.valueOf(request.getParameter("startDate")));
+		duration.setEndDate(java.sql.Date.valueOf(request.getParameter("endDate")));
+		
+		//insert new duration and fetch the id to store in user
 	    int id = durationDAO.insert(duration);
 	    User user = userDAO.get(currentUser);
 	    user.setDurationId(id);
+	    
+	    //store current duration in user table
 	    userDAO.updateDuration(user);
 	    return new ModelAndView("redirect:/");
 	}
 	
-	//URL for the xml form of the data, needed for ajax call
+	//list of all budget limits for a user
 	@RequestMapping(value="/limits", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Limit> getList()
@@ -81,38 +84,45 @@ public class BudgetController
 	    return limitList;
 	}
 	
-	//URL for the xml form of the data, needed for ajax call
+	//checks if the new entry will break the limit
 	@RequestMapping(value="/checkLimit", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean checkLimit(HttpServletRequest request)
 	{
-		//store the username of the user currently signed in
+		//get user and duration
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		int id = userDAO.get(currentUser).getDurationId();
+		
+		//category and amount from ajax call
 		String category = request.getParameter("category");
 		double limit = limitDAO.get(currentUser, category).getAmount();
 		double amount = Double.parseDouble(request.getParameter("amount"));
 		
-		List<BudgetEntry> entries = getCatEntries(currentUser, id);
+		//get all entries for a user for the current budget
+		List<BudgetEntry> entries = getEntries(currentUser, id);
+		
 		double total = 0;
 		for (int i = 0; i < entries.size(); i++)
 		{
+			//total sum for entries of the same category
 			if (entries.get(i).getCategory().equals(category))
-				{ total += entries.get(i).getAmount(); }
+				total += entries.get(i).getAmount();
 		}
 		
 	    return total + amount < limit;
 	}
 	
-	public List<BudgetEntry> getCatEntries(String username, int durationId)
+	//get all entries for the user in a duration
+	public List<BudgetEntry> getEntries(String username, int durationId)
 	{
+		//retrieve duration stored with user
 		String currentUser = username;
 		int id = durationId;
 		Duration duration = durationDAO.get(id);
+		
+		//list of entries for this duration
 		Date start = duration.getStartDate();
 		Date end = duration.getEndDate();
-		
-		//calls the list() function in the DAO implementation
 	    List<BudgetEntry> budgetList = budgetEntryDAO.list(currentUser, start, end);
 	    
 	    return budgetList;
@@ -123,30 +133,30 @@ public class BudgetController
 	@ResponseBody
 	public boolean checkActive(HttpServletRequest request)
 	{
-		//store the username of the user currently signed in
+		//get duration id
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		int id = userDAO.get(currentUser).getDurationId();
 		
 		//default
 		if(id == -1)
 			return false;
-		
+
 		//check if today is between the duration
 		Duration duration = durationDAO.get(id);
 		Date start = duration.getStartDate();
 		Date end = duration.getEndDate();
 		Date currentDate = new Date(Calendar.getInstance().getTimeInMillis());
 		
-		if(currentDate.compareTo(start) < 0 || currentDate.compareTo(end) >= 0)
+		if(currentDate.before(start) || currentDate.after(end))
 			return false;
 		else
 			return true;
 	}
 	
-	//URL for the xml form of the data, needed for ajax call
+	//list of all limits
 	@RequestMapping(value="/allLimits", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Limit> getAllLimits() throws IOException
+	public List<Limit> getAllLimits()
 	{
 		//calls the list() function in the DAO implementation
 	    List<Limit> budgetList = limitDAO.list();
@@ -154,21 +164,21 @@ public class BudgetController
 	    return budgetList;
 	}
 	
-	//save changes to an limit
+	//add a limit
 	@RequestMapping(value = "/addLimit", method = RequestMethod.POST)
 	public ModelAndView addLimit(@ModelAttribute Limit limit)
 	{
 		//store the username
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		
-		//set username for current user
+		//set username for current user and insert
 		limit.setInsertedBy(currentUser);
 		limit.setUsername(currentUser);
 	    limitDAO.insert(limit);
 	    return new ModelAndView("redirect:/");
 	}
 	
-	//delete an limit from the table
+	//delete limit
 	@RequestMapping(value = "/deleteLimit", method = RequestMethod.POST)
 	public ModelAndView deleteLimit(HttpServletRequest request)
 	{
@@ -177,7 +187,7 @@ public class BudgetController
 	    return new ModelAndView("redirect:/");
 	}
 	
-	//edit an existing limit in the table
+	//edit existing limit
 	@RequestMapping(value = "/editLimit", method = RequestMethod.GET)
 	public ModelAndView editLimit(HttpServletRequest request)
 	{
@@ -197,7 +207,7 @@ public class BudgetController
 	
 	public String getTotal()
 	{
-		//store the username of the user currently signed in
+		//store username
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		//calls the getTotal() function which obtains the total spent by this user

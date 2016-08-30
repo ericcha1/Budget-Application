@@ -5,7 +5,7 @@ package com.budgetapplication.model;
  */
 public class User 
 {
-	//user attributes
+	//attributes of a user in the user_table
     private String username;
     private String password;
     private String name; //real name
@@ -14,7 +14,7 @@ public class User
     private String email;
 	private String insertedBy;
 	private String insertedOn;
-	private int durationId;
+	private int durationId; //-1 if no duration started, otherwise id for duration_table
  
     //default constructor
     public User() 

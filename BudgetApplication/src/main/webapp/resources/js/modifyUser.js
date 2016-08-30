@@ -2,8 +2,7 @@ var currentUser = "";
 
 $(document).ready(function()
 {	
-	
-	//setting default availability of buttons
+	//default availability of buttons
 	var addButton = document.getElementById("add");
 	var delButton = document.getElementById("delete");
 	var modButton = document.getElementById("edit");

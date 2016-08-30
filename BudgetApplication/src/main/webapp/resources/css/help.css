@@ -20,3 +20,11 @@ h3
 	color: white;
 	text-align:center;
 }
+
+p 
+{
+	color: white;
+	font-size: 130%;
+	text-align: left;
+    text-indent: 50px;
+}

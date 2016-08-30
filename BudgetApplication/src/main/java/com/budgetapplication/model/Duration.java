@@ -8,7 +8,7 @@ import java.sql.Date;
  */
 public class Duration
 {
-	//attributes of an duration in the budget table
+	//attributes of an duration in the duration_table
     private int id;
     private String username;
     private Date startDate;

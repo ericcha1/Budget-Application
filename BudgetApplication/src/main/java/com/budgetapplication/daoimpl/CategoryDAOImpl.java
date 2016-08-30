@@ -14,7 +14,8 @@ import org.springframework.jdbc.core.RowMapper;
 /**
  * An implementation of the CategoryDAO interface.
  * Allows for modification, insertion, or deletion
- * of categories in the table.
+ * of categories in the table. Categories are the
+ * types of expenses that one has in a budget.
  */
 public class CategoryDAOImpl implements CategoryDAO 
 {

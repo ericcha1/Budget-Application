@@ -31,11 +31,11 @@ public class DurationDAOImpl implements DurationDAO
     {
         String sql = "INSERT INTO duration_table (username, startDate, endDate, insertedBy)"
                     + " VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, duration.getUsername(), duration.getStartDate(),
-                duration.getEndDate(), duration.getInsertedBy());
+        jdbcTemplate.update(sql, duration.getUsername(), duration.getStartDate().toString(),
+                duration.getEndDate().toString(), duration.getInsertedBy());
         
         //extract the row just inserted and return id
-        String sql2 = "SELECT id FROM duration_table WHERE username='" + duration.getUsername()
+        String sql2 = "SELECT * FROM duration_table WHERE username='" + duration.getUsername()
         			+ "' AND startDate='" + duration.getStartDate().toString() + "' AND endDate='" 
         			+ duration.getEndDate().toString() + "'";
         
@@ -47,7 +47,6 @@ public class DurationDAOImpl implements DurationDAO
                 if (rs.next()) 
                 {
                     Duration duration = new Duration();
-                    
                     duration.setId(rs.getInt("id"));
                     duration.setUsername(rs.getString("username"));
                     duration.setStartDate(rs.getDate("startDate"));
@@ -93,7 +92,6 @@ public class DurationDAOImpl implements DurationDAO
             public Duration mapRow(ResultSet rs, int rowNum) throws SQLException 
             {
                 Duration duration = new Duration();
-     
                 duration.setId(rs.getInt("id"));
                 duration.setUsername(rs.getString("username"));
                 duration.setStartDate(rs.getDate("startDate"));
@@ -120,7 +118,6 @@ public class DurationDAOImpl implements DurationDAO
             public Duration mapRow(ResultSet rs, int rowNum) throws SQLException 
             {
                 Duration duration = new Duration();
-     
                 duration.setId(rs.getInt("id"));
                 duration.setUsername(rs.getString("username"));
                 duration.setStartDate(rs.getDate("startDate"));
@@ -134,6 +131,7 @@ public class DurationDAOImpl implements DurationDAO
         return durationList;
     }
  
+    //get duration by id
     @Override
     public Duration get(int id) 
     {
@@ -146,7 +144,6 @@ public class DurationDAOImpl implements DurationDAO
                 if (rs.next()) 
                 {
                     Duration duration = new Duration();
-                    
                     duration.setId(rs.getInt("id"));
                     duration.setUsername(rs.getString("username"));
                     duration.setStartDate(rs.getDate("startDate"));

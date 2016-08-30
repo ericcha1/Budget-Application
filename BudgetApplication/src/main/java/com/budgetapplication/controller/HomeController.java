@@ -1,8 +1,6 @@
 package com.budgetapplication.controller;
 
-import java.io.IOException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.budgetapplication.dao.BudgetEntryDAO;
 import com.budgetapplication.model.BudgetEntry;
 
@@ -25,7 +22,7 @@ public class HomeController
 	
 	//the home view will be shown for the following URLs
 	@RequestMapping(value={"", "/", "/home"})  
-    public ModelAndView home() throws IOException 
+    public ModelAndView home()
 	{  
         return new ModelAndView("home", "total", getTotal());  
     }
@@ -35,14 +32,15 @@ public class HomeController
 	@ResponseBody
     public List<BudgetEntry> getRecent() 
 	{  
-		//store the username of the user currently signed in
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<BudgetEntry> recentEntries = budgetEntryDAO.listRecent(currentUser);
+        
+		//call to database that retrieves most recent entries for user
+		List<BudgetEntry> recentEntries = budgetEntryDAO.listRecent(currentUser);
         
 		return recentEntries;
     }
 	
-	public String getTotal() throws IOException
+	public String getTotal()
 	{
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		

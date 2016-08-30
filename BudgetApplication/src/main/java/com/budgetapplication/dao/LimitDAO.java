@@ -1,8 +1,6 @@
 package com.budgetapplication.dao;
 
-import java.sql.Date;
 import java.util.List;
- 
 import com.budgetapplication.model.Limit;
  
 /*
@@ -19,26 +17,27 @@ public interface LimitDAO
     public void insert(Limit limit);
     
     /**
-     * Update an limit's information.
+     * Update a limit's information.
      * @param limit
      */
     public void update(Limit limit);
     
     /**
-     * Remove an limit from the limit table.
+     * Remove a limit from the limit table.
      * @param id
      */
     public void delete(int id);
     
     /**
-     * Get an limit corresponding to an id.
+     * Get a limit corresponding to an id.
      * @param id
      * @return Limit
      */
     public Limit get(int id);
     
     /**
-     * Get an limit corresponding to an id.
+     * Get a limit corresponding to an user and
+     * category.
      * @param username, category
      * @return Limit
      */

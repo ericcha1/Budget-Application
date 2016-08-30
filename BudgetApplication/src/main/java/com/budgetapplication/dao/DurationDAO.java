@@ -19,19 +19,19 @@ public interface DurationDAO
     public int insert(Duration duration);
     
     /**
-     * Update an duration's information.
+     * Update a duration's information.
      * @param duration
      */
     public void update(Duration duration);
     
     /**
-     * Remove an duration from the table.
+     * Remove a duration from the table.
      * @param userId
      */
     public void delete(int id);
     
     /**
-     * Get an duration corresponding to an id.
+     * Get a duration corresponding to an id.
      * @param userId
      * @return Duration
      */

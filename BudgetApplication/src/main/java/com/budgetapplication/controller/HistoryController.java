@@ -1,13 +1,11 @@
 package com.budgetapplication.controller;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,35 +16,31 @@ import com.budgetapplication.model.BudgetEntry;
 import com.budgetapplication.model.Duration;
 
 /*
- * Controller that handles the BudgetEntry. This maps appropriate
- * URLs while calling functions from BudgetEntryDAOImpl in order
- * to create the CRUD functionality.
+ * Controller that handles the History. Allows for the
+ * retrieval of data between certain dates.
  */
 @Controller 
 public class HistoryController 
 {
 	@Autowired
     private BudgetEntryDAO budgetEntryDAO;
-	
 	@Autowired
 	private DurationDAO durationDAO;
 	
-	//goes to a view that displays a table with the current user's budget entries
+	//displays a table with the current user's budget entries
 	@RequestMapping(value="/history")
-	public ModelAndView showHistory() throws IOException
+	public ModelAndView showHistory()
 	{
 	    return new ModelAndView("history", "total", getTotal());
 	}
 	
-	//URL for the xml form of the data, needed for ajax call
+	//list of all dates for current user
 	@RequestMapping(value="/dates", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Duration> getDates() throws IOException
+	public List<Duration> getDates()
 	{
-		//store the username of the user currently signed in
+		//calls the list() function for user signed in
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-		
-		//calls the list() function in the DAO implementation
 	    List<Duration> durationList = durationDAO.list(currentUser);
 	    
 	    return durationList;
@@ -55,21 +49,22 @@ public class HistoryController
 	//gets a list of  entries that go between the start and end dates
 	@RequestMapping(value="/dateEntries", method = RequestMethod.GET)
 	@ResponseBody
-	public List<BudgetEntry> getEntries(HttpServletRequest request) throws IOException
+	public List<BudgetEntry> getEntries(HttpServletRequest request)
 	{
+		//retrieve duration from user
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		int id = Integer.parseInt(request.getParameter("id"));
 		Duration duration = durationDAO.get(id);
 		Date start = duration.getStartDate();
 		Date end = duration.getEndDate();
 		
-		//calls the list() function in the DAO implementation
+		//get list that only includes entries between start and end
 	    List<BudgetEntry> budgetList = budgetEntryDAO.list(currentUser, start, end);
 	    
 	    return budgetList;
 	}
 	
-	public String getTotal() throws IOException
+	public String getTotal()
 	{
 		//store the username of the user currently signed in
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();

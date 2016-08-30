@@ -29,14 +29,14 @@ public interface UserDAO
     public void updateDuration(User user);
      
     /**
-     * Remove an user from the user table.
+     * Remove a user from the user table.
      * @param username
      */
     public void delete(String username);
     
     /**
-     * Get an user corresponding to a user's username.
-     * Serves as the "default" (go-to) method to get a user.
+     * Get a user corresponding to a username.
+     * Easiest way to get a user.
      * @param userId
      * @return User
      */

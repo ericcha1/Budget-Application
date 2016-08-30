@@ -2,6 +2,7 @@ package com.budgetapplication.model;
 
 public class Category 
 {
+	//attributes of a category in the category_table
 	private String category;
 	private String insertedBy;
 	private String insertedOn;

@@ -61,14 +61,17 @@ $(document).ready(function()
 		var startDate = document.getElementsByName("startDate")[0].value;
 		var endDate = document.getElementsByName("endDate")[0].value;
 		
+		//check start comes before end
 		if (!compareDates(startDate, endDate))
 		{
 			showAlert("ERROR: Make sure the start date comes before the end date.", "#f44336");
 		}
 		else
 		{
+			//create new budget
 			startBudget();
 		}
+		
 		//prevent normal submission and display success/fail alerts
 		e.preventDefault(); 
 	});
@@ -84,8 +87,7 @@ $(document).ready(function()
     	currentId = 0;
 	});
 	
-	//when focus is lost from the amount field input, 
-	//switch it to have two decimal places
+	//when focus is lost from the amount field, set to have two decimal places
 	document.getElementsByName("amountField")[0].onblur = function ()
 	{    
 	    this.value = parseFloat(this.value).toFixed(2);
@@ -95,6 +97,8 @@ $(document).ready(function()
     fillCategories();
 	fillLimitTable();
 	$("#limitTable").tablesorter();
+	
+	//disable start button if budget is active
 	checkActive();
 }); 
 
@@ -123,7 +127,8 @@ function fillLimitTable()
 			$('#limitTable').trigger('update');
 
 		},
-		error: function(error){
+		error: function(error)
+		{
 	        console.log(error);
 		}
 	});
@@ -151,7 +156,8 @@ function fillCategories()
 			$('#categories').empty().append(html);
 			$('#categories').trigger('update');
 		},
-		error: function(error){
+		error: function(error)
+		{
 	        console.log(error);
 		}
 	});
@@ -273,6 +279,9 @@ function startBudget()
         data: {startDate: start, endDate: end},
         success:function(data)
         {
+        	document.getElementsByName("startDate")[0].disabled = true;
+        	document.getElementsByName("endDate")[0].disabled = true;
+        	document.getElementById("start").disabled = true;
         	showAlert("Budget successfully started.", "#4CAF50");
 		},
 		error: function(error)
@@ -316,8 +325,10 @@ function checkActive()
         type:"GET",
         success:function(active)
         {
+        	alert(active);
         	if (active)
         	{
+        		//disable button and input when budget is still active
             	document.getElementsByName("startDate")[0].disabled = true;
             	document.getElementsByName("endDate")[0].disabled = true;
             	document.getElementById("start").disabled = true;

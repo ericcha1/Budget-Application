@@ -1,6 +1,5 @@
 package com.budgetapplication.controller;
 
-import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.budgetapplication.dao.BudgetEntryDAO;
 import com.budgetapplication.dao.CategoryDAO;
-import com.budgetapplication.model.BudgetEntry;
 import com.budgetapplication.model.Category;
 
 /*
@@ -32,15 +30,15 @@ public class CategoryController
 	
 	//goes to a view that displays a table with all of the categories
 	@RequestMapping(value="/category")
-	public ModelAndView listCategory() throws IOException
+	public ModelAndView listCategory()
 	{
 	    return new ModelAndView("category", "total", getTotal());
 	}
 	
-	//URL for the xml form of the data, needed for ajax call
+	//list of all categories
 	@RequestMapping(value="/categories", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Category> getCategories() throws IOException
+	public List<Category> getCategories()
 	{
 		//calls the list() function in the DAO implementation
 	    List<Category> catList = categoryDAO.list();
@@ -49,7 +47,7 @@ public class CategoryController
 	
 	//save changes to a category
 	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
-	public ModelAndView addCategory(@ModelAttribute Category cat) throws IOException 
+	public ModelAndView addCategory(@ModelAttribute Category cat)
 	{
 		//store the username of the user currently signed in
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -60,7 +58,7 @@ public class CategoryController
 	
 	//delete an entry from the table
 	@RequestMapping(value = "/deleteCategory", method = RequestMethod.POST)
-	public ModelAndView deleteCategory(HttpServletRequest request) throws IOException
+	public ModelAndView deleteCategory(HttpServletRequest request)
 	{
 	    String category = request.getParameter("category");
 	    categoryDAO.delete(category);
@@ -69,9 +67,9 @@ public class CategoryController
 	
 	//edit an existing entry in the table
 	@RequestMapping(value = "/editCategory", method = RequestMethod.GET)
-	public ModelAndView editCategory(HttpServletRequest request) throws IOException 
+	public ModelAndView editCategory(HttpServletRequest request)
 	{
-		//retrieve the existing category
+		//retrieve the category names
 		String initialCategory = request.getParameter("initialCategory");
 		String newCategory = request.getParameter("category");
 	    
@@ -80,9 +78,9 @@ public class CategoryController
 	    return new ModelAndView("redirect:/");
 	}
 	
-	public String getTotal() throws IOException
+	public String getTotal()
 	{
-		//store the username of the user currently signed in
+		//store current username
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		//calls the getTotal() function which obtains the total spent by this user

@@ -128,8 +128,6 @@ function editCategory(editCat)
 	
 	//store the row's information
 	currentCategory = editCat;
-	
-	//set the fields to the row's data
 	document.getElementsByName("categoryField")[0].value = editCat;
 	
 	//scroll to top

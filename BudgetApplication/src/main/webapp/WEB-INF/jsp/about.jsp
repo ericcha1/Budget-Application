@@ -35,10 +35,14 @@
 				This Budget Application allows users to track their spending on various 
 				categories. By keeping a running total of these expenditures, one will
 				constantly be able to view the money currently being used from one's budget
-				as well as the how the spendings are distributed. This project was 
-				created for the purposes of practicing web development by Eric Cha, a 
-				current computer science major studying at the University of Maryland, 
-				Baltimore County. 
+				as well as the how the spendings are distributed. 
+			</p>
+			<p>
+				This project was created for the purposes of practicing web development 
+				by Eric Cha, a current computer science major studying at the University of 
+				Maryland, Baltimore County. Please note that this project is still being
+				updated. Graphs will be added in order to properly portray one's budget and 
+				the proportions being spent in each category.
 			</p>
 
 		</sec:authorize>

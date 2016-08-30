@@ -45,7 +45,6 @@ public class UserDAOImpl implements UserDAO
         		"enabled=?, email=? WHERE username=?";
         jdbcTemplate.update(sql, user.getPassword(), user.getName(), user.getRole(), 
         		user.getEnabled(), user.getEmail(), user.getUsername()); 
-        //is username mutable?
     }
     
     public void updateDuration(User user)
@@ -153,7 +152,7 @@ public class UserDAOImpl implements UserDAO
         return userList;
     }
     
-    //returns a list of all the users corresponding to a certain username (should be one user)
+    //returns a list of users corresponding to a username (can only be one user)
     @Override
     public List<User> list(String currentUsername) 
     {

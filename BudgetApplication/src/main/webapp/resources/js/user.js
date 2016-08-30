@@ -2,7 +2,7 @@ $(document).ready(function()
 { 
 	//load only the current user 
 	loadUser();
-	$("#userTable").tablesorter();
+	$('#userTable').tablesorter();
 }); 
 
 function loadUser()
@@ -71,8 +71,8 @@ function searchUser()
 	var search = document.getElementsByName("searchField")[0].value;
 	
     $.ajax({
-    	url: "/BudgetApplication/userSearch",
-        type: "GET",
+    	url: '/BudgetApplication/userSearch',
+        type: 'GET',
         data: {search: search},
         success:function(response)
         {

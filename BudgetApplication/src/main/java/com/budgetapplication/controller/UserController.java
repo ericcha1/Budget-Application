@@ -1,6 +1,5 @@
 package com.budgetapplication.controller;
 
-import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.budgetapplication.dao.BudgetEntryDAO;
 import com.budgetapplication.dao.UserDAO;
-import com.budgetapplication.model.BudgetEntry;
 import com.budgetapplication.model.User;
 
 /*
  * Controller that handles the User model. This maps appropriate
- * URLs while calling functions from UserDAOImpl in order to 
- * create the CRUD functionality.
+ * URLs to allow CRUD to be applied to users.
  */
 @Controller 
 public class UserController 
@@ -30,82 +27,74 @@ public class UserController
 	@Autowired
     private UserDAO userDAO;
 	
-	//returns a view that contains a table of the current user
+	//contains a table of the current user but can view others (no CRUD)
 	@RequestMapping(value="/user")
-	public ModelAndView listUser() throws IOException
+	public ModelAndView listUser()
 	{
 	    return new ModelAndView("user", "total", getTotal());
 	}
 	
-	//returns a view that contains a table of all of the users and account information
+	//contains a table of all of the users and account information (with CRUD)
 	@RequestMapping(value="/modifyUser")
-	public ModelAndView listAllUsers(ModelAndView model) throws IOException
+	public ModelAndView listAllUsers(ModelAndView model)
 	{
 		return new ModelAndView("modifyUser", "total", getTotal());
 	}
 	
-	//returns the current user data, needed for the ajax call
+	//returns the current user data
 	@RequestMapping(value="/currentData", method = RequestMethod.GET)
 	@ResponseBody
-	public List<User> getCurrentUser() throws IOException
+	public List<User> getCurrentUser()
 	{
-		//store the username of the user currently signed in
-		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();		
-		
-		//calls the list() function in the DAO implementation
-	    List<User> userList = userDAO.list(currentUser);
-	    
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+	    List<User> userList = userDAO.list(currentUser);   
 	    return userList;
 	}
 	
-	//returns the entries of the user table, needed for the ajax call
+	//list of all users
 	@RequestMapping(value="/userData", method = RequestMethod.GET)
 	@ResponseBody
-	public List<User> getList() throws IOException
+	public List<User> getList()
 	{
-		//calls the list() function in the DAO implementation
 	    List<User> userList = userDAO.list();
-	    
 	    return userList;
 	}
 	
-	//returns a list of users with similar usernames to the one searched, needed for the ajax call
+	//returns a list of users with similar usernames to the one searched
 	@RequestMapping(value="/userSearch", method = RequestMethod.GET)
 	@ResponseBody
-	public List<User> search(HttpServletRequest request) throws IOException
+	public List<User> search(HttpServletRequest request)
 	{	
-		//calls the listSearch() function with the parameter from the request
+		//obtains list with similar usernames as search
 	    List<User> userList = userDAO.listSearch(request.getParameter("search"));
-	    
 	    return userList;
 	}
 
 	//add a user
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public ModelAndView addUser(@ModelAttribute User user) throws IOException 
+	public ModelAndView addUser(@ModelAttribute User user)
 	{
-		//store the username of the user currently signed in
+		//get username and insert
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();		
 		user.setInsertedBy(currentUser);
-		
 	    userDAO.insert(user);
 	    return new ModelAndView("redirect:/");
 	}
 	
-	//delete a user from the table
+	//delete a user
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public ModelAndView deleteUser(HttpServletRequest request) throws IOException
+	public ModelAndView deleteUser(HttpServletRequest request)
 	{
 	    String username = request.getParameter("username");
 	    userDAO.delete(username);
 	    return new ModelAndView("redirect:/");
 	}
 	
-	//edit an existing user in the table
+	//edit an existing user
 	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
-	public ModelAndView editUser(HttpServletRequest request) throws IOException 
+	public ModelAndView editUser(HttpServletRequest request)
 	{
-		//retrieve the existing user for the given username
+		//retrieve existing user
 	    User user = userDAO.get(request.getParameter("username"));
 	    
 	    //modify the variables for the user
@@ -120,9 +109,9 @@ public class UserController
 	    return new ModelAndView("redirect:/");
 	}
 	
-	public String getTotal() throws IOException
+	public String getTotal()
 	{
-		//store the username of the user currently signed in
+		//store current username
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		//calls the getTotal() function which obtains the total spent by this user

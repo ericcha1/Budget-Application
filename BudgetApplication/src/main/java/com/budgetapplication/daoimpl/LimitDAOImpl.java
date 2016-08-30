@@ -1,6 +1,5 @@
 package com.budgetapplication.daoimpl;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,7 +14,8 @@ import org.springframework.jdbc.core.RowMapper;
 /**
  * An implementation of the LimitDAO interface.
  * Allows for modification, insertion, or deletion
- * of entries in the budget table. Each limit represents 
+ * of entries in the budget table. Each limit represents
+ * the maximum amount a user can put into a category.
  */
 public class LimitDAOImpl implements LimitDAO 
 {

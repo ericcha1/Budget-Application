@@ -1,7 +1,5 @@
 package com.budgetapplication.controller;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,12 +20,12 @@ public class AboutController
 	
 	//the home view will be shown for the following URLs
 	@RequestMapping(value="/about", method = RequestMethod.GET)  
-    public ModelAndView about() throws IOException 
+    public ModelAndView about()
 	{   
         return new ModelAndView("about", "total", getTotal());  
     }
 	
-	public String getTotal() throws IOException
+	public String getTotal()
 	{
 		//store the username of the user currently signed in
 		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();

@@ -6,7 +6,7 @@ package com.budgetapplication.model;
  */
 public class BudgetEntry
 {
-	//attributes of an entry in the budget table
+	//attributes of an entry in the budget_table
     private int id;
     private String username;
     private String category;

@@ -15,7 +15,8 @@ import org.springframework.jdbc.core.RowMapper;
 /**
  * An implementation of the BudgetEntryDAO interface.
  * Allows for modification, insertion, or deletion
- * of entries in the budget table. Each entry represents 
+ * of entries in the budget table. Each entry represents
+ * an addition to one's spendings. 
  */
 public class BudgetEntryDAOImpl implements BudgetEntryDAO 
 {
@@ -83,10 +84,10 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
     
     //returns a list of all the entries corresponding to a certain username
     @Override
-    public List<BudgetEntry> list(String currentUsername) 
+    public List<BudgetEntry> list(String username) 
     {
     	//append the username to the query
-    	String sql = "SELECT * FROM budget_table WHERE username=\"" + currentUsername + "\"";
+    	String sql = "SELECT * FROM budget_table WHERE username=\"" + username + "\"";
 
         List<BudgetEntry> entryList = jdbcTemplate.query(sql, new RowMapper<BudgetEntry>() 
         {
@@ -108,12 +109,12 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
         return entryList;
     }
     
-    //returns a list of all the entries corresponding to a certain username between two dates
+    //returns a list of entries for a certain username between two dates
     @Override
-    public List<BudgetEntry> list(String currentUsername, Date start, Date end) 
+    public List<BudgetEntry> list(String username, Date start, Date end) 
     {
     	//append the username to the query
-    	String sql = "SELECT * FROM budget_table WHERE username='" + currentUsername 
+    	String sql = "SELECT * FROM budget_table WHERE username='" + username 
     			+ "' AND insertedOn BETWEEN '" + start.toString() + "' AND '" 
     			+ end.toString() + "'";
 
@@ -136,11 +137,12 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
      
         return entryList;
     }
- 
+
+    //get entry by id
     @Override
-    public BudgetEntry get(int entryId) 
+    public BudgetEntry get(int id) 
     {
-    	String sql = "SELECT * FROM budget_table WHERE id=" + entryId;
+    	String sql = "SELECT * FROM budget_table WHERE id=" + id;
         return jdbcTemplate.query(sql, new ResultSetExtractor<BudgetEntry>() 
         {
      
@@ -164,12 +166,12 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
         });
     }
     
-    //returns a list of all the entries corresponding to a certain username
+    //returns a list of the five most recent entries corresponding for a certain username
     @Override
-    public List<BudgetEntry> listRecent(String currentUsername) 
+    public List<BudgetEntry> listRecent(String username) 
     {
     	//select the user's rows and order by time inserted
-    	String sql = "SELECT * FROM budget_table WHERE username=\"" + currentUsername 
+    	String sql = "SELECT * FROM budget_table WHERE username=\"" + username 
     			+ "\"ORDER BY insertedOn DESC LIMIT 5;";
 
         List<BudgetEntry> entryList = jdbcTemplate.query(sql, new RowMapper<BudgetEntry>() 
@@ -201,9 +203,7 @@ public class BudgetEntryDAOImpl implements BudgetEntryDAO
         List<BudgetEntry> entryList = list(username);
         
         for (int i = 0; i < entryList.size(); i++)
-        {
         	total += entryList.get(i).getAmount();
-        }
     	
     	return total;
     }
