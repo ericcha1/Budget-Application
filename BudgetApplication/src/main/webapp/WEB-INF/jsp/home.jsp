@@ -7,6 +7,7 @@
 	<head>
 		<title>Budget Application</title>
 
+		<script src="https://d3js.org/d3.v4.min.js"></script>
 		<script src="<c:url value="/resources/js/jquery-3.0.0.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery-latest.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/tablesorter/jquery.tablesorter.js" />"></script>
@@ -50,6 +51,12 @@
 				
 				<tbody></tbody>
 			</table>
+			
+			<script>
+			
+				
+			
+			</script>
 
 <%-- 			<c:url value="/j_spring_security_logout" var="logoutUrl" /> --%>
 			
